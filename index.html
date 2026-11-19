@@ -200,6 +200,126 @@ body {
   border-bottom-color: var(--accent-red);
   background: #f8fafc;
 }
+/* ADMIN BUTTON & MODAL */
+.nav-admin-btn {
+  background: #0f3460;
+  color: #fef08a !important;
+  border: 1px solid rgba(254, 240, 138, 0.4);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.nav-admin-btn:hover {
+  background: #1e3a8a;
+  color: #ffffff !important;
+  border-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.admin-modal-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+.admin-modal-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  max-width: 620px;
+  width: 92%;
+  padding: 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  position: relative;
+  animation: modalFadeIn 0.25s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.admin-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.admin-modal-close:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+.admin-hub-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  color: var(--primary-navy);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+.admin-hub-link:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1e40af;
+  transform: translateX(4px);
+}
+.admin-hub-tag {
+  font-size: 11px;
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.file-download-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.file-download-badge:hover {
+  background: #1e40af;
+  color: white;
+}
+
 .nav-drive-btn {
   background: linear-gradient(135deg, #0284c7, #0369a1);
   color: white !important;
@@ -593,7 +713,7 @@ body {
       <li><a href="#lich-tuan">Lịch Công Tác Tuần</a></li>
       <li><a href="#thong-bao-sec">Thông Báo</a></li>
     </ul>
-    <a href="https://drive.google.com/drive/folders/1Xnfeh7-pGIFBLD8qlquaURpfjpmDhdIt" target="_blank" rel="noopener" class="nav-drive-btn">📂 Kho Drive Dữ Liệu ↗</a>
+    <button class="nav-admin-btn" onclick="openAdminModal()">🔒 Quản Trị Viên</button>
   </div>
 </nav>
 
@@ -625,7 +745,7 @@ body {
         <li>Cơ sở vật chất & Thiết bị dạy học</li>
         <li>Chính sách hỗ trợ học sinh bán trú</li>
       </ul>
-      <a href="https://drive.google.com/drive/folders/1k_YwkCHfLhR_pLH1SG-_FonOSip2LaC4" target="_blank" rel="noopener" class="btn-primary">Tra Cứu Văn Bản (Drive) ➔</a>
+      <a href="#thong-bao-sec" class="btn-primary">Xem Báo Cáo Công Khai ➔</a>
     </div>
 
     <!-- CARD 2 -->
@@ -638,7 +758,7 @@ body {
         <li>Bồi dưỡng học sinh giỏi & Phụ đạo</li>
         <li>Hội thi giáo viên dạy giỏi các cấp</li>
       </ul>
-      <a href="https://drive.google.com/drive/folders/19yYl6v88opQLsl9oqrvhT4biRxpR2JkX" target="_blank" rel="noopener" class="btn-primary">Kho Tư Liệu Chuyên Môn ➔</a>
+      <a href="#chuyen-mon-info" class="btn-primary">Xem Chuyên Đề & STEM ➔</a>
     </div>
 
     <!-- CARD 3 -->
@@ -653,7 +773,7 @@ body {
       </ul>
       <div class="module-actions">
         <a href="#ban-tru-info" class="btn-primary" style="flex:1;">Góc Bán Trú ➔</a>
-        <a href="https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ" target="_blank" rel="noopener" class="btn-primary" style="flex:1; background:#f59e0b; color:white; border-color:#f59e0b;">Đoàn Thể (Drive) ➔</a>
+        <a href="#thong-bao-sec" class="btn-primary" style="flex:1; background:#f59e0b; color:white; border-color:#f59e0b;">Xem Hoạt Động ➔</a>
       </div>
     </div>
 
@@ -668,8 +788,8 @@ body {
         <li>Cẩm nang phụ huynh & An toàn trường học</li>
       </ul>
       <div class="module-actions">
-        <a href="https://drive.google.com/drive/folders/1Xnfeh7-pGIFBLD8qlquaURpfjpmDhdIt" target="_blank" rel="noopener" class="btn-primary" style="flex:1;">Lịch Tuần ➔</a>
-        <a href="https://drive.google.com/drive/folders/1C1h-ARExhPEGOWTpEIaAXb2ShpSqLXnh" target="_blank" rel="noopener" class="btn-primary btn-sky" style="flex:1;">Thời Khóa Biểu ➔</a>
+        <a href="#lich-tuan" class="btn-primary" style="flex:1;">Xem Lịch Tuần ➔</a>
+        <a href="#lich-tuan" class="btn-primary btn-sky" style="flex:1;">Thời Khóa Biểu ➔</a>
       </div>
     </div>
 
@@ -708,9 +828,8 @@ body {
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px dashed var(--border-light);">
         <span style="font-size:14px; color:#475569; font-weight:500;">📌 Cập nhật định kỳ thứ 7 hàng tuần bởi Ban Giám hiệu</span>
         <div style="display:flex; flex-wrap:wrap; gap:8px;">
-          <a href="https://drive.google.com/drive/folders/1Xnfeh7-pGIFBLD8qlquaURpfjpmDhdIt" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#eff6ff; color:#1e40af; border:1px solid #bfdbfe; padding:8px 14px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none;">📂 Lịch Tuần (Drive) ↗</a>
-          <a href="https://drive.google.com/drive/folders/1C1h-ARExhPEGOWTpEIaAXb2ShpSqLXnh" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0; padding:8px 14px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none;">📅 TKB (Drive) ↗</a>
-          <a href="https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px; background:#fef3c7; color:#b45309; border:1px solid #fde68a; padding:8px 14px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none;">🤝 Đoàn Thể - Xã Hội (Drive) ↗</a>
+          <a href="javascript:void(0)" onclick="alert('Quản trị viên chưa đính kèm tệp PDF Lịch tuần mới. Vui lòng quay lại sau!')" class="file-download-badge" style="padding:8px 14px; font-size:13px;">📥 Tải Lịch Tuần (PDF)</a>
+          <a href="javascript:void(0)" onclick="alert('Thời khóa biểu Học kỳ I đang được cập nhật. Vui lòng liên hệ Văn thư!')" class="file-download-badge" style="padding:8px 14px; font-size:13px; background:#f0fdf4; color:#15803d; border-color:#bbf7d0;">📅 Tải TKB Học Kỳ I</a>
         </div>
       </div>
       <table class="styled-table">
@@ -802,12 +921,12 @@ body {
     </div>
 
     <div class="footer-col">
-      <h3>KHO DỮ LIỆU ĐIỆN TỬ (DRIVE)</h3>
-      <p><a href="https://drive.google.com/drive/folders/1Xnfeh7-pGIFBLD8qlquaURpfjpmDhdIt" target="_blank" rel="noopener">📂 01. Lịch Công Tác Tuần BGH ↗</a></p>
-      <p><a href="https://drive.google.com/drive/folders/1C1h-ARExhPEGOWTpEIaAXb2ShpSqLXnh" target="_blank" rel="noopener">📅 02. Thời Khóa Biểu Nhà Trường ↗</a></p>
-      <p><a href="https://drive.google.com/drive/folders/1k_YwkCHfLhR_pLH1SG-_FonOSip2LaC4" target="_blank" rel="noopener">📜 03. Công Khai Thông Tư 09/2024 ↗</a></p>
-      <p><a href="https://drive.google.com/drive/folders/19yYl6v88opQLsl9oqrvhT4biRxpR2JkX" target="_blank" rel="noopener">💡 04. Hoạt Động Chuyên Môn & STEM ↗</a></p>
-      <p><a href="https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ" target="_blank" rel="noopener">🤝 05. Hoạt Động Đoàn Thể & Cộng Đồng ↗</a></p>
+      <h3>VĂN BẢN & DỮ LIỆU CÔNG KHAI</h3>
+      <p><a href="#lich-tuan">📋 Lịch Công Tác Tuần Ban Giám Hiệu</a></p>
+      <p><a href="#lich-tuan">📅 Thời Khóa Biểu Học Kỳ I</a></p>
+      <p><a href="#thong-bao-sec">📜 Báo Cáo Công Khai Thông Tư 09/2024</a></p>
+      <p><a href="#phan-he">💡 Kế Hoạch Chuyên Môn & Giáo Dục STEM</a></p>
+      <p><a href="#doan-the">🤝 Hoạt Động Đoàn Thể & Đền Ơn Đáp Nghĩa</a></p>
     </div>
 
     <div class="footer-col">
@@ -818,7 +937,7 @@ body {
 
   <div class="footer-bottom">
     <div>© 2024 - 2025 Bản quyền thuộc về <strong>Trường THCS Bán trú Canh Thuận</strong>.</div>
-    <div>Cổng thông tin điện tử giáo dục chuẩn Quốc gia.</div>
+    <div>Cổng thông tin điện tử chuẩn Quốc gia. &bull; <a href="javascript:void(0)" onclick="openAdminModal()" style="color:#64748b; text-decoration:none;">🔒 Đăng Nhập Quản Trị</a></div>
   </div>
 </footer>
 
@@ -832,6 +951,94 @@ function showTab(evt, tabId) {
   
   document.getElementById(tabId).classList.add('active');
   evt.currentTarget.classList.add('active');
+}
+</script>
+
+
+<!-- ================= ADMIN MANAGEMENT MODAL ================= -->
+<div id="adminModal" class="admin-modal-backdrop" onclick="closeAdminModal(event)">
+  <div class="admin-modal-card" onclick="event.stopPropagation()">
+    <button class="admin-modal-close" onclick="closeAdminModalDirect()">✕</button>
+    
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:15px; border-bottom:1px solid var(--border-light);">
+      <div style="font-size:32px;">🛡️</div>
+      <div>
+        <h3 style="font-size:18px; color:var(--primary-navy); font-weight:800;">TRUNG TÂM QUẢN TRỊ NỘI DUNG</h3>
+        <p style="font-size:13px; color:var(--text-muted);">Trường THCS Bán trú Canh Thuận (Vân Canh, Gia Lai)</p>
+      </div>
+    </div>
+
+    <!-- PIN SECURITY CHECK -->
+    <div id="adminPinSection">
+      <p style="font-size:14px; color:#475569; margin-bottom:16px;">Vui lòng nhập <strong>Mã PIN Quản Trị</strong> để mở Bảng điều khiển và tải lên văn bản mới:</p>
+      <div style="display:flex; gap:10px; margin-bottom:12px;">
+        <input type="password" id="adminPinInput" placeholder="Nhập mã PIN quản trị..." style="flex:1; padding:12px 16px; border:1px solid #cbd5e1; border-radius:8px; font-size:15px;" onkeyup="if(event.key==='Enter') verifyAdminPin()">
+        <button onclick="verifyAdminPin()" style="background:var(--primary-navy); color:white; border:none; padding:12px 20px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer;">Mở Khóa</button>
+      </div>
+      <p id="adminPinError" style="color:#dc2626; font-size:13px; display:none;">⚠️ Mã PIN chưa chính xác. Vui lòng kiểm tra lại!</p>
+      <p style="font-size:12.5px; color:#94a3b8; margin-top:8px;"><em>(Mã PIN mặc định của Thầy: <strong>2026</strong>)</em></p>
+    </div>
+
+    <!-- ADMIN DASHBOARD (UNLOCKED) -->
+    <div id="adminDashboardSection" style="display:none;">
+      <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:10px 14px; border-radius:8px; margin-bottom:16px; font-size:13px; color:#15803d; font-weight:600;">
+        ✅ Đã xác thực quyền Quản trị viên: <strong>thcsbtcanhthuan</strong>
+      </div>
+      
+      <p style="font-size:13.5px; color:#475569; margin-bottom:12px; font-weight:700;">HỆ THỐNG 5 THƯ MỤC GOOGLE DRIVE (TẢI LÊN & QUẢN LÝ TỆP):</p>
+      
+      <a href="https://drive.google.com/drive/folders/1Xnfeh7-pGIFBLD8qlquaURpfjpmDhdIt" target="_blank" rel="noopener" class="admin-hub-link">
+        <span>📂 01. Lịch Công Tác Tuần (PDF/Docx)</span>
+        <span class="admin-hub-tag">Mở Drive ↗</span>
+      </a>
+      <a href="https://drive.google.com/drive/folders/1C1h-ARExhPEGOWTpEIaAXb2ShpSqLXnh" target="_blank" rel="noopener" class="admin-hub-link">
+        <span>📅 02. Thời Khóa Biểu Nhà Trường (Excel/PDF)</span>
+        <span class="admin-hub-tag">Mở Drive ↗</span>
+      </a>
+      <a href="https://drive.google.com/drive/folders/1k_YwkCHfLhR_pLH1SG-_FonOSip2LaC4" target="_blank" rel="noopener" class="admin-hub-link">
+        <span>📜 03. Văn Bản Công Khai Thông Tư 09/2024</span>
+        <span class="admin-hub-tag">Mở Drive ↗</span>
+      </a>
+      <a href="https://drive.google.com/drive/folders/19yYl6v88opQLsl9oqrvhT4biRxpR2JkX" target="_blank" rel="noopener" class="admin-hub-link">
+        <span>💡 04. Hoạt Động Chuyên Môn & Giáo Dục STEM</span>
+        <span class="admin-hub-tag">Mở Drive ↗</span>
+      </a>
+      <a href="https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ" target="_blank" rel="noopener" class="admin-hub-link">
+        <span>🤝 05. Hoạt Động Đoàn Thể & Đền Ơn Đáp Nghĩa</span>
+        <span class="admin-hub-tag">Mở Drive ↗</span>
+      </a>
+
+      <div style="margin-top:18px; padding-top:14px; border-top:1px dashed var(--border-light); display:flex; gap:10px;">
+        <a href="https://github.com/thcsbtcanhthuan/thcsbtcanhthuan.github.io" target="_blank" rel="noopener" style="flex:1; text-align:center; background:#0f172a; color:white; padding:10px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none;">⚙️ GitHub Admin</a>
+        <a href="https://mail.google.com/" target="_blank" rel="noopener" style="flex:1; text-align:center; background:#ea4335; color:white; padding:10px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none;">✉ Gmail Nhà Trường</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function openAdminModal() {
+  document.getElementById('adminModal').style.display = 'flex';
+  document.getElementById('adminPinInput').focus();
+}
+function closeAdminModal(e) {
+  if (e.target.id === 'adminModal') {
+    document.getElementById('adminModal').style.display = 'none';
+  }
+}
+function closeAdminModalDirect() {
+  document.getElementById('adminModal').style.display = 'none';
+}
+function verifyAdminPin() {
+  const pin = document.getElementById('adminPinInput').value.trim();
+  // Master PIN for Thay Quan / BGH
+  if (pin === '2026' || pin === '1985') {
+    document.getElementById('adminPinSection').style.display = 'none';
+    document.getElementById('adminDashboardSection').style.display = 'block';
+  } else {
+    document.getElementById('adminPinError').style.display = 'block';
+  }
 }
 </script>
 
