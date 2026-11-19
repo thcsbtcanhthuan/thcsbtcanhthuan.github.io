@@ -320,6 +320,32 @@ body {
   color: white;
 }
 
+
+/* TKB DROPDOWN & ATTACHMENT BADGE */
+.dropdown-menu a:hover {
+  background: #f1f5f9 !important;
+}
+.attachment-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+.attachment-btn:hover {
+  background: #15803d;
+  color: white;
+  border-color: #15803d;
+}
+
 .nav-drive-btn {
   background: linear-gradient(135deg, #0284c7, #0369a1);
   color: white !important;
@@ -828,8 +854,39 @@ body {
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px dashed var(--border-light);">
         <span style="font-size:14px; color:#475569; font-weight:500;">📌 Cập nhật định kỳ thứ 7 hàng tuần bởi Ban Giám hiệu</span>
         <div style="display:flex; flex-wrap:wrap; gap:8px;">
-          <a href="javascript:void(0)" onclick="alert('Quản trị viên chưa đính kèm tệp PDF Lịch tuần mới. Vui lòng quay lại sau!')" class="file-download-badge" style="padding:8px 14px; font-size:13px;">📥 Tải Lịch Tuần (PDF)</a>
-          <a href="javascript:void(0)" onclick="alert('Thời khóa biểu Học kỳ I đang được cập nhật. Vui lòng liên hệ Văn thư!')" class="file-download-badge" style="padding:8px 14px; font-size:13px; background:#f0fdf4; color:#15803d; border-color:#bbf7d0;">📅 Tải TKB Học Kỳ I</a>
+          <a href="https://drive.google.com/drive/folders/1Xnfeh7-pGIFBLD8qlquaURpfjpmDhdIt" target="_blank" rel="noopener" class="file-download-badge" style="padding:8px 14px; font-size:13px;" title="Tải toàn văn bản Kế hoạch Lịch tuần chính thức (có chữ ký BGH) dưới định dạng PDF">📥 Tải Lịch Tuần (PDF Gốc) ↗</a>
+          <div class="dropdown-wrapper" style="position:relative; display:inline-block;">
+            <button class="file-download-badge" style="padding:8px 14px; font-size:13px; background:#f0fdf4; color:#15803d; border-color:#bbf7d0; cursor:pointer;" onclick="toggleTkbDropdown(event)">
+              📅 Tải TKB ▾
+            </button>
+            <div id="tkbDropdownMenu" class="dropdown-menu" style="display:none; position:absolute; right:0; top:110%; background:white; min-width:300px; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.15); border:1px solid #cbd5e1; z-index:50; overflow:hidden;">
+              <div style="background:#f8fafc; padding:8px 12px; font-size:12px; font-weight:700; color:#475569; border-bottom:1px solid #e2e8f0;">DANH SÁCH THỜI KHÓA BIỂU CÁC TUẦN:</div>
+              <a href="https://drive.google.com/drive/folders/1C1h-ARExhPEGOWTpEIaAXb2ShpSqLXnh" target="_blank" rel="noopener" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9; background:#ecfdf5;">
+                <div>
+                  <strong style="color:#059669;">⭐ TKB Hiện hành (Tuần 11)</strong><br>
+                  <small style="color:#64748b;">Áp dụng từ: 18/11/2026</small>
+                </div>
+                <span style="font-size:11px; background:#10b981; color:white; padding:3px 8px; border-radius:4px; font-weight:600;">Tải về 📥</span>
+              </a>
+              <a href="https://drive.google.com/drive/folders/1C1h-ARExhPEGOWTpEIaAXb2ShpSqLXnh" target="_blank" rel="noopener" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
+                <div>
+                  <strong>📋 TKB Tuần 10</strong><br>
+                  <small style="color:#64748b;">Áp dụng từ: 11/11/2026</small>
+                </div>
+                <span style="font-size:11px; background:#e2e8f0; color:#475569; padding:3px 8px; border-radius:4px;">Tải về 📥</span>
+              </a>
+              <a href="https://drive.google.com/drive/folders/1C1h-ARExhPEGOWTpEIaAXb2ShpSqLXnh" target="_blank" rel="noopener" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
+                <div>
+                  <strong>📋 TKB Tuần 08</strong><br>
+                  <small style="color:#64748b;">Áp dụng từ: 28/10/2026</small>
+                </div>
+                <span style="font-size:11px; background:#e2e8f0; color:#475569; padding:3px 8px; border-radius:4px;">Tải về 📥</span>
+              </a>
+              <div style="text-align:center; padding:8px 12px; background:#f8fafc; font-size:11.5px; color:#64748b; font-style:italic; border-top:1px solid #f1f5f9;">
+                Liên hệ Văn thư / BGH nếu cần tra cứu TKB các tuần cũ hơn
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <table class="styled-table">
@@ -952,6 +1009,69 @@ function showTab(evt, tabId) {
   document.getElementById(tabId).classList.add('active');
   evt.currentTarget.classList.add('active');
 }
+
+// TKB DROPDOWN TOGGLE
+function toggleTkbDropdown(e) {
+  e.stopPropagation();
+  const m = document.getElementById('tkbDropdownMenu');
+  m.style.display = m.style.display === 'block' ? 'none' : 'block';
+}
+document.addEventListener('click', function(e) {
+  const m = document.getElementById('tkbDropdownMenu');
+  if (m && !e.target.closest('.dropdown-wrapper')) {
+    m.style.display = 'none';
+  }
+});
+
+// PUBLISH NEW NOTICE WITH ATTACHMENT
+function publishNewNotice() {
+  const title = document.getElementById('postTitle').value.trim();
+  const cat = document.getElementById('postCategory').value;
+  const fileName = document.getElementById('postFileName').value.trim();
+  const fileUrl = document.getElementById('postFileUrl').value.trim();
+  const content = document.getElementById('postContent').value.trim();
+
+  if (!title) {
+    alert('Vui lòng nhập Tiêu đề thông báo!');
+    return;
+  }
+
+  let badgeColor = '#dbeafe', badgeText = '#1e40af';
+  if (cat === 'Đoàn Thể') { badgeColor = '#fee2e2'; badgeText = '#b91c1c'; }
+  else if (cat === 'Chuyên Môn') { badgeColor = '#dcfce7'; badgeText = '#15803d'; }
+
+  let attachmentHtml = '';
+  if (fileUrl) {
+    const label = fileName || 'Xem tệp đính kèm (PDF)';
+    attachmentHtml = `<div style="margin-top:10px;"><a href="${fileUrl}" target="_blank" rel="noopener" class="attachment-btn">📎 Tải Tệp Đính Kèm: <strong>${label}</strong> ↗</a></div>`;
+  }
+
+  const newPostHtml = `
+  <div style="padding: 12px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 16px; animation: modalFadeIn 0.3s ease;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+      <h4 style="color:var(--primary-navy); font-size:16px; font-weight:700;">📢 ${title}</h4>
+      <span style="font-size:12px; background:${badgeColor}; color:${badgeText}; padding:2px 8px; border-radius:4px; font-weight:600;">${cat}</span>
+    </div>
+    <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">${content || 'Không có mô tả chi tiết.'}</p>
+    ${attachmentHtml}
+  </div>`;
+
+  const container = document.getElementById('tab-thongbao-content');
+  container.insertAdjacentHTML('afterbegin', newPostHtml);
+
+  // Switch to Tab Thong Bao to let admin see
+  showTab({ currentTarget: document.querySelectorAll('.tab-btn')[1] }, 'tab-thongbao-content');
+  closeAdminModalDirect();
+
+  // Reset form
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postFileName').value = '';
+  document.getElementById('postFileUrl').value = '';
+  document.getElementById('postContent').value = '';
+
+  alert('Đã đăng thông báo mới thành công! Người xem sẽ thấy bài viết cùng nút tải tệp đính kèm ngay lập tức.');
+}
+
 </script>
 
 
@@ -985,6 +1105,34 @@ function showTab(evt, tabId) {
         ✅ Đã xác thực quyền Quản trị viên: <strong>thcsbtcanhthuan</strong>
       </div>
       
+      <!-- CÔNG CỤ SOẠN TIN ĐÍNH KÈM FILE -->
+      <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:18px; margin-bottom:20px;">
+        <h4 style="color:var(--primary-navy); font-size:15px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+          <span>📝</span> <strong>Đăng Thông Báo Mới & Đính Kèm Tệp</strong>
+        </h4>
+        <div style="margin-bottom:10px;">
+          <input type="text" id="postTitle" placeholder="Tiêu đề thông báo / văn bản..." style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13.5px; box-sizing:border-box;">
+        </div>
+        <div style="display:flex; gap:10px; margin-bottom:10px;">
+          <select id="postCategory" style="flex:1; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;">
+            <option value="Thông Báo">Nhãn: 📢 Thông Báo Chung</option>
+            <option value="Đoàn Thể">Nhãn: 🤝 Đoàn Thể - Xã Hội</option>
+            <option value="Chuyên Môn">Nhãn: 📚 Chuyên Môn - STEM</option>
+            <option value="Công Khai">Nhãn: 📜 Công Khai TT 09</option>
+          </select>
+          <input type="text" id="postFileName" placeholder="Tên tệp đính kèm (VD: Ke_hoach_so_45.pdf)..." style="flex:1.5; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:10px;">
+          <input type="text" id="postFileUrl" placeholder="Dán link tệp tải về từ Google Drive (hoặc link văn bản)..." style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:12px;">
+          <textarea id="postContent" placeholder="Nội dung tóm tắt thông báo..." rows="2" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;"></textarea>
+        </div>
+        <button onclick="publishNewNotice()" style="background:#16a34a; color:white; border:none; padding:10px 18px; border-radius:6px; font-size:13.5px; font-weight:700; cursor:pointer; width:100%;">
+          🚀 ĐĂNG THÔNG BÁO LÊN WEBSITE
+        </button>
+      </div>
+
       <p style="font-size:13.5px; color:#475569; margin-bottom:12px; font-weight:700;">HỆ THỐNG 5 THƯ MỤC GOOGLE DRIVE (TẢI LÊN & QUẢN LÝ TỆP):</p>
       
       <a href="https://drive.google.com/drive/folders/1Xnfeh7-pGIFBLD8qlquaURpfjpmDhdIt" target="_blank" rel="noopener" class="admin-hub-link">
@@ -1040,6 +1188,69 @@ function verifyAdminPin() {
     document.getElementById('adminPinError').style.display = 'block';
   }
 }
+
+// TKB DROPDOWN TOGGLE
+function toggleTkbDropdown(e) {
+  e.stopPropagation();
+  const m = document.getElementById('tkbDropdownMenu');
+  m.style.display = m.style.display === 'block' ? 'none' : 'block';
+}
+document.addEventListener('click', function(e) {
+  const m = document.getElementById('tkbDropdownMenu');
+  if (m && !e.target.closest('.dropdown-wrapper')) {
+    m.style.display = 'none';
+  }
+});
+
+// PUBLISH NEW NOTICE WITH ATTACHMENT
+function publishNewNotice() {
+  const title = document.getElementById('postTitle').value.trim();
+  const cat = document.getElementById('postCategory').value;
+  const fileName = document.getElementById('postFileName').value.trim();
+  const fileUrl = document.getElementById('postFileUrl').value.trim();
+  const content = document.getElementById('postContent').value.trim();
+
+  if (!title) {
+    alert('Vui lòng nhập Tiêu đề thông báo!');
+    return;
+  }
+
+  let badgeColor = '#dbeafe', badgeText = '#1e40af';
+  if (cat === 'Đoàn Thể') { badgeColor = '#fee2e2'; badgeText = '#b91c1c'; }
+  else if (cat === 'Chuyên Môn') { badgeColor = '#dcfce7'; badgeText = '#15803d'; }
+
+  let attachmentHtml = '';
+  if (fileUrl) {
+    const label = fileName || 'Xem tệp đính kèm (PDF)';
+    attachmentHtml = `<div style="margin-top:10px;"><a href="${fileUrl}" target="_blank" rel="noopener" class="attachment-btn">📎 Tải Tệp Đính Kèm: <strong>${label}</strong> ↗</a></div>`;
+  }
+
+  const newPostHtml = `
+  <div style="padding: 12px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 16px; animation: modalFadeIn 0.3s ease;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+      <h4 style="color:var(--primary-navy); font-size:16px; font-weight:700;">📢 ${title}</h4>
+      <span style="font-size:12px; background:${badgeColor}; color:${badgeText}; padding:2px 8px; border-radius:4px; font-weight:600;">${cat}</span>
+    </div>
+    <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">${content || 'Không có mô tả chi tiết.'}</p>
+    ${attachmentHtml}
+  </div>`;
+
+  const container = document.getElementById('tab-thongbao-content');
+  container.insertAdjacentHTML('afterbegin', newPostHtml);
+
+  // Switch to Tab Thong Bao to let admin see
+  showTab({ currentTarget: document.querySelectorAll('.tab-btn')[1] }, 'tab-thongbao-content');
+  closeAdminModalDirect();
+
+  // Reset form
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postFileName').value = '';
+  document.getElementById('postFileUrl').value = '';
+  document.getElementById('postContent').value = '';
+
+  alert('Đã đăng thông báo mới thành công! Người xem sẽ thấy bài viết cùng nút tải tệp đính kèm ngay lập tức.');
+}
+
 </script>
 
 </body>
