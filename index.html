@@ -945,20 +945,26 @@ body {
 
 
 
-/* H2: HỘP 10 THÔNG BÁO QUAN TRỌNG TỰ CHẠY LƯỚT LÊN (VERTICAL AUTO-SCROLL TICKER) */
+/* H2: HỘP 10 THÔNG BÁO QUAN TRỌNG TỰ CHẠY LƯỚT LÊN & CHO PHÉP CUỘN CHUỘT */
 .vertical-news-ticker-container {
   height: 240px;
-  overflow: hidden;
+  overflow-y: auto;
   position: relative;
   background: rgba(15, 23, 42, 0.4);
   border-radius: 6px;
   padding: 6px 8px;
 }
+.vertical-news-ticker-container::-webkit-scrollbar {
+  width: 4px;
+}
+.vertical-news-ticker-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+}
 .vertical-news-ticker-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .vertical-ticker-item {
   background: rgba(255, 255, 255, 0.06);
@@ -1641,7 +1647,10 @@ html, body {
       <li><a href="#lich-tuan" onclick="openTabNav('tab-lich-content', event)">Lịch Công Tác Tuần</a></li>
       <li><a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)">Thông Báo & Tin Tức</a></li>
     </ul>
-    <button type="button" class="nav-tkb-btn" onclick="openCurrentTkbViewer()">📅 Xem TKB Hiện Hành</button>
+    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+      <a href="https://www.facebook.com/profile.php?id=1454446594415231" target="_blank" rel="noopener" class="nav-tkb-btn" style="background:linear-gradient(135deg, #1877f2, #1d4ed8); border-color:#60a5fa; text-decoration:none; box-shadow:0 3px 10px rgba(24,119,242,0.35);">📘 Fanpage Trường</a>
+      <button type="button" class="nav-tkb-btn" onclick="openCurrentTkbViewer()">📅 Xem TKB Hiện Hành</button>
+    </div>
   </div>
 </nav>
 
@@ -1960,6 +1969,7 @@ html, body {
       <p>📍 <strong>Địa chỉ:</strong> Làng Hòn Mẻ, Xã Vân Canh, Tỉnh Gia Lai</p>
       <p>✉ <strong>Email chính thức:</strong> <a href="mailto:thcsbtcanhthuan@gmail.com">thcsbtcanhthuan@gmail.com</a></p>
       <p>☎ <strong>Điện thoại liên hệ:</strong> <a href="tel:0979681177">0979 681 177</a></p>
+      <p>📘 <strong>Fanpage Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=1454446594415231" target="_blank" rel="noopener">Trường THCS Bán trú Canh Thuận ↗</a></p>
       <p>🎯 <em>“Kỷ cương – Tình thương – Trách nhiệm – Sáng tạo”</em></p>
     </div>
 
@@ -3864,17 +3874,21 @@ function renderVerticalAutoScrollTicker() {
     </div>`;
   });
 
-  // Duplicate list once for seamless continuous upward loop
+  // Duplicate list once for seamless continuous upward loop + mouse wheel scrolling
   container.innerHTML = html + html;
+  const wrap = document.getElementById('verticalTickerContainer');
+  if (wrap) wrap.scrollTop = 0;
   verticalTickerOffset = 0;
   startVerticalTickerAnimation();
 }
 
 function startVerticalTickerAnimation() {
   if (verticalTickerTimer) clearInterval(verticalTickerTimer);
+  const wrap = document.getElementById('verticalTickerContainer');
   const list = document.getElementById('verticalTickerList');
-  if (!list) return;
+  if (!wrap || !list) return;
 
+  verticalTickerOffset = wrap.scrollTop;
   verticalTickerTimer = setInterval(() => {
     const singleSetHeight = list.scrollHeight / 2;
     if (singleSetHeight <= 0) return;
@@ -3882,7 +3896,7 @@ function startVerticalTickerAnimation() {
     if (verticalTickerOffset >= singleSetHeight) {
       verticalTickerOffset = 0;
     }
-    list.style.transform = `translateY(-${verticalTickerOffset}px)`;
+    wrap.scrollTop = verticalTickerOffset;
   }, 40);
 }
 
@@ -3890,6 +3904,8 @@ function pauseVerticalTicker() {
   if (verticalTickerTimer) clearInterval(verticalTickerTimer);
 }
 function resumeVerticalTicker() {
+  const wrap = document.getElementById('verticalTickerContainer');
+  if (wrap) verticalTickerOffset = wrap.scrollTop;
   startVerticalTickerAnimation();
 }
 
