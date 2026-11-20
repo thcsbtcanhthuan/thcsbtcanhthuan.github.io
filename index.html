@@ -1648,7 +1648,7 @@ html, body {
       <li><a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)">Thông Báo & Tin Tức</a></li>
     </ul>
     <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-      <a href="https://www.facebook.com/profile.php?id=1454446594415231" target="_blank" rel="noopener" class="nav-tkb-btn" style="background:linear-gradient(135deg, #1877f2, #1d4ed8); border-color:#60a5fa; text-decoration:none; box-shadow:0 3px 10px rgba(24,119,242,0.35);">📘 Fanpage Trường</a>
+      <a href="https://www.facebook.com/thcsbtcanhthuan/" target="_blank" rel="noopener" class="nav-tkb-btn" style="background:linear-gradient(135deg, #1877f2, #1d4ed8); border-color:#60a5fa; text-decoration:none; box-shadow:0 3px 10px rgba(24,119,242,0.35);">📘 Fanpage Trường</a>
       <button type="button" class="nav-tkb-btn" onclick="openCurrentTkbViewer()">📅 Xem TKB Hiện Hành</button>
     </div>
   </div>
@@ -1969,7 +1969,7 @@ html, body {
       <p>📍 <strong>Địa chỉ:</strong> Làng Hòn Mẻ, Xã Vân Canh, Tỉnh Gia Lai</p>
       <p>✉ <strong>Email chính thức:</strong> <a href="mailto:thcsbtcanhthuan@gmail.com">thcsbtcanhthuan@gmail.com</a></p>
       <p>☎ <strong>Điện thoại liên hệ:</strong> <a href="tel:0979681177">0979 681 177</a></p>
-      <p>📘 <strong>Fanpage Facebook:</strong> <a href="https://www.facebook.com/profile.php?id=1454446594415231" target="_blank" rel="noopener">Trường THCS Bán trú Canh Thuận ↗</a></p>
+      <p>📘 <strong>Fanpage Facebook:</strong> <a href="https://www.facebook.com/thcsbtcanhthuan/" target="_blank" rel="noopener">facebook.com/thcsbtcanhthuan ↗</a></p>
       <p>🎯 <em>“Kỷ cương – Tình thương – Trách nhiệm – Sáng tạo”</em></p>
     </div>
 
@@ -2745,7 +2745,7 @@ async function sendPostToFacebookWebhook(postObj) {
 
   const files = getPostFiles(postObj);
   const firstImg = files.find(f => isImageFile(f.name, f.url));
-  let publicImageUrl = '';
+  let publicImageUrl = 'https://raw.githubusercontent.com/thcsbtcanhthuan/thcsbtcanhthuan.github.io/main/BANNER_THCS_CANH_THUAN.jpg';
   if (firstImg && firstImg.url && !firstImg.url.startsWith('data:')) {
     publicImageUrl = getGithubRawFallback(firstImg.url);
   }
@@ -3424,10 +3424,10 @@ async function publishNewNotice() {
     await syncDatabaseToGitHub(`Đăng/Cập nhật bài viết: ${title}`);
   }
 
-  // Đăng đồng thời sang Fanpage Facebook qua Make.com Webhook nếu được tích chọn
+  // Đăng đồng thời sang Fanpage Facebook qua Make.com Webhook nếu được tích chọn (cả khi Đăng mới lẫn khi Sửa bài!)
   let fbPosted = false;
   const wantFb = document.getElementById('postToFacebook') ? document.getElementById('postToFacebook').checked : false;
-  if (wantFb && !isEditing && getFbWebhookUrl()) {
+  if (wantFb && getFbWebhookUrl()) {
     btn.textContent = '📘 Đang gửi bài sang Fanpage Facebook Trường...';
     const fbRes = await sendPostToFacebookWebhook(newPost);
     fbPosted = fbRes.ok;
@@ -3464,13 +3464,13 @@ async function publishNewNotice() {
 
   closeAdminModalDirect();
 
+  const fbNote = fbPosted ? '\n📘 Đã tự động đăng lên Fanpage Facebook Trường!' : (wantFb && !getFbWebhookUrl() ? '\n⚠️ Chưa đẩy lên Facebook vì trên trình duyệt này chưa lưu Webhook URL ở mục 📘!' : '');
   if (isEditing) {
-    alert('Đã lưu chỉnh sửa bài viết thành công!');
+    alert(`Đã lưu chỉnh sửa bài viết thành công!${fbNote}`);
   } else if (token) {
-    const fbNote = fbPosted ? '\n📘 Đã tự động đăng đồng thời lên Fanpage Facebook Trường!' : '';
     alert(`Đăng bài và đồng bộ ${uploadedFiles.length} tệp lên GitHub thành công! Web toàn trường sẽ cập nhật trong khoảng 1 phút.${fbNote}`);
   } else {
-    alert('Đã đăng bài thành công lên Website! (Gợi ý: Thầy có thể dán GitHub Token ở phần Cấu hình để hệ thống tự động đẩy lên GitHub cho cả trường xem).');
+    alert(`Đã đăng bài thành công lên Website!${fbNote}`);
   }
 }
 
@@ -3595,6 +3595,9 @@ function renderAdminNoticeList() {
         <div style="color:#64748b; font-size:11px;">${item.date} &bull; ${item.categoryName} ${filesCount > 0 ? '• 📎 ' + filesCount + ' tệp' : ''}</div>
       </div>
       <div style="display:flex; gap:4px; flex-shrink:0; flex-wrap:wrap;">
+        <button type="button" onclick="shareExistingPostToFb('${item.id}')" style="background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:700;" title="Đẩy ngay bài viết này sang Fanpage Facebook Trường">
+          📘 Đăng FB
+        </button>
         <button type="button" onclick="editCustomPost('${item.id}')" style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:700;" title="Sửa tiêu đề, nội dung, tệp đính kèm">
           ✏️ Sửa
         </button>
@@ -3608,6 +3611,21 @@ function renderAdminNoticeList() {
     </div>`;
   });
   container.innerHTML = html;
+}
+
+async function shareExistingPostToFb(id) {
+  if (!getFbWebhookUrl()) {
+    alert('Thầy hãy dán đường dẫn Webhook URL (từ Make.com) vào mục "📘 KẾT NỐI FANPAGE FACEBOOK TRƯỜNG" ở phía trên rồi bấm Lưu Webhook trước nhé!');
+    return;
+  }
+  const post = getAllPosts().find(p => String(p.id) === String(id));
+  if (!post) return;
+  const r = await sendPostToFacebookWebhook(post);
+  if (r.ok) {
+    alert(`✔ Đã đẩy bài "${post.title}" sang Fanpage Facebook Trường thành công! Thầy qua trang Facebook nhấn F5 để xem ngay nhé.`);
+  } else {
+    alert('❌ Gửi sang Make.com thất bại. Thầy kiểm tra lại đường dẫn Webhook URL và công tắc ON trên Make.com nhé!');
+  }
 }
 
 function editCustomPost(id) {
