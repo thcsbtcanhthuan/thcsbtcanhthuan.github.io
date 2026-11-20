@@ -92,7 +92,7 @@ body {
   position: relative;
   overflow: hidden;
   color: white;
-  padding: 40px 0 30px 0;
+  padding: 22px 0 18px 0;
 }
 .hero-container {
   max-width: 1400px;
@@ -122,7 +122,7 @@ body {
   flex: 1;
 }
 .school-name {
-  font-size: 38px;
+  font-size: 32px;
   font-weight: 800;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -132,7 +132,7 @@ body {
   margin-bottom: 8px;
 }
 .school-slogan {
-  font-size: 21px;
+  font-size: 17.5px;
   font-style: italic;
   font-weight: 500;
   color: #fef08a;
@@ -402,7 +402,7 @@ body {
 /* SECTION TITLE */
 .section-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 14px;
 }
 .section-subtitle {
   color: #dc2626;
@@ -437,8 +437,8 @@ body {
 .modules-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
-  margin-bottom: 45px;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 .module-card {
   background: var(--bg-card);
@@ -542,7 +542,7 @@ body {
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-light);
   overflow: hidden;
-  margin-bottom: 45px;
+  margin-bottom: 24px;
 }
 .tab-nav {
   display: flex;
@@ -567,8 +567,7 @@ body {
   border-bottom: 3px solid var(--accent-red);
 }
 .tab-panel {
-  display: none;
-  padding: 28px;
+  padding: 18px;
 }
 .tab-panel.active {
   display: block;
@@ -607,12 +606,12 @@ body {
   background: linear-gradient(135deg, #1e3a8a, #0f3460);
   border-radius: var(--radius-lg);
   color: white;
-  padding: 35px 24px;
+  padding: 18px 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 16px;
   text-align: center;
-  margin-bottom: 45px;
+  margin-bottom: 24px;
 }
 .stat-number {
   font-size: 34px;
@@ -694,9 +693,9 @@ body {
 .central-showcase-section {
   background: linear-gradient(135deg, #0b1e36, #162a45);
   border-radius: var(--radius-lg);
-  padding: 32px 36px;
+  padding: 22px 24px;
   color: white;
-  margin-bottom: 40px;
+  margin-bottom: 22px;
   box-shadow: 0 15px 35px rgba(11, 30, 54, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
@@ -943,6 +942,73 @@ body {
   margin-top: 3px;
 }
 
+
+
+/* H2: HỘP 10 THÔNG BÁO QUAN TRỌNG TỰ CHẠY LƯỚT LÊN (VERTICAL AUTO-SCROLL TICKER) */
+.vertical-news-ticker-container {
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+.vertical-news-ticker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.vertical-ticker-item {
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 3px solid #ea580c;
+  border-radius: 5px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.vertical-ticker-item:hover {
+  background: rgba(234, 88, 12, 0.2);
+  transform: translateX(4px);
+}
+.vertical-ticker-item.is-important {
+  border-left-color: #facc15;
+  background: rgba(250, 204, 21, 0.1);
+}
+.ticker-item-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3px;
+  font-size: 11px;
+}
+.ticker-item-tag {
+  background: #ea580c;
+  color: white;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 10px;
+}
+.ticker-item-tag.imp {
+  background: #ca8a04;
+  color: #fef08a;
+}
+.ticker-item-date {
+  color: #94a3b8;
+}
+.ticker-item-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #f8fafc;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 </style>
 </head>
 <body>
@@ -958,7 +1024,7 @@ body {
     <div class="top-bar-right">
       <span>✉ <a href="mailto:thcsbtcanhthuan@gmail.com">thcsbtcanhthuan@gmail.com</a></span>
       <span>•</span>
-      <span style="color:#fde047; font-weight:600;">Năm học 2024 - 2025</span>
+      <span id="liveRealtimeClock" style="color:#fde047; font-weight:700; display:inline-flex; align-items:center; gap:5px;"><span id="clockText">🕒 Đang tải thời gian...</span></span>
     </div>
   </div>
 </div>
@@ -1001,13 +1067,69 @@ body {
 <!-- 4. MAIN CONTENT WRAPPER -->
 <main class="main-wrapper">
 
-  <!-- MARQUEE NOTICE -->
-  <div class="notice-ticker">
-    <span class="badge-urgent">Thông Báo</span>
-    <span class="ticker-text">Chào mừng Quý Phụ huynh, Thầy cô giáo và các em Học sinh đến với Cổng thông tin chính thức của Trường THCS Bán trú Canh Thuận!</span>
+  <!-- MARQUEE NOTICE (DÒNG THÔNG BÁO QUAN TRỌNG TỰ ĐỘNG CHẠY DO ADMIN CHỈ ĐỊNH) -->
+  <div class="notice-ticker" style="padding: 9px 16px; margin-bottom: 20px;">
+    <span class="badge-urgent" style="display:flex; align-items:center; gap:5px; white-space:nowrap;">
+      <span>📌</span> TIN QUAN TRỌNG
+    </span>
+    <div style="flex:1; overflow:hidden; white-space:nowrap; margin-left:14px; position:relative;">
+      <span class="ticker-text" id="liveImportantMarquee" style="display:inline-block; animation: marqueeScroll 25s linear infinite; font-weight:600;">
+        Đang tải thông báo trọng tâm từ Ban Giám hiệu...
+      </span>
+    </div>
   </div>
 
   <!-- SECTION HEADER -->
+  
+  <!-- ================= VÙNG TRUNG TÂM: HOẠT ĐỘNG - ĐẢNG - ĐOÀN THỂ (10 TIN MỚI NHẤT) ================= -->
+  <section class="central-showcase-section" id="hoat-dong-dang-doan-the">
+    <div class="showcase-header">
+      <div class="showcase-title-wrap">
+        <span class="showcase-tag">🏛️ HOẠT ĐỘNG - ĐẢNG - ĐOÀN THỂ</span>
+        <h2 class="showcase-title">HOẠT ĐỘNG - ĐẢNG - ĐOÀN THỂ</h2>
+        <p class="showcase-sub">Dòng sự kiện, sinh hoạt chính trị Chi bộ, công tác Đoàn - Đội & nhịp sống văn hóa nhà trường</p>
+      </div>
+      <div class="showcase-controls">
+        <button class="carousel-btn prev-btn" onclick="prevShowcaseSlide()" title="Tin trước">❮</button>
+        <button class="carousel-btn next-btn" onclick="nextShowcaseSlide()" title="Tin tiếp theo">❯</button>
+      </div>
+    </div>
+
+    <div class="showcase-container">
+      <!-- LEFT: CAROUSEL SLIDER -->
+      <div class="showcase-slider-wrapper" id="showcaseSliderWrapper" onmouseenter="pauseShowcase()" onmouseleave="resumeShowcase()">
+        <div id="showcaseSlideContent" class="slide-content-wrap">
+          <!-- Rendered dynamically -->
+        </div>
+        <div class="slider-dots" id="sliderDotsContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- RIGHT: HỘP 10 THÔNG BÁO QUAN TRỌNG / MỚI NHẤT (TỰ ĐỘNG CHẠY LƯỚT CUỘN LÊN) -->
+      <div class="showcase-sidebar" style="position:relative;">
+        <div class="sidebar-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="display:flex; align-items:center; gap:6px;">
+            <span>⚡</span> 10 THÔNG BÁO QUAN TRỌNG / MỚI NHẤT
+          </span>
+          <small id="slideCounterText" style="background:#ea580c; color:white; padding:1px 6px; border-radius:4px; font-weight:700;">Tự cuộn lên ⬆</small>
+        </div>
+        
+        <!-- VERTICAL AUTO-SCROLL TICKER CONTAINER -->
+        <div class="vertical-news-ticker-container" id="verticalTickerContainer" onmouseenter="pauseVerticalTicker()" onmouseleave="resumeVerticalTicker()">
+          <div class="vertical-news-ticker-list" id="verticalTickerList">
+            <!-- Rendered dynamically with 10 notices auto-scrolling upwards -->
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:11px; color:#94a3b8;">
+          <span>💡 Rê chuột để dừng đọc</span>
+          <a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)" style="color:#fde047; text-decoration:none; font-weight:600;">Xem tất cả ➔</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="section-header" id="phan-he">
     <span class="section-subtitle">Hệ Thống Dữ Liệu Giáo Dục Số</span>
     <h2 class="section-title">BỐN PHÂN HỆ TRỌNG TÂM</h2>
@@ -1271,7 +1393,7 @@ body {
   </div>
 
   <div class="footer-bottom">
-    <div>© 2024 - 2025 Bản quyền thuộc về <strong>Trường THCS Bán trú Canh Thuận</strong>.</div>
+    <div>© 2026 Bản quyền thuộc về <strong>Trường THCS Bán trú Canh Thuận</strong>.</div>
     <div>Cổng thông tin điện tử chuẩn Quốc gia. &bull; <a href="javascript:void(0)" onclick="openAdminModal()" style="color:#64748b; text-decoration:none;">🔒 Đăng Nhập Quản Trị</a></div>
   </div>
 </footer>
@@ -1360,6 +1482,12 @@ body {
           </div>
         </div>
 
+        <div style="margin-bottom:10px; background:#fef3c7; border:1px solid #fde047; padding:8px 12px; border-radius:6px; display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="postIsImportant" style="width:17px; height:17px; cursor:pointer;" checked>
+          <label for="postIsImportant" style="font-size:13px; font-weight:700; color:#854d0e; cursor:pointer;">
+            ⭐ Đánh dấu là THÔNG BÁO QUAN TRỌNG (Ghim hiển thị trên thanh cuộn đầu trang & Hộp cuộn lướt lên)
+          </label>
+        </div>
         <div style="margin-bottom:10px;">
           <textarea id="postContent" placeholder="Nội dung tóm tắt chi tiết bài viết..." rows="3" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;"></textarea>
         </div>
@@ -1678,16 +1806,25 @@ function renderCentralShowcase() {
 function nextShowcaseSlide() {
   const posts = getCat05Top10();
   currentShowcaseIndex = (currentShowcaseIndex + 1) % posts.length;
+  initLiveRealtimeClock();
   renderCentralShowcase();
+  renderVerticalAutoScrollTicker();
+  updateHeaderImportantMarquee();
 }
 function prevShowcaseSlide() {
   const posts = getCat05Top10();
   currentShowcaseIndex = (currentShowcaseIndex - 1 + posts.length) % posts.length;
+  initLiveRealtimeClock();
   renderCentralShowcase();
+  renderVerticalAutoScrollTicker();
+  updateHeaderImportantMarquee();
 }
 function goToSlide(idx) {
   currentShowcaseIndex = idx;
+  initLiveRealtimeClock();
   renderCentralShowcase();
+  renderVerticalAutoScrollTicker();
+  updateHeaderImportantMarquee();
   resetShowcaseTimer();
 }
 
@@ -1937,7 +2074,10 @@ async function publishNewNotice() {
   // Update Carousel if Category 05
   if (cat === '05') {
     currentShowcaseIndex = 0;
-    renderCentralShowcase();
+    initLiveRealtimeClock();
+  renderCentralShowcase();
+  renderVerticalAutoScrollTicker();
+  updateHeaderImportantMarquee();
     resetShowcaseTimer();
   }
 
@@ -2023,7 +2163,10 @@ function deleteCustomPost(id) {
   let custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
   custom = custom.filter(p => p.id !== id);
   localStorage.setItem('canhthuan_posts_v2', JSON.stringify(custom));
+  initLiveRealtimeClock();
   renderCentralShowcase();
+  renderVerticalAutoScrollTicker();
+  updateHeaderImportantMarquee();
   renderAdminNoticeList();
   renderFrontNotices();
 }
@@ -2070,8 +2213,101 @@ function renderFrontNotices() {
 }
 
 // INITIALIZE ON LOAD
+
+// ================= H1: LIVE REALTIME CLOCK =================
+function initLiveRealtimeClock() {
+  function tick() {
+    const now = new Date();
+    const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+    const dayName = days[now.getDay()];
+    const dateStr = String(now.getDate()).padStart(2, '0') + '/' + String(now.getMonth() + 1).padStart(2, '0') + '/' + now.getFullYear();
+    const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+    
+    const el = document.getElementById('clockText');
+    if (el) {
+      el.textContent = `${dayName}, ${dateStr} • ${timeStr}`;
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+// ================= H2: VERTICAL UPWARD AUTO-SCROLL TICKER =================
+let verticalTickerTimer = null;
+let verticalTickerOffset = 0;
+
+function renderVerticalAutoScrollTicker() {
+  const container = document.getElementById('verticalTickerList');
+  if (!container) return;
+
+  const all = getAllPosts();
+  // Get top 10 notices (prioritize isImportant or newest)
+  const top10 = all.slice(0, 10);
+
+  let html = '';
+  top10.forEach((item, index) => {
+    const isImp = item.isImportant !== false;
+    const tagLabel = isImp ? '⭐ QUAN TRỌNG' : (item.categoryName || 'THÔNG BÁO');
+    const tagClass = isImp ? 'imp' : '';
+
+    html += `
+    <div class="vertical-ticker-item ${isImp ? 'is-important' : ''}" onclick="goToSlide(${index})">
+      <div class="ticker-item-badge-row">
+        <span class="ticker-item-tag ${tagClass}">${tagLabel}</span>
+        <span class="ticker-item-date">${item.date}</span>
+      </div>
+      <div class="ticker-item-title">${index + 1}. ${item.title}</div>
+    </div>`;
+  });
+
+  // Duplicate list once to allow infinite upward scroll
+  container.innerHTML = html + html;
+  startVerticalTickerAnimation();
+}
+
+function startVerticalTickerAnimation() {
+  if (verticalTickerTimer) clearInterval(verticalTickerTimer);
+  const list = document.getElementById('verticalTickerList');
+  if (!list) return;
+
+  verticalTickerTimer = setInterval(() => {
+    verticalTickerOffset += 1;
+    // When reached half height (one set of 10 items), reset smoothly
+    const singleSetHeight = list.scrollHeight / 2;
+    if (verticalTickerOffset >= singleSetHeight) {
+      verticalTickerOffset = 0;
+    }
+    list.style.transform = `translateY(-${verticalTickerOffset}px)`;
+  }, 45); // Smooth upward scrolling speed
+}
+
+function pauseVerticalTicker() {
+  if (verticalTickerTimer) clearInterval(verticalTickerTimer);
+}
+function resumeVerticalTicker() {
+  startVerticalTickerAnimation();
+}
+
+// ================= H2: UPDATE TOP MARQUEE WITH IMPORTANT NOTICES =================
+function updateHeaderImportantMarquee() {
+  const el = document.getElementById('liveImportantMarquee');
+  if (!el) return;
+
+  const all = getAllPosts();
+  const importantPosts = all.filter(p => p.isImportant !== false).slice(0, 5);
+
+  if (importantPosts.length > 0) {
+    const marqueeTexts = importantPosts.map(p => `📢 [${p.date}] ${p.title} ➔ ${p.content.substring(0, 75)}...`).join(' &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp; ');
+    el.innerHTML = marqueeTexts;
+  }
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
+  initLiveRealtimeClock();
   renderCentralShowcase();
+  renderVerticalAutoScrollTicker();
+  updateHeaderImportantMarquee();
   startShowcaseAutoRotate();
   renderFrontNotices();
   updateTokenBadge();
