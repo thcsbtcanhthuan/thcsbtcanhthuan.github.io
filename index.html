@@ -3819,13 +3819,27 @@ async function openTkbFileInViewer(rawUrl, fileName, titleLabel) {
     }
 
     currentTkbWorkbook = XLSX.read(arrayBuffer, { type: 'array' });
-    const sheetNames = currentTkbWorkbook.SheetNames || [];
+    const allNames = currentTkbWorkbook.SheetNames || [];
+    const wbSheetsMeta = (currentTkbWorkbook.Workbook && currentTkbWorkbook.Workbook.Sheets) || [];
+
+    // Tự động lọc bỏ các Sheet ẩn (như XXXXXXXXX của phần mềm xếp TKB) và các Sheet trống không có dữ liệu
+    const validSheetNames = allNames.filter((name, i) => {
+      const meta = wbSheetsMeta[i];
+      if (meta && meta.Hidden && meta.Hidden > 0) return false;
+      const sh = currentTkbWorkbook.Sheets[name];
+      if (!sh || !sh['!ref']) return false;
+      const rows = XLSX.utils.sheet_to_json(sh, { header: 1, blankrows: false });
+      return rows.some(r => Array.isArray(r) && r.some(c => c !== null && c !== undefined && String(c).trim() !== ''));
+    });
+
+    const sheetNames = validSheetNames.length > 0 ? validSheetNames : allNames;
     if (sheetNames.length === 0) throw new Error('Tệp Excel không có dữ liệu.');
 
-    // Tạo thanh chọn các Sheet (nếu file TKB có nhiều trang: Toàn trường, Lớp, GV...)
+    // Tạo thanh chọn các Sheet hợp lệ (ẩn các sheet rác/ẩn)
     let tabsHtml = '';
     sheetNames.forEach((name, idx) => {
-      tabsHtml += `<button type="button" class="tkb-sheet-tab ${idx === 0 ? 'active' : ''}" data-sheet="${name}" onclick="switchTkbSheet('${name.replace(/'/g, "\\'")}')">📄 ${name}</button>`;
+      const displayLabel = (sheetNames.length === 1 && /^sheet\d*$/i.test(name)) ? 'Bảng Thời Khóa Biểu' : name;
+      tabsHtml += `<button type="button" class="tkb-sheet-tab ${idx === 0 ? 'active' : ''}" data-sheet="${name}" onclick="switchTkbSheet('${name.replace(/'/g, "\\'")}')">📄 ${displayLabel}</button>`;
     });
     tabsEl.innerHTML = tabsHtml;
     switchTkbSheet(sheetNames[0]);
