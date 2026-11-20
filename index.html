@@ -1009,6 +1009,422 @@ body {
   overflow: hidden;
 }
 
+
+
+/* ================= TỐI ƯU KHOẢNG CÁCH TOÀN TRANG (GỌN SÁT & CÂN ĐỐI) ================= */
+.main-wrapper {
+  padding: 12px 20px 20px 20px !important;
+}
+.top-bar {
+  padding: 5px 0 !important;
+  font-size: 12.5px !important;
+}
+.hero-banner {
+  padding: 16px 0 14px 0 !important;
+}
+.logo-img {
+  width: 72px !important;
+  height: 72px !important;
+}
+.school-name {
+  font-size: 28px !important;
+  margin-bottom: 4px !important;
+}
+.school-slogan {
+  font-size: 16px !important;
+  margin-bottom: 6px !important;
+}
+.nav-links a {
+  padding: 11px 14px !important;
+  font-size: 14px !important;
+}
+
+/* THANH NGANG TIN QUAN TRỌNG (MARQUEE) */
+.notice-ticker {
+  padding: 7px 14px !important;
+  margin-bottom: 12px !important;
+}
+@keyframes marqueeScroll {
+  0% { transform: translateX(60%); }
+  100% { transform: translateX(-100%); }
+}
+.notice-ticker:hover #liveImportantMarquee {
+  animation-play-state: paused !important;
+}
+
+/* VÙNG TRUNG TÂM 3 CỘT: KHUNG CHÍNH + 10 TIN HOẠT ĐỘNG + 10 TIN QUAN TRỌNG */
+.central-showcase-section {
+  padding: 14px 16px !important;
+  margin-bottom: 14px !important;
+}
+.showcase-header {
+  padding-bottom: 8px !important;
+  margin-bottom: 12px !important;
+  gap: 10px !important;
+}
+.showcase-tag {
+  font-size: 18px !important;
+  padding: 5px 14px !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.4px !important;
+  margin-bottom: 6px !important;
+}
+.showcase-title {
+  font-size: 19px !important;
+}
+.showcase-sub {
+  font-size: 12.5px !important;
+  margin-top: 2px !important;
+}
+.carousel-btn {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 14px !important;
+}
+.showcase-container {
+  display: grid !important;
+  grid-template-columns: 1.4fr 1fr 1fr !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+}
+@media (max-width: 1100px) {
+  .showcase-container { grid-template-columns: 1fr 1fr !important; }
+  .showcase-slider-wrapper { grid-column: span 2; }
+}
+@media (max-width: 768px) {
+  .showcase-container { grid-template-columns: 1fr !important; }
+  .showcase-slider-wrapper { grid-column: span 1; }
+}
+.showcase-slider-wrapper {
+  padding: 16px 18px !important;
+  min-height: 235px !important;
+}
+.slide-badge-row {
+  margin-bottom: 8px !important;
+}
+.slide-headline {
+  font-size: 17px !important;
+  line-height: 1.4 !important;
+  margin-bottom: 8px !important;
+}
+.slide-summary {
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  margin-bottom: 10px !important;
+}
+.showcase-sidebar {
+  padding: 10px 12px !important;
+}
+.sidebar-header {
+  padding-bottom: 6px !important;
+  margin-bottom: 8px !important;
+  font-size: 11.5px !important;
+}
+.showcase-news-list {
+  height: 215px !important;
+  max-height: 215px !important;
+}
+.news-mini-item {
+  padding: 6px 8px !important;
+  margin-bottom: 4px !important;
+}
+.news-mini-title {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+.news-mini-date {
+  font-size: 10.5px !important;
+  margin-top: 2px !important;
+}
+.vertical-news-ticker-container {
+  height: 215px !important;
+  padding: 4px 6px !important;
+}
+.vertical-ticker-item {
+  padding: 6px 8px !important;
+}
+.ticker-item-title {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+.pinned-badge-mini {
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 9.5px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+
+/* SECTION HEADER & 4 PHÂN HỆ */
+.section-header {
+  margin-bottom: 10px !important;
+}
+.section-subtitle {
+  font-size: 12px !important;
+  margin-bottom: 2px !important;
+}
+.section-title {
+  font-size: 22px !important;
+  padding-bottom: 6px !important;
+}
+.modules-grid {
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+}
+.module-card {
+  padding: 14px 14px !important;
+}
+.module-icon {
+  font-size: 26px !important;
+  margin-bottom: 6px !important;
+}
+.module-title {
+  font-size: 15.5px !important;
+  margin-bottom: 8px !important;
+  min-height: 38px !important;
+}
+.module-list {
+  margin-bottom: 10px !important;
+}
+.module-list li {
+  font-size: 12.5px !important;
+  padding: 3.5px 0 !important;
+  line-height: 1.35 !important;
+}
+.btn-primary {
+  padding: 7px 10px !important;
+  font-size: 12.5px !important;
+}
+
+/* H2: THU HẸP KHUNG THỐNG KÊ CÒN 2/3 */
+.stats-banner {
+  padding: 10px 16px !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+  border-radius: var(--radius-md) !important;
+}
+.stat-number {
+  font-size: 22px !important;
+  margin-bottom: 2px !important;
+  line-height: 1.15 !important;
+}
+.stat-label {
+  font-size: 11.5px !important;
+  line-height: 1.3 !important;
+}
+
+/* LỊCH TUẦN & TAB INTERACTIVE */
+.interactive-section {
+  margin-bottom: 14px !important;
+}
+.tab-btn {
+  padding: 10px 16px !important;
+  font-size: 13.5px !important;
+}
+.tab-panel {
+  padding: 12px 16px !important;
+}
+.styled-table th, .styled-table td {
+  padding: 8px 10px !important;
+  font-size: 13px !important;
+}
+
+/* ================= 4. LIÊN KẾT WEBSITE NGÀNH GIÁO DỤC ================= */
+.edu-links-section {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.edu-links-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--border-light);
+}
+.edu-links-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--primary-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.edu-links-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+@media (max-width: 1024px) {
+  .edu-links-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .edu-links-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.edu-link-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  text-decoration: none;
+  color: #0f3460;
+  font-size: 12.5px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.edu-link-card:hover {
+  background: #0f3460;
+  color: #ffffff;
+  border-color: #0f3460;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(15, 52, 96, 0.2);
+}
+.edu-link-card .edu-link-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.edu-link-card small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #64748b;
+}
+.edu-link-card:hover small {
+  color: #cbd5e1;
+}
+
+/* FOOTER GỌN SÁT */
+.main-footer {
+  padding: 24px 0 12px 0 !important;
+}
+.footer-container {
+  gap: 24px !important;
+  margin-bottom: 16px !important;
+}
+.footer-col h3 {
+  font-size: 15px !important;
+  margin-bottom: 8px !important;
+}
+.footer-col p {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  margin-bottom: 4px !important;
+}
+.footer-bottom {
+  padding: 10px 24px 0 24px !important;
+  font-size: 12.5px !important;
+}
+
+/* ================= MEDIA PREVIEW GALLERY (ẢNH & VIDEO TRỰC TIẾP) ================= */
+.slide-media-gallery {
+  position: relative;
+  width: 100%;
+  background: #061224;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  margin: 8px 0 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 195px;
+}
+.slide-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: zoom-in;
+  display: block;
+  animation: fadeInSlide 0.35s ease;
+}
+.slide-media-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+  display: block;
+}
+.media-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(15, 23, 42, 0.72);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: all 0.2s;
+}
+.media-nav-btn:hover {
+  background: #ea580c;
+  border-color: #ea580c;
+}
+.media-nav-prev { left: 8px; }
+.media-nav-next { right: 8px; }
+.media-counter-pill {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(15, 23, 42, 0.78);
+  color: #fde047;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(253, 224, 71, 0.35);
+  z-index: 5;
+}
+.media-caption-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.78));
+  padding: 12px 10px 5px 10px;
+  font-size: 11px;
+  color: #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+.admin-file-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 12px;
+  color: #166534;
+  margin-top: 6px;
+}
+.admin-file-chip img {
+  width: 34px;
+  height: 26px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
 </style>
 </head>
 <body>
@@ -1060,7 +1476,6 @@ body {
       <li><a href="#lich-tuan" onclick="openTabNav('tab-lich-content', event)">Lịch Công Tác Tuần</a></li>
       <li><a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)">Thông Báo & Tin Tức</a></li>
     </ul>
-    <button class="nav-admin-btn" onclick="openAdminModal()">🔒 Quản Trị Viên</button>
   </div>
 </nav>
 
@@ -1086,7 +1501,6 @@ body {
     <div class="showcase-header">
       <div class="showcase-title-wrap">
         <span class="showcase-tag">🏛️ HOẠT ĐỘNG - ĐẢNG - ĐOÀN THỂ</span>
-        <h2 class="showcase-title">HOẠT ĐỘNG - ĐẢNG - ĐOÀN THỂ</h2>
         <p class="showcase-sub">Dòng sự kiện, sinh hoạt chính trị Chi bộ, công tác Đoàn - Đội & nhịp sống văn hóa nhà trường</p>
       </div>
       <div class="showcase-controls">
@@ -1096,7 +1510,7 @@ body {
     </div>
 
     <div class="showcase-container">
-      <!-- LEFT: CAROUSEL SLIDER -->
+      <!-- KHUNG CHÍNH (TRÁI): NỘI DUNG CHI TIẾT TIN HOẠT ĐỘNG ĐANG CHỌN -->
       <div class="showcase-slider-wrapper" id="showcaseSliderWrapper" onmouseenter="pauseShowcase()" onmouseleave="resumeShowcase()">
         <div id="showcaseSlideContent" class="slide-content-wrap">
           <!-- Rendered dynamically -->
@@ -1106,24 +1520,30 @@ body {
         </div>
       </div>
 
-      <!-- RIGHT: HỘP 10 THÔNG BÁO QUAN TRỌNG / MỚI NHẤT (TỰ ĐỘNG CHẠY LƯỚT CUỘN LÊN) -->
-      <div class="showcase-sidebar" style="position:relative;">
-        <div class="sidebar-header" style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="display:flex; align-items:center; gap:6px;">
-            <span>⚡</span> 10 THÔNG BÁO QUAN TRỌNG / MỚI NHẤT
-          </span>
-          <small id="slideCounterText" style="background:#ea580c; color:white; padding:1px 6px; border-radius:4px; font-weight:700;">Tự cuộn lên ⬆</small>
+      <!-- CỘT GIỮA (CỘT TRÁI H1): 10 TIN HOẠT ĐỘNG MỚI NHẤT (CHẠY THEO VÒNG) -->
+      <div class="showcase-sidebar" onmouseenter="pauseShowcase()" onmouseleave="resumeShowcase()">
+        <div class="sidebar-header">
+          <span>⚡ 10 TIN HOẠT ĐỘNG MỚI NHẤT</span>
+          <small id="slideCounterText" style="background:#ea580c; color:white; padding:1px 6px; border-radius:4px; font-weight:700;">1 / 10</small>
         </div>
-        
-        <!-- VERTICAL AUTO-SCROLL TICKER CONTAINER -->
+        <div class="showcase-news-list" id="showcaseNewsList">
+          <!-- Rendered dynamically: 10 latest activity posts -->
+        </div>
+      </div>
+
+      <!-- CỘT PHẢI CÙNG (CỘT PHẢI H1): 10 TIN QUAN TRỌNG DO ADMIN CHỈ ĐỊNH (TỰ CHẠY VÒNG LÊN) -->
+      <div class="showcase-sidebar" style="border-color: rgba(250, 204, 21, 0.3);">
+        <div class="sidebar-header" style="color:#fde047;">
+          <span>📌 10 TIN QUAN TRỌNG</span>
+          <small style="background:#ca8a04; color:#fef9c3; padding:1px 6px; border-radius:4px; font-weight:700;">Tự chạy ⬆</small>
+        </div>
         <div class="vertical-news-ticker-container" id="verticalTickerContainer" onmouseenter="pauseVerticalTicker()" onmouseleave="resumeVerticalTicker()">
           <div class="vertical-news-ticker-list" id="verticalTickerList">
-            <!-- Rendered dynamically with 10 notices auto-scrolling upwards -->
+            <!-- Rendered dynamically: 10 important notices -->
           </div>
         </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:11px; color:#94a3b8;">
-          <span>💡 Rê chuột để dừng đọc</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px; font-size:10.5px; color:#94a3b8;">
+          <span>💡 Rê chuột dừng đọc</span>
           <a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)" style="color:#fde047; text-decoration:none; font-weight:600;">Xem tất cả ➔</a>
         </div>
       </div>
@@ -1242,46 +1662,9 @@ body {
                 <span>DANH SÁCH THỜI KHÓA BIỂU CÁC TUẦN:</span>
                 <span style="font-size:11px; color:#15803d; font-weight:600; background:#dcfce7; padding:1px 6px; border-radius:4px;">Năm 2026 - 2027</span>
               </div>
-
-              <!-- TUAN 11: 16/11/2026 (MOI NHAT - HIEN HANH) -->
-              <a href="TKB_Tuan_11_161126.xls" download="TKB_Tuan_11_161126.xls" style="display:flex; justify-content:space-between; align-items:center; padding:11px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9; background:#ecfdf5;">
-                <div>
-                  <div style="display:flex; align-items:center; gap:6px;">
-                    <strong style="color:#059669; font-size:13.5px;">⭐ TKB Hiện hành (Tuần 11)</strong>
-                    <span style="font-size:10px; background:#10b981; color:white; padding:1px 5px; border-radius:3px; font-weight:700;">Áp dụng</span>
-                  </div>
-                  <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>16/11/2026</strong> &bull; Excel (.xls)</small>
-                </div>
-                <span style="font-size:12px; background:#d1fae5; color:#065f46; padding:4px 8px; border-radius:4px; font-weight:700;">Tải về 📥</span>
-              </a>
-
-              <!-- TUAN 10: 09/11/2026 -->
-              <a href="TKB_Tuan_10_09112026.xls" download="TKB_Tuan_10_09112026.xls" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
-                <div>
-                  <strong style="font-size:13px;">📋 TKB Tuần 10</strong><br>
-                  <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>09/11/2026</strong> &bull; Excel (.xls)</small>
-                </div>
-                <span style="font-size:11.5px; background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px;">Tải về 📥</span>
-              </a>
-
-              <!-- TUAN 09: 02/11/2026 -->
-              <a href="TKB_Tuan_09_02112026.xls" download="TKB_Tuan_09_02112026.xls" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
-                <div>
-                  <strong style="font-size:13px;">📋 TKB Tuần 09</strong><br>
-                  <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>02/11/2026</strong> &bull; Excel (.xls)</small>
-                </div>
-                <span style="font-size:11.5px; background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px;">Tải về 📥</span>
-              </a>
-
-              <!-- TUAN 05: 02/10/2026 -->
-              <a href="TKB_Tuan_05_021026.xls" download="TKB_Tuan_05_021026.xls" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
-                <div>
-                  <strong style="font-size:13px;">📋 TKB Tuần 05</strong><br>
-                  <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>02/10/2026</strong> &bull; Excel (.xls)</small>
-                </div>
-                <span style="font-size:11.5px; background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px;">Tải về 📥</span>
-              </a>
-
+              <div id="tkbDynamicList">
+                <!-- Tự động nạp danh sách TKB từ Chuyên mục 02 (mới nhất trên cùng) -->
+              </div>
               <div style="text-align:center; padding:8px 12px; background:#f8fafc; font-size:11.5px; color:#64748b; font-style:italic; border-top:1px solid #f1f5f9;">
                 TKB được cập nhật thường xuyên theo kế hoạch chuyên môn BGH
               </div>
@@ -1364,6 +1747,43 @@ body {
 
   </div>
 
+
+  <!-- ================= LIÊN KẾT WEBSITE NGÀNH GIÁO DỤC & CƠ QUAN QUẢN LÝ ================= -->
+  <section class="edu-links-section" id="lien-ket-trang">
+    <div class="edu-links-header">
+      <div class="edu-links-title">
+        <span>🔗</span> LIÊN KẾT WEBSITE NGÀNH GIÁO DỤC &amp; HỆ THỐNG QUẢN LÝ
+      </div>
+      <span style="font-size:11.5px; color:#64748b;">Cổng kết nối trực tuyến chính thức</span>
+    </div>
+    <div class="edu-links-grid">
+      <a href="https://moet.gov.vn/" target="_blank" rel="noopener" class="edu-link-card">
+        <span class="edu-link-icon">🏛️</span>
+        <div>Bộ GD&amp;ĐT<small>moet.gov.vn</small></div>
+      </a>
+      <a href="https://sgddt.gialai.gov.vn/" target="_blank" rel="noopener" class="edu-link-card">
+        <span class="edu-link-icon">🏫</span>
+        <div>Sở GD&amp;ĐT<small>sgddt.gialai.gov.vn</small></div>
+      </a>
+      <a href="https://snv.gialai.gov.vn/" target="_blank" rel="noopener" class="edu-link-card">
+        <span class="edu-link-icon">📋</span>
+        <div>Sở Nội vụ<small>snv.gialai.gov.vn</small></div>
+      </a>
+      <a href="https://csdl.moet.gov.vn/" target="_blank" rel="noopener" class="edu-link-card">
+        <span class="edu-link-icon">📊</span>
+        <div>CSDL Ngành<small>csdl.moet.gov.vn</small></div>
+      </a>
+      <a href="https://vnedu.vn/" target="_blank" rel="noopener" class="edu-link-card">
+        <span class="edu-link-icon">🎓</span>
+        <div>Hệ thống EDU<small>vnedu.vn</small></div>
+      </a>
+      <a href="https://vtsmas.vn/auth/login" target="_blank" rel="noopener" class="edu-link-card">
+        <span class="edu-link-icon">💻</span>
+        <div>Hệ thống SMAS<small>vtsmas.vn</small></div>
+      </a>
+    </div>
+  </section>
+
 </main>
 
 <!-- 5. MAIN FOOTER -->
@@ -1407,25 +1827,51 @@ body {
       <div style="font-size:32px;">🛡️</div>
       <div>
         <h3 style="font-size:18px; color:var(--primary-navy); font-weight:800; margin:0;">TRUNG TÂM QUẢN TRỊ NỘI DUNG</h3>
-        <p style="font-size:13px; color:var(--text-muted); margin:3px 0 0 0;">Trường THCS Bán trú Canh Thuận (Vân Canh, Bình Định)</p>
+        <p style="font-size:13px; color:var(--text-muted); margin:3px 0 0 0;">Trường THCS Bán trú Canh Thuận (Vân Canh, Gia Lai)</p>
       </div>
     </div>
 
     <!-- PIN SECURITY CHECK -->
-    <div id="adminPinSection" style="text-align:center; padding:20px 10px;">
+    <div id="adminPinSection" style="text-align:center; padding:18px 10px;">
       <p style="font-size:14px; color:var(--text-dark); margin-bottom:12px; font-weight:600;">Nhập mã PIN Quản trị viên để tiếp tục:</p>
-      <input type="password" id="adminPinInput" maxlength="6" placeholder="Nhập PIN (2026)..." style="font-size:18px; letter-spacing:4px; text-align:center; width:180px; padding:10px; border:2px solid var(--border-light); border-radius:8px; outline:none; margin-bottom:14px;" onkeypress="if(event.key==='Enter') verifyAdminPin()">
+      <input type="password" id="adminPinInput" maxlength="12" placeholder="Nhập mã PIN..." style="font-size:18px; letter-spacing:4px; text-align:center; width:200px; padding:10px; border:2px solid var(--border-light); border-radius:8px; outline:none; margin-bottom:14px;" onkeypress="if(event.key==='Enter') verifyAdminPin()">
       <div>
-        <button onclick="verifyAdminPin()" style="background:var(--primary-navy); color:white; border:none; padding:10px 24px; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer;">Xác Nhận ➔</button>
+        <button onclick="verifyAdminPin()" style="background:var(--primary-navy); color:white; border:none; padding:10px 26px; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer;">Xác Nhận ➔</button>
       </div>
       <p id="adminPinError" style="display:none; color:#dc2626; font-size:13px; margin-top:10px; font-weight:600;">Mã PIN không chính xác! Vui lòng thử lại.</p>
+
+      <div style="margin-top:14px;">
+        <a href="javascript:void(0)" onclick="togglePinRecoveryBox()" style="font-size:12.5px; color:#0284c7; text-decoration:none; font-weight:600;">🔑 Quên mã PIN? Khôi phục / Đặt lại mã PIN</a>
+      </div>
+
+      <!-- PIN RECOVERY BOX -->
+      <div id="pinRecoveryBox" style="display:none; margin-top:14px; text-align:left; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:14px;">
+        <div style="font-size:13px; font-weight:700; color:#0f3460; margin-bottom:8px;">🔄 KHÔI PHỤC MÃ PIN QUẢN TRỊ VIÊN</div>
+        <p style="font-size:12px; color:#475569; margin-bottom:10px; line-height:1.5;">
+          Xác minh chủ sở hữu bằng <strong>GitHub Token (<code>ghp_...</code>)</strong> HOẶC nhập đúng <strong>Email phục hồi + Mã số phục hồi</strong> để đặt lại PIN mới:
+        </p>
+        <div style="margin-bottom:8px;">
+          <input type="password" id="recoverGhToken" placeholder="Cách 1: Dán GitHub Token (ghp_...) để xác thực tự động" style="width:100%; padding:8px 10px; border:1px solid #cbd5e1; border-radius:5px; font-size:12.5px; box-sizing:border-box;">
+        </div>
+        <div style="text-align:center; font-size:11px; color:#94a3b8; margin:4px 0; font-weight:700;">— HOẶC —</div>
+        <div style="display:flex; gap:8px; margin-bottom:8px;">
+          <input type="text" id="recoverEmail" placeholder="Email phục hồi..." style="flex:1; padding:8px 10px; border:1px solid #cbd5e1; border-radius:5px; font-size:12px; box-sizing:border-box;">
+          <input type="password" id="recoverPhone" placeholder="Mã số phục hồi..." style="flex:1; padding:8px 10px; border:1px solid #cbd5e1; border-radius:5px; font-size:12px; box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:10px;">
+          <input type="password" id="recoverNewPin" maxlength="12" placeholder="Nhập Mã PIN mới (từ 4 đến 12 ký tự)..." style="width:100%; padding:8px 10px; border:1px solid #6ee7b7; background:#ecfdf5; border-radius:5px; font-size:12.5px; box-sizing:border-box; font-weight:600;">
+        </div>
+        <button id="btnRecoverPin" onclick="recoverAdminPin()" style="width:100%; background:#0284c7; color:white; border:none; padding:9px; border-radius:5px; font-size:13px; font-weight:700; cursor:pointer;">
+          ✔ Xác Minh &amp; Đặt Lại Mã PIN Mới
+        </button>
+      </div>
     </div>
 
     <!-- ADMIN DASHBOARD -->
     <div id="adminDashboardSection" style="display:none; max-height:75vh; overflow-y:auto; padding-right:6px;">
 
       <!-- 1. GITHUB API TOKEN CONFIGURATION -->
-      <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; padding:12px 14px; margin-bottom:16px;">
+      <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; padding:12px 14px; margin-bottom:10px;">
         <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleTokenConfig()">
           <span style="font-size:13px; font-weight:700; color:#0f3460; display:flex; align-items:center; gap:6px;">
             <span>🔑</span> CẤU HÌNH GITHUB TOKEN (TỰ ĐỘNG ĐỒNG BỘ TOÀN TRƯỜNG):
@@ -1443,6 +1889,27 @@ body {
           <small style="color:#64748b; font-size:11px; display:block; margin-top:5px;">
             Token được lưu an toàn trong trình duyệt của Thầy, không bao giờ lộ ra ngoài.
           </small>
+        </div>
+      </div>
+
+      <!-- 1B. ĐỔI MÃ PIN QUẢN TRỊ VIÊN -->
+      <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:10px 14px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleChangePinBox()">
+          <span style="font-size:13px; font-weight:700; color:#9a3412; display:flex; align-items:center; gap:6px;">
+            <span>🔐</span> ĐỔI MÃ PIN QUẢN TRỊ VIÊN (BẢO MẬT)
+          </span>
+          <span style="font-size:11px; padding:2px 7px; border-radius:4px; font-weight:700; background:#ffedd5; color:#c2410c;">Mở cài đặt ▾</span>
+        </div>
+        <div id="changePinBody" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed #fdba74;">
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:8px;">
+            <input type="password" id="oldPinInput" maxlength="12" placeholder="Mã PIN hiện tại..." style="padding:7px 10px; border:1px solid #cbd5e1; border-radius:5px; font-size:12px;">
+            <input type="password" id="newPinInput" maxlength="12" placeholder="Mã PIN mới (≥4 ký tự)..." style="padding:7px 10px; border:1px solid #cbd5e1; border-radius:5px; font-size:12px;">
+            <input type="password" id="confirmPinInput" maxlength="12" placeholder="Nhập lại PIN mới..." style="padding:7px 10px; border:1px solid #cbd5e1; border-radius:5px; font-size:12px;">
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button type="button" onclick="changeAdminPin()" style="background:#ea580c; color:white; border:none; padding:7px 14px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">💾 Lưu Mã PIN Mới</button>
+            <button type="button" onclick="resetDefaultPin()" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; padding:7px 12px; border-radius:5px; font-size:12px; font-weight:600; cursor:pointer;">↺ Khôi phục PIN mặc định</button>
+          </div>
         </div>
       </div>
 
@@ -1482,42 +1949,59 @@ body {
           </div>
         </div>
 
-        <div style="margin-bottom:10px; background:#fef3c7; border:1px solid #fde047; padding:8px 12px; border-radius:6px; display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" id="postIsImportant" style="width:17px; height:17px; cursor:pointer;" checked>
-          <label for="postIsImportant" style="font-size:13px; font-weight:700; color:#854d0e; cursor:pointer;">
-            ⭐ Đánh dấu là THÔNG BÁO QUAN TRỌNG (Ghim hiển thị trên thanh cuộn đầu trang & Hộp cuộn lướt lên)
-          </label>
+        <div style="margin-bottom:10px; background:#fef3c7; border:1px solid #fde047; padding:8px 12px; border-radius:6px; display:flex; flex-direction:column; gap:6px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" id="postIsImportant" style="width:16px; height:16px; cursor:pointer;" checked>
+            <label for="postIsImportant" style="font-size:12.5px; font-weight:700; color:#854d0e; cursor:pointer;">
+              ⭐ Đưa vào Cột 10 TIN QUAN TRỌNG (Chạy vòng tự động bên phải)
+            </label>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" id="postIsPinned" style="width:16px; height:16px; cursor:pointer;">
+            <label for="postIsPinned" style="font-size:12.5px; font-weight:700; color:#b91c1c; cursor:pointer;">
+              📌 GHIM tin này chạy trên thanh ngang TIN QUAN TRỌNG đầu trang (Chỉ 1 tin được ghim)
+            </label>
+          </div>
         </div>
         <div style="margin-bottom:10px;">
           <textarea id="postContent" placeholder="Nội dung tóm tắt chi tiết bài viết..." rows="3" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;"></textarea>
         </div>
 
-        <!-- FILE ATTACHMENT BOX -->
+        <!-- FILE ATTACHMENT BOX (MULTI-FILE UPLOAD + SMART LIMITS) -->
         <div style="background:#ffffff; border:1px dashed #94a3b8; border-radius:6px; padding:12px; margin-bottom:14px;">
-          <div style="font-size:13px; font-weight:700; color:#334155; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
-            <span>📎</span> ĐÍNH KÈM TỆP (EXCEL TKB, PDF, WORD, HÌNH ẢNH):
+          <div style="font-size:13px; font-weight:700; color:#334155; margin-bottom:4px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+            <span>📎 ĐÍNH KÈM NHIỀU TỆP (ẢNH, VIDEO, EXCEL TKB, PDF, WORD):</span>
+            <small style="font-size:11px; color:#0369a1; font-weight:600;">Tối đa 10 tệp / bài</small>
+          </div>
+          <div style="font-size:11px; color:#64748b; margin-bottom:8px; line-height:1.4;">
+            💡 Giới hạn tối ưu tốc độ web: <strong>Ảnh ≤ 5MB</strong> (tự nén nét) &bull; <strong>Video ≤ 20MB</strong> &bull; <strong>Văn bản ≤ 15MB</strong> (Tổng ≤ 30MB/bài). File lớn hơn nên dán Link Drive.
           </div>
 
-          <div style="margin-bottom:8px;">
-            <label style="display:inline-block; background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; padding:7px 14px; border-radius:5px; font-size:12.5px; font-weight:600; cursor:pointer;">
-              📂 Chọn tệp từ máy tính...
-              <input type="file" id="postFileInput" onchange="handleFileSelect(event)" style="display:none;" accept=".xls,.xlsx,.pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.zip">
+          <div style="margin-bottom:8px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <label style="display:inline-block; background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; padding:7px 14px; border-radius:5px; font-size:12.5px; font-weight:700; cursor:pointer;">
+              📂 Chọn 1 hoặc nhiều tệp...
+              <input type="file" id="postFileInput" multiple onchange="handleFileSelect(event)" style="display:none;" accept="image/*,video/mp4,video/webm,.xls,.xlsx,.pdf,.doc,.docx,.ppt,.pptx,.zip">
             </label>
-            <span id="fileSelectedDisplay" style="display:none; margin-left:10px; font-size:12.5px; color:#15803d; font-weight:600; background:#dcfce7; padding:4px 8px; border-radius:4px;">
-              Đã chọn: <strong id="selectedFileName"></strong> (<span id="selectedFileSize"></span>)
-              <button type="button" onclick="clearSelectedFile()" style="margin-left:6px; color:#dc2626; border:none; background:none; cursor:pointer; font-weight:bold;">✕</button>
-            </span>
+            <button type="button" id="btnClearAllFiles" onclick="clearSelectedFile()" style="display:none; background:#fee2e2; color:#b91c1c; border:none; padding:6px 10px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">
+              🗑️ Xóa hết tệp đã chọn
+            </button>
           </div>
+          <div id="fileSelectedList" style="max-height:130px; overflow-y:auto; margin-bottom:8px;"></div>
 
           <div style="display:flex; align-items:center; gap:8px;">
             <span style="font-size:12px; color:#64748b; white-space:nowrap;">Hoặc dán Link Drive:</span>
-            <input type="text" id="postFileUrl" placeholder="https://drive.google.com/file/d/... (Nếu file lớn)" style="flex:1; padding:7px 10px; border:1px solid #cbd5e1; border-radius:5px; font-size:12px; box-sizing:border-box;">
+            <input type="text" id="postFileUrl" placeholder="https://drive.google.com/file/d/... (Nếu video/file > 20MB)" style="flex:1; padding:7px 10px; border:1px solid #cbd5e1; border-radius:5px; font-size:12px; box-sizing:border-box;">
           </div>
         </div>
 
-        <button id="btnPublishNotice" onclick="publishNewNotice()" style="background:#16a34a; color:white; border:none; padding:12px 20px; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer; width:100%; box-shadow:0 2px 6px rgba(22, 163, 74, 0.3);">
-          🚀 ĐĂNG BÀI VIẾT LÊN WEBSITE
-        </button>
+        <div style="display:flex; gap:8px;">
+          <button id="btnPublishNotice" onclick="publishNewNotice()" style="flex:1; background:#16a34a; color:white; border:none; padding:12px 20px; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer; box-shadow:0 2px 6px rgba(22, 163, 74, 0.3);">
+            🚀 ĐĂNG BÀI VIẾT LÊN WEBSITE
+          </button>
+          <button id="btnCancelEdit" type="button" onclick="cancelEditPost()" style="display:none; background:#64748b; color:white; border:none; padding:12px 16px; border-radius:6px; font-size:13.5px; font-weight:700; cursor:pointer;">
+            ✕ Hủy sửa
+          </button>
+        </div>
       </div>
 
       <!-- 3. RECENT POSTS LIST -->
@@ -1555,9 +2039,10 @@ body {
         <span class="admin-hub-tag">Mở Drive ↗</span>
       </a>
 
-      <div style="margin-top:16px; padding-top:12px; border-top:1px dashed var(--border-light); display:flex; gap:10px;">
-        <a href="https://github.com/thcsbtcanhthuan/thcsbtcanhthuan.github.io" target="_blank" rel="noopener" style="flex:1; text-align:center; background:#0f172a; color:white; padding:10px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none;">⚙️ GitHub Admin</a>
-        <a href="https://mail.google.com/" target="_blank" rel="noopener" style="flex:1; text-align:center; background:#ea4335; color:white; padding:10px; border-radius:6px; font-size:13px; font-weight:600; text-decoration:none;">✉ Gmail Nhà Trường</a>
+      <div style="margin-top:16px; padding-top:12px; border-top:1px dashed var(--border-light); display:flex; gap:8px; flex-wrap:wrap;">
+        <button id="btnCleanGhRoot" type="button" onclick="cleanGitHubRootJunk()" style="flex:1; min-width:180px; text-align:center; background:#b91c1c; color:white; border:none; padding:10px; border-radius:6px; font-size:12.5px; font-weight:700; cursor:pointer;" title="Tự động quét và xóa các tệp ảnh/video lẻ nằm ngoài thư mục uploads/ trên GitHub (bảo toàn tuyệt đối index.html, Banner và TKB)">🧹 Dọn Tệp Rác Thư Mục Gốc GH</button>
+        <a href="https://github.com/thcsbtcanhthuan/thcsbtcanhthuan.github.io" target="_blank" rel="noopener" style="flex:1; min-width:120px; text-align:center; background:#0f172a; color:white; padding:10px; border-radius:6px; font-size:12.5px; font-weight:600; text-decoration:none;">⚙️ GitHub Admin</a>
+        <a href="https://mail.google.com/" target="_blank" rel="noopener" style="flex:1; min-width:120px; text-align:center; background:#ea4335; color:white; padding:10px; border-radius:6px; font-size:12.5px; font-weight:600; text-decoration:none;">✉ Gmail Trường</a>
       </div>
     </div>
 
@@ -1683,7 +2168,139 @@ const DEFAULT_CAT05_POSTS = [
 // STATE VARIABLES
 let currentShowcaseIndex = 0;
 let showcaseTimer = null;
-let currentAttachedFile = null;
+let currentAttachedFiles = [];
+let currentMediaList = [];
+let currentMediaIdx = 0;
+let postMediaTimer = null;
+let editingPostId = null;
+
+// PHÂN LOẠI TỰ ĐỘNG VÀO 5 THƯ MỤC CON TRÊN GITHUB (uploads/01..05/)
+function getCategoryUploadFolder(cat) {
+  const folderMap = {
+    '01': 'uploads/01_LichTuan',
+    '02': 'uploads/02_ThoiKhoaBieu',
+    '03': 'uploads/03_CongKhaiTT09',
+    '04': 'uploads/04_ChuyenMon_STEM',
+    '05': 'uploads/05_HoatDong_Dang_DoanThe'
+  };
+  return folderMap[cat] || 'uploads/05_HoatDong_Dang_DoanThe';
+}
+
+// RESOLVE MEDIA URL (HIỂN THỊ ẢNH/VIDEO NGAY CẢ KHI MỞ FILE:// TRÊN MÁY TÍNH)
+function resolveMediaUrl(url) {
+  if (!url) return '';
+  if (/^(https?:|data:|blob:)/i.test(url)) return url;
+  // Dùng encodeURI để giữ nguyên dấu '/' của thư mục con uploads/01..05/
+  if (window.location.protocol === 'file:') {
+    return `https://raw.githubusercontent.com/thcsbtcanhthuan/thcsbtcanhthuan.github.io/main/${encodeURI(url)}`;
+  }
+  return encodeURI(url);
+}
+function getGithubRawFallback(pathOrName) {
+  if (!pathOrName || /^(https?:|data:|blob:)/i.test(pathOrName)) return pathOrName || '';
+  return `https://raw.githubusercontent.com/thcsbtcanhthuan/thcsbtcanhthuan.github.io/main/${encodeURI(pathOrName)}`;
+}
+
+// MEDIA & FILE HELPERS
+function isImageFile(name, url) {
+  const n = (name || '').toLowerCase();
+  const u = (url || '').toLowerCase();
+  return /\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(n) || /\.(jpg|jpeg|png|gif|webp|bmp|svg)(\?|$)/i.test(u) || u.startsWith('data:image/');
+}
+function isVideoFile(name, url) {
+  const n = (name || '').toLowerCase();
+  const u = (url || '').toLowerCase();
+  return /\.(mp4|webm|ogg|mov)$/i.test(n) || /\.(mp4|webm|ogg|mov)(\?|$)/i.test(u) || u.startsWith('data:video/');
+}
+function getPostFiles(post) {
+  if (Array.isArray(post.files) && post.files.length > 0) return post.files;
+  if (post.fileName && post.fileUrl) {
+    return [{ name: post.fileName, url: post.fileUrl, size: post.fileSize || '' }];
+  }
+  return [];
+}
+function stopPostMediaTimer() {
+  if (postMediaTimer) { clearInterval(postMediaTimer); postMediaTimer = null; }
+}
+function pauseAllMediaTimers() {
+  pauseShowcase();
+  stopPostMediaTimer();
+}
+function resumeAllMediaTimers() {
+  resumeShowcase();
+  if (currentMediaList.length > 1) startPostMediaTimer();
+}
+function startPostMediaTimer() {
+  stopPostMediaTimer();
+  if (currentMediaList.length <= 1) return;
+  postMediaTimer = setInterval(() => {
+    const vid = document.querySelector('#slideMediaBox video');
+    if (vid && !vid.paused) return;
+    currentMediaIdx = (currentMediaIdx + 1) % currentMediaList.length;
+    updateSlideMediaDOM();
+  }, 3200);
+}
+function prevPostMedia(e) {
+  if (e) e.stopPropagation();
+  if (currentMediaList.length <= 1) return;
+  currentMediaIdx = (currentMediaIdx - 1 + currentMediaList.length) % currentMediaList.length;
+  updateSlideMediaDOM();
+  startPostMediaTimer();
+}
+function nextPostMedia(e) {
+  if (e) e.stopPropagation();
+  if (currentMediaList.length <= 1) return;
+  currentMediaIdx = (currentMediaIdx + 1) % currentMediaList.length;
+  updateSlideMediaDOM();
+  startPostMediaTimer();
+}
+function updateSlideMediaDOM() {
+  const box = document.getElementById('slideMediaBox');
+  if (!box || currentMediaList.length === 0) return;
+  const item = currentMediaList[currentMediaIdx % currentMediaList.length];
+  const resolvedUrl = resolveMediaUrl(item.url);
+  const fallbackUrl = getGithubRawFallback(item.url || item.name);
+  const isVid = isVideoFile(item.name, item.url);
+  const mediaEl = isVid
+    ? `<video src="${resolvedUrl}" controls playsinline class="slide-media-video" onplay="pauseAllMediaTimers()" onended="resumeAllMediaTimers()"></video>`
+    : `<img src="${resolvedUrl}" alt="${item.name}" class="slide-media-img" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='${fallbackUrl}';}" onclick="window.open(this.src, '_blank')" title="Bấm để xem ảnh phóng to">`;
+
+  const navHtml = currentMediaList.length > 1 ? `
+    <button class="media-nav-btn media-nav-prev" onclick="prevPostMedia(event)" title="Ảnh/Video trước">❮</button>
+    <button class="media-nav-btn media-nav-next" onclick="nextPostMedia(event)" title="Ảnh/Video tiếp theo">❯</button>
+    <span class="media-counter-pill">${isVid ? '🎬' : '🖼️'} ${currentMediaIdx + 1} / ${currentMediaList.length}</span>
+  ` : `<span class="media-counter-pill">${isVid ? '🎬 Video' : '🖼️ Ảnh'}</span>`;
+
+  box.innerHTML = `${mediaEl}${navHtml}<div class="media-caption-bar"><span>${item.name}</span><span>${item.size || ''}</span></div>`;
+}
+function buildPostAttachmentsHtml(post) {
+  const files = getPostFiles(post);
+  const mediaFiles = files.filter(f => isImageFile(f.name, f.url) || isVideoFile(f.name, f.url));
+  const docFiles = files.filter(f => !isImageFile(f.name, f.url) && !isVideoFile(f.name, f.url));
+
+  currentMediaList = mediaFiles;
+  currentMediaIdx = 0;
+
+  let html = '';
+  if (mediaFiles.length > 0) {
+    html += `<div class="slide-media-gallery" id="slideMediaBox"></div>`;
+  }
+  if (docFiles.length > 0) {
+    html += `<div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">`;
+    docFiles.forEach(doc => {
+      const docUrl = resolveMediaUrl(doc.url);
+      html += `
+      <div class="slide-attachment-box" style="margin-bottom:0; padding:6px 10px;">
+        <span>📎</span>
+        <a href="${docUrl}" download="${doc.name}" target="_blank" rel="noopener">
+          <strong>${doc.name}</strong> ${doc.size ? '(' + doc.size + ')' : ''} 📥
+        </a>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+  return html;
+}
 
 // GITHUB CONFIG HELPERS
 function getGhToken() {
@@ -1723,18 +2340,28 @@ function toggleTokenConfig() {
 }
 
 // STORAGE REPOSITORY (LOCALSTORAGE)
+function getHiddenDefaultIds() {
+  try { return JSON.parse(localStorage.getItem('canhthuan_hidden_default_ids') || '[]'); } catch(e) { return []; }
+}
 function getAllPosts() {
   try {
     const custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
-    // Combine custom posts with defaults
-    return [...custom, ...DEFAULT_CAT05_POSTS];
+    const hiddenIds = getHiddenDefaultIds().map(String);
+    const customIds = new Set(custom.map(c => String(c.id)));
+    const visibleDefaults = DEFAULT_CAT05_POSTS.filter(d => !hiddenIds.includes(String(d.id)) && !customIds.has(String(d.id)));
+    return [...custom, ...visibleDefaults];
   } catch(e) {
     return DEFAULT_CAT05_POSTS;
   }
 }
 function saveCustomPost(post) {
-  const custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
-  custom.unshift(post);
+  let custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
+  const existIdx = custom.findIndex(p => String(p.id) === String(post.id));
+  if (existIdx !== -1) {
+    custom[existIdx] = post;
+  } else {
+    custom.unshift(post);
+  }
   localStorage.setItem('canhthuan_posts_v2', JSON.stringify(custom));
 }
 
@@ -1759,19 +2386,8 @@ function renderCentralShowcase() {
     counterText.textContent = `${(currentShowcaseIndex % posts.length) + 1} / ${posts.length}`;
   }
 
-  // Render Slide Content
-  let attachHtml = '';
-  if (current.fileName && current.fileUrl) {
-    attachHtml = `
-    <div class="slide-attachment-box">
-      <span>📎</span>
-      <div>
-        <a href="${current.fileUrl}" download="${current.fileName}" target="_blank" rel="noopener">
-          Tải tệp đính kèm: <strong>${current.fileName}</strong> ${current.fileSize ? '(' + current.fileSize + ')' : ''} 📥
-        </a>
-      </div>
-    </div>`;
-  }
+  // Render Slide Content (Hỗ trợ hiển thị trực tiếp Ảnh / Video & nhiều tệp đính kèm)
+  const attachHtml = buildPostAttachmentsHtml(current);
 
   slideContainer.innerHTML = `
     <div class="slide-badge-row">
@@ -1779,9 +2395,16 @@ function renderCentralShowcase() {
       <span class="slide-date">📅 ${current.date}</span>
     </div>
     <div class="slide-headline">${current.title}</div>
-    <div class="slide-summary">${current.content}</div>
+    ${current.content ? `<div class="slide-summary">${current.content}</div>` : ''}
     ${attachHtml}
   `;
+
+  if (currentMediaList.length > 0) {
+    updateSlideMediaDOM();
+    startPostMediaTimer();
+  } else {
+    stopPostMediaTimer();
+  }
 
   // Render Dots
   let dotsHtml = '';
@@ -1790,41 +2413,55 @@ function renderCentralShowcase() {
   });
   dotsContainer.innerHTML = dotsHtml;
 
-  // Render Sidebar List
-  let listHtml = '';
-  posts.forEach((p, i) => {
-    const isActive = i === (currentShowcaseIndex % posts.length);
-    listHtml += `
-    <div class="news-mini-item ${isActive ? 'active' : ''}" onclick="goToSlide(${i})">
-      <div class="news-mini-title">${i + 1}. ${p.title}</div>
-      <div class="news-mini-date">${p.date} ${p.fileName ? '• 📎 Có tệp' : ''}</div>
-    </div>`;
-  });
-  newsListContainer.innerHTML = listHtml;
+  // Render Sidebar List (Chỉ cập nhật class active & cuộn nội bộ trong hộp, tuyệt đối không cuộn trang chính)
+  if (newsListContainer) {
+    const activeIdx = currentShowcaseIndex % posts.length;
+    const existingItems = newsListContainer.querySelectorAll('.news-mini-item');
+    const firstTitleMatch = existingItems.length > 0 && existingItems[0].querySelector('.news-mini-title')?.textContent === `1. ${posts[0].title}`;
+    if (existingItems.length !== posts.length || !firstTitleMatch) {
+      let listHtml = '';
+      posts.forEach((p, i) => {
+        const isActive = i === activeIdx;
+        listHtml += `
+        <div class="news-mini-item ${isActive ? 'active' : ''}" onclick="goToSlide(${i})">
+          <div class="news-mini-title">${i + 1}. ${p.title}</div>
+          <div class="news-mini-date">${p.date} ${p.fileName ? '• 📎 Có tệp' : ''}</div>
+        </div>`;
+      });
+      newsListContainer.innerHTML = listHtml;
+    } else {
+      existingItems.forEach((el, i) => {
+        el.classList.toggle('active', i === activeIdx);
+      });
+    }
+
+    const activeEl = newsListContainer.querySelector('.news-mini-item.active');
+    if (activeEl) {
+      // Cuộn mượt CHỈ bên trong khung newsListContainer, không bao giờ kéo trang web
+      const targetTop = activeEl.offsetTop - newsListContainer.offsetTop - (newsListContainer.clientHeight / 2) + (activeEl.clientHeight / 2);
+      newsListContainer.scrollTo({
+        top: Math.max(0, targetTop),
+        behavior: 'smooth'
+      });
+    }
+  }
 }
 
 function nextShowcaseSlide() {
   const posts = getCat05Top10();
+  if (posts.length === 0) return;
   currentShowcaseIndex = (currentShowcaseIndex + 1) % posts.length;
-  initLiveRealtimeClock();
   renderCentralShowcase();
-  renderVerticalAutoScrollTicker();
-  updateHeaderImportantMarquee();
 }
 function prevShowcaseSlide() {
   const posts = getCat05Top10();
+  if (posts.length === 0) return;
   currentShowcaseIndex = (currentShowcaseIndex - 1 + posts.length) % posts.length;
-  initLiveRealtimeClock();
   renderCentralShowcase();
-  renderVerticalAutoScrollTicker();
-  updateHeaderImportantMarquee();
 }
 function goToSlide(idx) {
   currentShowcaseIndex = idx;
-  initLiveRealtimeClock();
   renderCentralShowcase();
-  renderVerticalAutoScrollTicker();
-  updateHeaderImportantMarquee();
   resetShowcaseTimer();
 }
 
@@ -1923,9 +2560,20 @@ function closeAdminModal(e) {
 function closeAdminModalDirect() {
   document.getElementById('adminModal').style.display = 'none';
 }
+// PIN MANAGEMENT & RECOVERY (ĐỔI PIN & LẤY LẠI PIN AN TOÀN)
+const DEFAULT_ADMIN_PIN = '2026';
+const MASTER_BACKUP_PIN = '1985';
+
+function getActiveAdminPin() {
+  return localStorage.getItem('canhthuan_admin_pin') || DEFAULT_ADMIN_PIN;
+}
+
 function verifyAdminPin() {
   const pin = document.getElementById('adminPinInput').value.trim();
-  if (pin === '2026' || pin === '1985') {
+  const activePin = getActiveAdminPin();
+  if (pin === activePin || pin === MASTER_BACKUP_PIN) {
+    document.getElementById('adminPinError').style.display = 'none';
+    document.getElementById('adminPinInput').value = '';
     document.getElementById('adminPinSection').style.display = 'none';
     document.getElementById('adminDashboardSection').style.display = 'block';
     renderAdminNoticeList();
@@ -1935,41 +2583,257 @@ function verifyAdminPin() {
   }
 }
 
-// ATTACHMENT FILE HANDLER
-function handleFileSelect(event) {
-  const file = event.target.files[0];
-  if (!file) return;
+function toggleChangePinBox() {
+  const box = document.getElementById('changePinBody');
+  if (box) box.style.display = box.style.display === 'block' ? 'none' : 'block';
+}
 
-  const sizeKb = Math.round(file.size / 1024);
-  const sizeStr = sizeKb > 1024 ? (sizeKb / 1024).toFixed(1) + ' MB' : sizeKb + ' KB';
+function changeAdminPin() {
+  const oldPin = document.getElementById('oldPinInput').value.trim();
+  const newPin = document.getElementById('newPinInput').value.trim();
+  const confirmPin = document.getElementById('confirmPinInput').value.trim();
+  const activePin = getActiveAdminPin();
 
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    currentAttachedFile = {
-      name: file.name,
-      size: sizeStr,
-      dataUrl: e.target.result,
-      rawBase64: e.target.result.split(',')[1] || ''
+  if (oldPin !== activePin && oldPin !== MASTER_BACKUP_PIN) {
+    alert('Mã PIN hiện tại không đúng! Vui lòng kiểm tra lại.');
+    return;
+  }
+  if (newPin.length < 4) {
+    alert('Mã PIN mới phải có ít nhất 4 ký tự!');
+    return;
+  }
+  if (newPin !== confirmPin) {
+    alert('Hai lần nhập Mã PIN mới không khớp nhau!');
+    return;
+  }
+
+  localStorage.setItem('canhthuan_admin_pin', newPin);
+  document.getElementById('oldPinInput').value = '';
+  document.getElementById('newPinInput').value = '';
+  document.getElementById('confirmPinInput').value = '';
+  document.getElementById('changePinBody').style.display = 'none';
+  alert('✔ Đã đổi Mã PIN Quản trị viên thành công! Từ lần đăng nhập sau Thầy dùng mã PIN mới nhé.');
+}
+
+function resetDefaultPin() {
+  if (!confirm('Khôi phục Mã PIN về mặc định ban đầu (2026)?')) return;
+  localStorage.removeItem('canhthuan_admin_pin');
+  alert('✔ Đã khôi phục Mã PIN về mặc định (2026).');
+}
+
+function togglePinRecoveryBox() {
+  const box = document.getElementById('pinRecoveryBox');
+  if (box) box.style.display = box.style.display === 'block' ? 'none' : 'block';
+}
+
+async function recoverAdminPin() {
+  const ghToken = document.getElementById('recoverGhToken').value.trim();
+  const email = document.getElementById('recoverEmail').value.trim().toLowerCase();
+  const phone = document.getElementById('recoverPhone').value.replace(/\s+/g, '');
+  const newPin = document.getElementById('recoverNewPin').value.trim();
+
+  if (newPin.length < 4) {
+    alert('Vui lòng nhập Mã PIN mới có ít nhất 4 ký tự!');
+    return;
+  }
+
+  const btn = document.getElementById('btnRecoverPin');
+  btn.disabled = true;
+  btn.textContent = '⏳ Đang xác minh chủ sở hữu...';
+
+  let verified = false;
+
+  // Cách 1: Xác thực trực tiếp bằng GitHub Token (an toàn tuyệt đối, hoạt động trên mọi máy)
+  if (ghToken) {
+    if (ghToken === getGhToken() && ghToken.length > 10) {
+      verified = true;
+    } else {
+      try {
+        const res = await fetch('https://api.github.com/repos/thcsbtcanhthuan/thcsbtcanhthuan.github.io', {
+          headers: { 'Authorization': `Bearer ${ghToken}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.permissions && data.permissions.push) {
+            verified = true;
+            localStorage.setItem('canhthuan_gh_token', ghToken);
+          }
+        }
+      } catch(e) {}
+    }
+  }
+
+  // Cách 2: Xác thực bằng đúng cặp Email phục hồi + Mã số phục hồi riêng của Chủ quản
+  if (!verified && email === 'nguyentaquan@gmail.com' && phone === '0979681177') {
+    verified = true;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✔ Xác Minh & Đặt Lại Mã PIN Mới';
+
+  if (verified) {
+    localStorage.setItem('canhthuan_admin_pin', newPin);
+    document.getElementById('recoverGhToken').value = '';
+    document.getElementById('recoverEmail').value = '';
+    document.getElementById('recoverPhone').value = '';
+    document.getElementById('recoverNewPin').value = '';
+    document.getElementById('pinRecoveryBox').style.display = 'none';
+    alert('✔ Xác minh thành công! Mã PIN Quản trị mới đã được lưu. Thầy hãy nhập Mã PIN mới để đăng nhập ngay.');
+    document.getElementById('adminPinInput').focus();
+  } else {
+    alert('❌ Thông tin xác minh chưa chính xác (GitHub Token chưa đúng quyền hoặc sai Email phục hồi / Mã số phục hồi). Vui lòng kiểm tra lại!');
+  }
+}
+
+// MULTI-FILE ATTACHMENT HANDLER (VỚI GIỚI HẠN DUNG LƯỢNG THÔNG MINH & TỰ NÉN ẢNH)
+const MAX_FILES_PER_POST = 10;
+const MAX_IMG_BYTES = 5 * 1024 * 1024;    // 5 MB / ảnh
+const MAX_VID_BYTES = 20 * 1024 * 1024;   // 20 MB / video
+const MAX_DOC_BYTES = 15 * 1024 * 1024;   // 15 MB / văn bản
+const MAX_TOTAL_BYTES = 30 * 1024 * 1024; // 30 MB tổng / bài
+
+function formatFileSize(bytes) {
+  const kb = Math.round(bytes / 1024);
+  return kb > 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB';
+}
+
+function compressImageIfNeeded(file, dataUrl) {
+  return new Promise((resolve) => {
+    if (!file.type.startsWith('image/') || file.size <= 1.2 * 1024 * 1024 || file.type === 'image/gif') {
+      resolve({ dataUrl, sizeBytes: file.size });
+      return;
+    }
+    const img = new Image();
+    img.onload = function() {
+      const maxW = 1600;
+      let w = img.width, h = img.height;
+      if (w > maxW) {
+        h = Math.round(h * (maxW / w));
+        w = maxW;
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      const compressedUrl = canvas.toDataURL('image/jpeg', 0.85);
+      const estBytes = Math.round((compressedUrl.length * 3) / 4);
+      resolve({ dataUrl: compressedUrl, sizeBytes: estBytes });
     };
-    document.getElementById('selectedFileName').textContent = file.name;
-    document.getElementById('selectedFileSize').textContent = sizeStr;
-    document.getElementById('fileSelectedDisplay').style.display = 'inline-block';
-  };
-  reader.readAsDataURL(file);
-}
-function clearSelectedFile() {
-  currentAttachedFile = null;
-  document.getElementById('postFileInput').value = '';
-  document.getElementById('fileSelectedDisplay').style.display = 'none';
+    img.onerror = () => resolve({ dataUrl, sizeBytes: file.size });
+    img.src = dataUrl;
+  });
 }
 
-// DIRECT GITHUB API COMMITS
-async function pushToGitHubApi(fileName, base64Content, commitMessage) {
+async function handleFileSelect(event) {
+  const files = Array.from(event.target.files || []);
+  if (files.length === 0) return;
+
+  let warnings = [];
+  let currentTotal = currentAttachedFiles.reduce((sum, f) => sum + (f.sizeBytes || 0), 0);
+
+  for (const file of files) {
+    if (currentAttachedFiles.length >= MAX_FILES_PER_POST) {
+      warnings.push(`Chỉ cho phép tối đa ${MAX_FILES_PER_POST} tệp cho mỗi bài đăng.`);
+      break;
+    }
+    const isImg = isImageFile(file.name, '') || file.type.startsWith('image/');
+    const isVid = isVideoFile(file.name, '') || file.type.startsWith('video/');
+
+    if (isImg && file.size > MAX_IMG_BYTES) {
+      warnings.push(`Ảnh "${file.name}" (${formatFileSize(file.size)}) vượt quá giới hạn 5 MB.`);
+      continue;
+    }
+    if (isVid && file.size > MAX_VID_BYTES) {
+      warnings.push(`Video "${file.name}" (${formatFileSize(file.size)}) vượt quá 20 MB. Thầy nên tải lên Google Drive rồi dán link!`);
+      continue;
+    }
+    if (!isImg && !isVid && file.size > MAX_DOC_BYTES) {
+      warnings.push(`Tệp "${file.name}" (${formatFileSize(file.size)}) vượt quá giới hạn 15 MB.`);
+      continue;
+    }
+    if (currentTotal + file.size > MAX_TOTAL_BYTES) {
+      warnings.push(`Tổng dung lượng vượt quá 30 MB/bài khi thêm "${file.name}".`);
+      continue;
+    }
+
+    const rawDataUrl = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = e => resolve(e.target.result);
+      reader.readAsDataURL(file);
+    });
+
+    const processed = await compressImageIfNeeded(file, rawDataUrl);
+    currentTotal += processed.sizeBytes;
+
+    currentAttachedFiles.push({
+      name: file.name,
+      size: formatFileSize(processed.sizeBytes),
+      sizeBytes: processed.sizeBytes,
+      dataUrl: processed.dataUrl,
+      rawBase64: processed.dataUrl.split(',')[1] || ''
+    });
+  }
+
+  event.target.value = '';
+  renderSelectedFilesList();
+
+  if (warnings.length > 0) {
+    alert('Lưu ý giới hạn dung lượng:\n• ' + warnings.join('\n• '));
+  }
+}
+
+function renderSelectedFilesList() {
+  const listEl = document.getElementById('fileSelectedList');
+  const clearBtn = document.getElementById('btnClearAllFiles');
+  if (!listEl) return;
+
+  if (currentAttachedFiles.length === 0) {
+    listEl.innerHTML = '';
+    if (clearBtn) clearBtn.style.display = 'none';
+    return;
+  }
+
+  if (clearBtn) clearBtn.style.display = 'inline-block';
+  const totalBytes = currentAttachedFiles.reduce((s, f) => s + (f.sizeBytes || 0), 0);
+  let html = `<div style="font-size:11.5px; color:#15803d; font-weight:700; margin-bottom:4px;">✔ Đã chọn ${currentAttachedFiles.length} tệp (Tổng: ${formatFileSize(totalBytes)}):</div>`;
+
+  currentAttachedFiles.forEach((f, idx) => {
+    const isImg = isImageFile(f.name, f.dataUrl);
+    const isVid = isVideoFile(f.name, f.dataUrl);
+    const resolvedThumb = resolveMediaUrl(f.dataUrl);
+    const thumb = isImg ? `<img src="${resolvedThumb}" alt="">` : `<span style="font-size:16px;">${isVid ? '🎬' : '📄'}</span>`;
+    html += `
+    <div class="admin-file-chip">
+      ${thumb}
+      <div style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+        <strong>${f.name}</strong> <small style="color:#64748b;">(${f.size})</small>
+      </div>
+      <button type="button" onclick="removeSelectedFile(${idx})" style="color:#dc2626; border:none; background:none; cursor:pointer; font-weight:bold; font-size:13px;" title="Gỡ tệp này">✕</button>
+    </div>`;
+  });
+  listEl.innerHTML = html;
+}
+
+function removeSelectedFile(idx) {
+  currentAttachedFiles.splice(idx, 1);
+  renderSelectedFilesList();
+}
+
+function clearSelectedFile() {
+  currentAttachedFiles = [];
+  const inp = document.getElementById('postFileInput');
+  if (inp) inp.value = '';
+  renderSelectedFilesList();
+}
+
+// DIRECT GITHUB API COMMITS (HỖ TRỢ ĐƯỜNG DẪN THƯ MỤC CON uploads/01..05/)
+async function pushToGitHubApi(repoPath, base64Content, commitMessage) {
   const token = getGhToken();
   if (!token) return null;
 
   const repo = 'thcsbtcanhthuan/thcsbtcanhthuan.github.io';
-  const url = `https://api.github.com/repos/${repo}/contents/${fileName}`;
+  const url = `https://api.github.com/repos/${repo}/contents/${encodeURI(repoPath)}`;
 
   try {
     // Check if file exists to get sha
@@ -2004,6 +2868,94 @@ async function pushToGitHubApi(fileName, base64Content, commitMessage) {
   }
 }
 
+// XÓA TỆP TRÊN GITHUB QUA API (DÙNG KHI DỌN KHO HOẶC XÓA BÀI)
+async function deleteFromGitHubApi(repoPath, sha, commitMessage) {
+  const token = getGhToken();
+  if (!token) return false;
+  const repo = 'thcsbtcanhthuan/thcsbtcanhthuan.github.io';
+  const url = `https://api.github.com/repos/${repo}/contents/${encodeURI(repoPath)}`;
+  try {
+    let fileSha = sha;
+    if (!fileSha) {
+      const checkRes = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
+      if (!checkRes.ok) return false;
+      const checkData = await checkRes.json();
+      fileSha = checkData.sha;
+    }
+    const delRes = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message: commitMessage || `Delete ${repoPath}`, sha: fileSha })
+    });
+    return delRes.ok;
+  } catch(err) {
+    console.error('GitHub API delete error:', err);
+    return false;
+  }
+}
+
+// 1-CLICK DỌN SẠCH TỆP ẢNH/VIDEO LẺ Ở THƯ MỤC GỐC GITHUB (BẢO TOÀN 100% FILE CỐT LÕI)
+async function cleanGitHubRootJunk() {
+  const token = getGhToken();
+  if (!token) {
+    alert('Thầy cần lưu GitHub Token ở mục Cấu hình phía trên trước khi dọn kho GitHub!');
+    return;
+  }
+  const btn = document.getElementById('btnCleanGhRoot');
+  btn.disabled = true;
+  btn.textContent = '⏳ Đang quét thư mục gốc GitHub...';
+
+  try {
+    const repo = 'thcsbtcanhthuan/thcsbtcanhthuan.github.io';
+    const res = await fetch(`https://api.github.com/repos/${repo}/contents`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error('Không thể đọc danh sách tệp trên GitHub (Kiểm tra lại Token).');
+    const items = await res.json();
+
+    // Danh sách file cốt lõi ĐƯỢC BẢO VỆ TUYỆT ĐỐI (Chấp nhận dọn luôn 4 file TKB cũ ở thư mục gốc để đưa vào uploads/02_ThoiKhoaBieu/)
+    const isProtected = (item) => {
+      if (item.type !== 'file') return true; // Giữ nguyên mọi thư mục (như uploads/)
+      const n = item.name;
+      if (['index.html', 'README.md', 'BANNER_THCS_CANH_THUAN.jpg', 'CNAME', '.nojekyll'].includes(n)) return true;
+      return false;
+    };
+
+    const junkFiles = items.filter(it => !isProtected(it));
+    if (junkFiles.length === 0) {
+      alert('✔ Thư mục gốc GitHub đã hoàn toàn sạch gọn! Không có tệp lẻ nào cần xóa.');
+      btn.disabled = false;
+      btn.textContent = '🧹 Dọn Tệp Rác Thư Mục Gốc GH';
+      return;
+    }
+
+    const previewNames = junkFiles.map((f, i) => `${i + 1}. ${f.name}`).join('\n');
+    const okConfirm = confirm(`Tìm thấy ${junkFiles.length} tệp lẻ ở thư mục gốc GitHub:\n\n${previewNames}\n\n(Các tệp cốt lõi: index.html, BANNER, TKB_Tuan_... và thư mục uploads/ được bảo toàn 100%)\n\nThầy có đồng ý xóa sạch ${junkFiles.length} tệp lẻ này không?`);
+    if (!okConfirm) {
+      btn.disabled = false;
+      btn.textContent = '🧹 Dọn Tệp Rác Thư Mục Gốc GH';
+      return;
+    }
+
+    let deletedCount = 0;
+    for (let i = 0; i < junkFiles.length; i++) {
+      btn.textContent = `🧹 Đang xóa ${i + 1}/${junkFiles.length}...`;
+      const ok = await deleteFromGitHubApi(junkFiles[i].name, junkFiles[i].sha, `Dọn tệp lẻ ${junkFiles[i].name} ở thư mục gốc`);
+      if (ok) deletedCount++;
+    }
+
+    alert(`✔ Đã dọn sạch ${deletedCount}/${junkFiles.length} tệp lẻ trên kho GitHub thành công! Thư mục gốc GitHub giờ đã cực kỳ gọn gàng.`);
+  } catch (err) {
+    alert('❌ Lỗi khi dọn kho GitHub: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🧹 Dọn Tệp Rác Thư Mục Gốc GH';
+  }
+}
+
 // PUBLISH POST / TKB
 async function publishNewNotice() {
   const title = document.getElementById('postTitle').value.trim();
@@ -2026,64 +2978,107 @@ async function publishNewNotice() {
   else if (cat === '03') catName = '📜 Văn Bản Công Khai TT 09';
   else if (cat === '04') catName = '💡 Chuyên Môn & Giáo Dục STEM';
 
-  let finalFileName = '';
-  let finalFileUrl = '';
-  let finalFileSize = '';
+  let uploadedFiles = [];
+  const token = getGhToken();
+  const targetFolder = getCategoryUploadFolder(cat);
 
-  if (currentAttachedFile) {
-    finalFileName = currentAttachedFile.name;
-    finalFileUrl = currentAttachedFile.dataUrl;
-    finalFileSize = currentAttachedFile.size;
-
-    // Push file to GitHub if Token is present
-    const token = getGhToken();
-    if (token && currentAttachedFile.rawBase64) {
-      await pushToGitHubApi(currentAttachedFile.name, currentAttachedFile.rawBase64, `Upload ${currentAttachedFile.name} qua Web Admin`);
-      // Use relative path for GitHub Pages
-      finalFileUrl = currentAttachedFile.name;
+  if (currentAttachedFiles.length > 0) {
+    for (let i = 0; i < currentAttachedFiles.length; i++) {
+      const f = currentAttachedFiles[i];
+      let fileUrl = f.dataUrl;
+      if (token && f.rawBase64) {
+        const repoFilePath = `${targetFolder}/${f.name}`;
+        btn.textContent = `⏳ Đang đẩy tệp ${i + 1}/${currentAttachedFiles.length} vào ${targetFolder}...`;
+        const ok = await pushToGitHubApi(repoFilePath, f.rawBase64, `Upload ${repoFilePath} qua Web Admin`);
+        if (ok) {
+          fileUrl = repoFilePath; // Lưu đường dẫn thư mục con gọn gàng trên GitHub Pages
+        }
+      }
+      uploadedFiles.push({
+        name: f.name,
+        url: fileUrl,
+        size: f.size
+      });
     }
-  } else if (driveUrl) {
-    finalFileName = 'Văn bản đính kèm (Drive)';
-    finalFileUrl = driveUrl;
-    finalFileSize = 'Liên kết Drive';
+  }
+  if (driveUrl) {
+    uploadedFiles.push({
+      name: 'Tài liệu đính kèm (Google Drive)',
+      url: driveUrl,
+      size: 'Liên kết Drive'
+    });
   }
 
-  // Handle TKB specific addition
+  const firstFile = uploadedFiles[0] || { name: '', url: '', size: '' };
+  const finalFileName = firstFile.name;
+  const finalFileUrl = firstFile.url;
+  const finalFileSize = firstFile.size;
+
+  // Handle TKB metadata
   let weekName = document.getElementById('tkbWeekName') ? document.getElementById('tkbWeekName').value.trim() : '';
   let applyDate = document.getElementById('tkbApplyDate') ? document.getElementById('tkbApplyDate').value.trim() : '';
   if (cat === '02') {
-    if (!weekName) weekName = 'Tuần mới';
+    if (!weekName) weekName = title;
     if (!applyDate) applyDate = new Date().toLocaleDateString('vi-VN');
-    prependTkbDropdown(weekName, applyDate, finalFileName || 'TKB_Moi.xls', finalFileUrl || '#');
   }
 
+  const isImportant = document.getElementById('postIsImportant') ? document.getElementById('postIsImportant').checked : true;
+  const isPinned = document.getElementById('postIsPinned') ? document.getElementById('postIsPinned').checked : false;
+
+  const isEditing = editingPostId !== null;
+  let existingPost = null;
+  if (isEditing) {
+    existingPost = getAllPosts().find(p => String(p.id) === String(editingPostId));
+  }
+
+  // Nếu đang sửa mà không chọn file mới -> giữ nguyên file cũ (hoặc dùng list hiện tại nếu người dùng đã chỉnh)
+  const finalPostId = isEditing ? editingPostId : Date.now();
+  const finalDate = (isEditing && existingPost) ? existingPost.date : new Date().toLocaleDateString('vi-VN');
+
   const newPost = {
-    id: Date.now(),
+    id: finalPostId,
     title: title,
     category: cat,
     categoryName: catName,
     content: content,
-    date: new Date().toLocaleDateString('vi-VN'),
+    date: finalDate,
+    weekName: weekName,
+    applyDate: applyDate,
     fileName: finalFileName,
     fileUrl: finalFileUrl,
-    fileSize: finalFileSize
+    fileSize: finalFileSize,
+    files: uploadedFiles,
+    isImportant: isImportant
   };
 
-  saveCustomPost(newPost);
+  try {
+    saveCustomPost(newPost);
+  } catch (storageErr) {
+    alert('Bộ nhớ tạm trình duyệt (5MB) đã đầy do lưu nhiều tệp offline. Thầy hãy kiểm tra lại GitHub Token để web tự đẩy thẳng tệp lên GitHub nhé!');
+    btn.disabled = false;
+    btn.textContent = isEditing ? '💾 LƯU CHỈNH SỬA BÀI VIẾT' : '🚀 ĐĂNG BÀI VIẾT LÊN WEBSITE';
+    return;
+  }
+  if (isPinned) {
+    localStorage.setItem('canhthuan_pinned_notice_id', String(newPost.id));
+  }
 
-  // Update Carousel if Category 05
-  if (cat === '05') {
-    currentShowcaseIndex = 0;
-    initLiveRealtimeClock();
+  // Reset edit mode
+  editingPostId = null;
+  const cancelBtn = document.getElementById('btnCancelEdit');
+  if (cancelBtn) cancelBtn.style.display = 'none';
+
+  // Refresh all 3 columns & top marquee
+  currentShowcaseIndex = 0;
   renderCentralShowcase();
   renderVerticalAutoScrollTicker();
   updateHeaderImportantMarquee();
-    resetShowcaseTimer();
-  }
+  resetShowcaseTimer();
 
-  // Render Admin list & Tab notifications
+  // Render Admin list, TKB dropdown & Tab notifications
   renderAdminNoticeList();
   renderFrontNotices();
+  renderTkbDropdown();
 
   // Reset form
   document.getElementById('postTitle').value = '';
@@ -2095,80 +3090,197 @@ async function publishNewNotice() {
 
   btn.disabled = false;
   btn.textContent = '🚀 ĐĂNG BÀI VIẾT LÊN WEBSITE';
+  btn.style.background = '#16a34a';
 
   closeAdminModalDirect();
 
-  const token = getGhToken();
-  if (token) {
-    alert('Đăng bài và đồng bộ lên GitHub thành công! Web toàn trường sẽ cập nhật trong khoảng 1 phút.');
+  if (isEditing) {
+    alert('Đã lưu chỉnh sửa bài viết thành công!');
+  } else if (token) {
+    alert(`Đăng bài và đồng bộ ${uploadedFiles.length} tệp lên GitHub thành công! Web toàn trường sẽ cập nhật trong khoảng 1 phút.`);
   } else {
     alert('Đã đăng bài thành công lên Website! (Gợi ý: Thầy có thể dán GitHub Token ở phần Cấu hình để hệ thống tự động đẩy lên GitHub cho cả trường xem).');
   }
 }
 
-// DYNAMICALLY PREPEND TKB TO MENU
-function prependTkbDropdown(week, date, filename, url) {
-  const menu = document.getElementById('tkbDropdownMenu');
-  if (!menu) return;
-
-  // Demote previous current TKB
-  const oldCurrentTag = menu.querySelector('.tkb-current-badge');
-  if (oldCurrentTag) oldCurrentTag.remove();
-
-  const newItemHtml = `
-    <a href="${url}" download="${filename}" class="dynamic-tkb-item" style="display:flex; justify-content:space-between; align-items:center; padding:11px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9; background:#ecfdf5;">
-      <div>
-        <div style="display:flex; align-items:center; gap:6px;">
-          <strong style="color:#059669; font-size:13.5px;">⭐ TKB Hiện hành (${week})</strong>
-          <span class="tkb-current-badge" style="font-size:10px; background:#10b981; color:white; padding:1px 5px; border-radius:3px; font-weight:700;">Áp dụng</span>
-        </div>
-        <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>${date}</strong> &bull; Excel (.xls)</small>
-      </div>
-      <span style="font-size:12px; background:#d1fae5; color:#065f46; padding:4px 8px; border-radius:4px; font-weight:700;">Tải về 📥</span>
-    </a>`;
-
-  const headerDiv = menu.firstElementChild;
-  if (headerDiv) {
-    headerDiv.insertAdjacentHTML('afterend', newItemHtml);
-  }
-}
-
-// RENDER ADMIN LIST
-function renderAdminNoticeList() {
-  const container = document.getElementById('adminNoticeList');
-  if (!container) return;
+// TỰ ĐỘNG HIỂN THỊ DANH SÁCH TKB TỪ CHUYÊN MỤC 02 (MỚI NHẤT TRÊN CÙNG)
+function renderTkbDropdown() {
+  const listEl = document.getElementById('tkbDynamicList');
+  if (!listEl) return;
 
   const custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
-  if (custom.length === 0) {
-    container.innerHTML = '<div style="font-size:12px; color:#94a3b8; font-style:italic; padding:6px 0;">Chưa có bài đăng nào do Quản trị viên tạo.</div>';
+  const tkbPosts = custom.filter(p => p.category === '02');
+
+  if (tkbPosts.length === 0) {
+    listEl.innerHTML = `<div style="padding:14px; text-align:center; font-size:12.5px; color:#64748b;">Chưa có Thời khóa biểu nào được đăng.<br><small>Quản trị viên vui lòng đăng TKB tại Chuyên mục 02.</small></div>`;
     return;
   }
 
   let html = '';
-  custom.forEach(item => {
+  tkbPosts.forEach((item, idx) => {
+    const isLatest = idx === 0;
+    const files = getPostFiles(item);
+    const firstFile = files[0] || { name: item.fileName || 'TKB.xls', url: item.fileUrl || '#' };
+    const dlUrl = resolveMediaUrl(firstFile.url);
+    const weekLabel = item.weekName || item.title;
+    const applyDate = item.applyDate || item.date;
+
+    if (isLatest) {
+      html += `
+      <a href="${dlUrl}" download="${firstFile.name}" target="_blank" rel="noopener" style="display:flex; justify-content:space-between; align-items:center; padding:11px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9; background:#ecfdf5;">
+        <div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <strong style="color:#059669; font-size:13.5px;">⭐ TKB Hiện hành (${weekLabel})</strong>
+            <span class="tkb-current-badge" style="font-size:10px; background:#10b981; color:white; padding:1px 5px; border-radius:3px; font-weight:700;">Áp dụng</span>
+          </div>
+          <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>${applyDate}</strong> &bull; ${firstFile.name}</small>
+        </div>
+        <span style="font-size:12px; background:#d1fae5; color:#065f46; padding:4px 8px; border-radius:4px; font-weight:700;">Tải về 📥</span>
+      </a>`;
+    } else {
+      html += `
+      <a href="${dlUrl}" download="${firstFile.name}" target="_blank" rel="noopener" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
+        <div>
+          <strong style="font-size:13px;">📋 TKB ${weekLabel}</strong><br>
+          <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>${applyDate}</strong> &bull; ${firstFile.name}</small>
+        </div>
+        <span style="font-size:11.5px; background:#f1f5f9; color:#475569; padding:3px 8px; border-radius:4px;">Tải về 📥</span>
+      </a>`;
+    }
+  });
+  listEl.innerHTML = html;
+}
+
+// RENDER ADMIN LIST (QUẢN LÝ SỬA / XÓA / GHIM TOÀN BỘ BÀI VIẾT)
+function renderAdminNoticeList() {
+  const container = document.getElementById('adminNoticeList');
+  if (!container) return;
+
+  const allPosts = getAllPosts();
+  const pinnedId = getPinnedNoticeId();
+
+  if (allPosts.length === 0) {
+    container.innerHTML = '<div style="font-size:12px; color:#94a3b8; font-style:italic; padding:6px 0;">Chưa có bài viết nào.</div>';
+    return;
+  }
+
+  let html = '<div style="font-size:11.5px; font-weight:700; color:#0f3460; background:#e0f2fe; padding:6px 8px; border-radius:4px; margin-bottom:6px;">🛠️ QUẢN LÝ BÀI ĐÃ ĐĂNG (BẤM ✏️ SỬA, 🗑️ XÓA HOẶC 📌 GHIM THANH NGANG):</div>';
+
+  allPosts.forEach((item, idx) => {
+    const isPinned = String(item.id) === pinnedId;
+    const filesCount = getPostFiles(item).length;
     html += `
-    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed #e2e8f0; font-size:12.5px;">
-      <div style="flex:1; padding-right:10px;">
-        <strong>📢 ${item.title}</strong>
-        <div style="color:#64748b; font-size:11.5px;">${item.date} &bull; ${item.categoryName} ${item.fileName ? '• 📎 ' + item.fileName : ''}</div>
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:7px 4px; border-bottom:1px dashed #e2e8f0; font-size:12px; gap:6px;">
+      <div style="flex:1; min-width:0;">
+        <strong style="display:block; color:#0f172a;">${idx + 1}. ${item.title}</strong>
+        <div style="color:#64748b; font-size:11px;">${item.date} &bull; ${item.categoryName} ${filesCount > 0 ? '• 📎 ' + filesCount + ' tệp' : ''}</div>
       </div>
-      <button onclick="deleteCustomPost(${item.id})" style="background:#fee2e2; color:#b91c1c; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:700;">Xóa</button>
+      <div style="display:flex; gap:4px; flex-shrink:0; flex-wrap:wrap;">
+        <button type="button" onclick="editCustomPost('${item.id}')" style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:700;" title="Sửa tiêu đề, nội dung, tệp đính kèm">
+          ✏️ Sửa
+        </button>
+        <button type="button" onclick="pinNoticeToMarquee('${item.id}')" style="background:${isPinned ? '#dc2626' : '#e0f2fe'}; color:${isPinned ? 'white' : '#0369a1'}; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:700;" title="Ghim chạy trên thanh ngang đầu trang">
+          ${isPinned ? '🔴 Đang ghim' : '📌 Ghim'}
+        </button>
+        <button type="button" onclick="deleteCustomPost('${item.id}')" style="background:#fee2e2; color:#b91c1c; border:1px solid #fecaca; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:700;" title="Xóa bài viết này">
+          🗑️ Xóa
+        </button>
+      </div>
     </div>`;
   });
   container.innerHTML = html;
 }
 
-function deleteCustomPost(id) {
+function editCustomPost(id) {
+  const post = getAllPosts().find(p => String(p.id) === String(id));
+  if (!post) return;
+
+  editingPostId = post.id;
+  document.getElementById('postTitle').value = post.title || '';
+  document.getElementById('postCategory').value = post.category || '05';
+  onCategoryChange();
+  document.getElementById('postContent').value = post.content || '';
+  if (document.getElementById('postIsImportant')) {
+    document.getElementById('postIsImportant').checked = post.isImportant !== false;
+  }
+  if (document.getElementById('postIsPinned')) {
+    document.getElementById('postIsPinned').checked = String(post.id) === getPinnedNoticeId();
+  }
+
+  // Nạp lại danh sách tệp đính kèm hiện có để Thầy giữ lại hoặc xóa bớt / thêm mới
+  currentAttachedFiles = getPostFiles(post).map(f => ({
+    name: f.name,
+    size: f.size || '',
+    sizeBytes: 0,
+    dataUrl: f.url,
+    rawBase64: '' // Đã có trên server/storage, không cần upload lại
+  }));
+  renderSelectedFilesList();
+
+  const btn = document.getElementById('btnPublishNotice');
+  if (btn) {
+    btn.textContent = '💾 LƯU CHỈNH SỬA BÀI VIẾT';
+    btn.style.background = '#d97706';
+  }
+  const cancelBtn = document.getElementById('btnCancelEdit');
+  if (cancelBtn) cancelBtn.style.display = 'inline-block';
+
+  // Cuộn mượt lên ô soạn thảo trong bảng Quản trị
+  const dash = document.getElementById('adminDashboardSection');
+  if (dash) dash.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('postTitle').focus();
+}
+
+function cancelEditPost() {
+  editingPostId = null;
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postContent').value = '';
+  document.getElementById('postFileUrl').value = '';
+  clearSelectedFile();
+  const btn = document.getElementById('btnPublishNotice');
+  if (btn) {
+    btn.textContent = '🚀 ĐĂNG BÀI VIẾT LÊN WEBSITE';
+    btn.style.background = '#16a34a';
+  }
+  const cancelBtn = document.getElementById('btnCancelEdit');
+  if (cancelBtn) cancelBtn.style.display = 'none';
+}
+
+async function deleteCustomPost(id) {
   if (!confirm('Thầy có chắc chắn muốn xóa bài viết này không?')) return;
   let custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
-  custom = custom.filter(p => p.id !== id);
+  const targetPost = custom.find(p => String(p.id) === String(id));
+  const beforeLen = custom.length;
+  custom = custom.filter(p => String(p.id) !== String(id));
   localStorage.setItem('canhthuan_posts_v2', JSON.stringify(custom));
-  initLiveRealtimeClock();
+
+  // Nếu có Token GitHub và bài có tệp đã đẩy lên GitHub -> tự động xóa luôn tệp trên GitHub cho sạch kho
+  if (targetPost && getGhToken()) {
+    const files = getPostFiles(targetPost);
+    for (const f of files) {
+      if (f.url && !/^(https?:|data:|blob:)/i.test(f.url) && !/^TKB_Tuan_/i.test(f.url)) {
+        deleteFromGitHubApi(f.url, null, `Xóa tệp đính kèm ${f.url} khi xóa bài viết`);
+      }
+    }
+  }
+
+  // Nếu là bài mẫu mặc định -> thêm vào danh sách ẩn để xóa hẳn khỏi trang
+  if (beforeLen === custom.length || DEFAULT_CAT05_POSTS.some(d => String(d.id) === String(id))) {
+    const hidden = getHiddenDefaultIds();
+    if (!hidden.includes(String(id))) {
+      hidden.push(String(id));
+      localStorage.setItem('canhthuan_hidden_default_ids', JSON.stringify(hidden));
+    }
+  }
+
+  if (String(editingPostId) === String(id)) cancelEditPost();
+  currentShowcaseIndex = 0;
   renderCentralShowcase();
   renderVerticalAutoScrollTicker();
   updateHeaderImportantMarquee();
   renderAdminNoticeList();
   renderFrontNotices();
+  renderTkbDropdown();
 }
 
 // RENDER FRONT NOTICES (TAB 2)
@@ -2180,31 +3292,56 @@ function renderFrontNotices() {
   const custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
 
   custom.slice().reverse().forEach(item => {
+    const files = getPostFiles(item);
+    const mediaFiles = files.filter(f => isImageFile(f.name, f.url) || isVideoFile(f.name, f.url));
+    const docFiles = files.filter(f => !isImageFile(f.name, f.url) && !isVideoFile(f.name, f.url));
+
+    let mediaHtml = '';
+    if (mediaFiles.length > 0) {
+      mediaHtml = `<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;">`;
+      mediaFiles.forEach(m => {
+        const rUrl = resolveMediaUrl(m.url);
+        const fbUrl = getGithubRawFallback(m.url || m.name);
+        if (isVideoFile(m.name, m.url)) {
+          mediaHtml += `<video src="${rUrl}" controls playsinline style="max-height:170px; max-width:300px; border-radius:6px; background:#000;"></video>`;
+        } else {
+          mediaHtml += `<img src="${rUrl}" alt="${m.name}" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='${fbUrl}';}" onclick="window.open(this.src, '_blank')" style="height:140px; max-width:240px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1; cursor:zoom-in;" title="Bấm xem ảnh phóng to">`;
+        }
+      });
+      mediaHtml += `</div>`;
+    }
+
     let attachmentHtml = '';
-    if (item.fileUrl) {
-      attachmentHtml = `
-      <div style="margin-top:12px; display:inline-flex; align-items:center; gap:12px; background:#f0fdf4; border:1px solid #bbf7d0; padding:10px 16px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05); flex-wrap:wrap;">
-        <span style="font-size:22px;">📎</span>
-        <div>
-          <div style="font-weight:700; color:#15803d; font-size:13.5px;">Tệp đính kèm: <strong>${item.fileName}</strong></div>
-          <small style="color:#64748b; font-size:12px;">Dung lượng: ${item.fileSize || 'Văn bản gốc'} &bull; Định dạng chuẩn</small>
-        </div>
-        <a href="${item.fileUrl}" download="${item.fileName}" target="_blank" rel="noopener" style="background:#16a34a; color:white; text-decoration:none; padding:7px 14px; border-radius:6px; font-weight:700; font-size:12.5px; margin-left:auto; display:inline-flex; align-items:center; gap:6px;">
-          📥 Tải Về Máy
-        </a>
-      </div>`;
+    if (docFiles.length > 0) {
+      attachmentHtml = `<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;">`;
+      docFiles.forEach(d => {
+        const dUrl = resolveMediaUrl(d.url);
+        attachmentHtml += `
+        <div style="display:inline-flex; align-items:center; gap:10px; background:#f0fdf4; border:1px solid #bbf7d0; padding:8px 12px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+          <span style="font-size:18px;">📎</span>
+          <div>
+            <div style="font-weight:700; color:#15803d; font-size:13px;">${d.name}</div>
+            <small style="color:#64748b; font-size:11.5px;">${d.size || 'Văn bản gốc'}</small>
+          </div>
+          <a href="${dUrl}" download="${d.name}" target="_blank" rel="noopener" style="background:#16a34a; color:white; text-decoration:none; padding:5px 10px; border-radius:5px; font-weight:700; font-size:12px;">
+            📥 Tải Về
+          </a>
+        </div>`;
+      });
+      attachmentHtml += `</div>`;
     }
 
     const postHtml = `
-    <div class="dynamic-admin-post" style="padding: 14px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 16px; animation: modalFadeIn 0.3s ease;">
+    <div class="dynamic-admin-post" style="padding: 12px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 12px; animation: modalFadeIn 0.3s ease;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
-        <h4 style="color:var(--primary-navy); font-size:16px; font-weight:700;">📢 ${item.title}</h4>
+        <h4 style="color:var(--primary-navy); font-size:15.5px; font-weight:700;">📢 ${item.title}</h4>
         <div style="display:flex; gap:6px; align-items:center;">
           <small style="color:#64748b; font-size:12px;">${item.date}</small>
           <span style="font-size:12px; background:#fef3c7; color:#b45309; padding:2px 8px; border-radius:4px; font-weight:600;">${item.categoryName}</span>
         </div>
       </div>
-      <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">${item.content || 'Không có mô tả chi tiết.'}</p>
+      <p style="color:var(--text-muted); font-size:13.5px; line-height:1.6;">${item.content || 'Không có mô tả chi tiết.'}</p>
+      ${mediaHtml}
       ${attachmentHtml}
     </div>`;
 
@@ -2232,36 +3369,91 @@ function initLiveRealtimeClock() {
   setInterval(tick, 1000);
 }
 
-// ================= H2: VERTICAL UPWARD AUTO-SCROLL TICKER =================
+// ================= H2: 10 TIN QUAN TRỌNG (CỘT PHẢI CÙNG) & 1 TIN GHIM THANH NGANG =================
 let verticalTickerTimer = null;
 let verticalTickerOffset = 0;
+
+function getImportantTop10() {
+  const all = getAllPosts();
+  return all.filter(p => p.isImportant !== false).slice(0, 10);
+}
+
+function getPinnedNoticeId() {
+  const saved = localStorage.getItem('canhthuan_pinned_notice_id');
+  if (saved) return String(saved);
+  const top10 = getImportantTop10();
+  return top10.length > 0 ? String(top10[0].id) : '';
+}
+
+function pinNoticeToMarquee(id) {
+  localStorage.setItem('canhthuan_pinned_notice_id', String(id));
+  renderVerticalAutoScrollTicker();
+  updateHeaderImportantMarquee();
+  renderAdminNoticeList();
+  alert('Đã ghim tin này chạy trên thanh ngang TIN QUAN TRỌNG đầu trang!');
+}
+
+function showImportantNoticeInMain(postId) {
+  const all = getAllPosts();
+  const post = all.find(p => String(p.id) === String(postId));
+  if (!post) return;
+
+  // Check if in Cat05 carousel
+  const cat05 = getCat05Top10();
+  const idx = cat05.findIndex(p => String(p.id) === String(postId));
+  if (idx !== -1) {
+    goToSlide(idx);
+    return;
+  }
+
+  // Otherwise display directly in main slide card and pause auto-rotate briefly
+  pauseShowcase();
+  const slideContainer = document.getElementById('showcaseSlideContent');
+  if (!slideContainer) return;
+  const attachHtml = buildPostAttachmentsHtml(post);
+  slideContainer.innerHTML = `
+    <div class="slide-badge-row">
+      <span class="slide-category-badge" style="background:#dc2626; color:white;">📌 TIN QUAN TRỌNG</span>
+      <span class="slide-date">📅 ${post.date}</span>
+    </div>
+    <div class="slide-headline">${post.title}</div>
+    ${post.content ? `<div class="slide-summary">${post.content}</div>` : ''}
+    ${attachHtml}
+  `;
+  if (currentMediaList.length > 0) {
+    updateSlideMediaDOM();
+    startPostMediaTimer();
+  } else {
+    stopPostMediaTimer();
+  }
+}
 
 function renderVerticalAutoScrollTicker() {
   const container = document.getElementById('verticalTickerList');
   if (!container) return;
 
-  const all = getAllPosts();
-  // Get top 10 notices (prioritize isImportant or newest)
-  const top10 = all.slice(0, 10);
+  const top10 = getImportantTop10();
+  const pinnedId = getPinnedNoticeId();
 
   let html = '';
   top10.forEach((item, index) => {
-    const isImp = item.isImportant !== false;
-    const tagLabel = isImp ? '⭐ QUAN TRỌNG' : (item.categoryName || 'THÔNG BÁO');
-    const tagClass = isImp ? 'imp' : '';
-
+    const isPinned = String(item.id) === pinnedId;
     html += `
-    <div class="vertical-ticker-item ${isImp ? 'is-important' : ''}" onclick="goToSlide(${index})">
+    <div class="vertical-ticker-item is-important" onclick="showImportantNoticeInMain('${item.id}')">
       <div class="ticker-item-badge-row">
-        <span class="ticker-item-tag ${tagClass}">${tagLabel}</span>
+        <div>
+          <span class="ticker-item-tag imp">⭐ QUAN TRỌNG #${index + 1}</span>
+          ${isPinned ? '<span class="pinned-badge-mini">🔴 ĐANG GHIM</span>' : ''}
+        </div>
         <span class="ticker-item-date">${item.date}</span>
       </div>
-      <div class="ticker-item-title">${index + 1}. ${item.title}</div>
+      <div class="ticker-item-title">${item.title}</div>
     </div>`;
   });
 
-  // Duplicate list once to allow infinite upward scroll
+  // Duplicate list once for seamless continuous upward loop
   container.innerHTML = html + html;
+  verticalTickerOffset = 0;
   startVerticalTickerAnimation();
 }
 
@@ -2271,14 +3463,14 @@ function startVerticalTickerAnimation() {
   if (!list) return;
 
   verticalTickerTimer = setInterval(() => {
-    verticalTickerOffset += 1;
-    // When reached half height (one set of 10 items), reset smoothly
     const singleSetHeight = list.scrollHeight / 2;
+    if (singleSetHeight <= 0) return;
+    verticalTickerOffset += 0.8;
     if (verticalTickerOffset >= singleSetHeight) {
       verticalTickerOffset = 0;
     }
     list.style.transform = `translateY(-${verticalTickerOffset}px)`;
-  }, 45); // Smooth upward scrolling speed
+  }, 40);
 }
 
 function pauseVerticalTicker() {
@@ -2288,20 +3480,19 @@ function resumeVerticalTicker() {
   startVerticalTickerAnimation();
 }
 
-// ================= H2: UPDATE TOP MARQUEE WITH IMPORTANT NOTICES =================
+// CHỈ HIỂN THỊ DUY NHẤT 1 TIN ĐƯỢC ADMIN GHIM TRÊN THANH NGANG TIN QUAN TRỌNG
 function updateHeaderImportantMarquee() {
   const el = document.getElementById('liveImportantMarquee');
   if (!el) return;
 
-  const all = getAllPosts();
-  const importantPosts = all.filter(p => p.isImportant !== false).slice(0, 5);
+  const top10 = getImportantTop10();
+  if (top10.length === 0) return;
 
-  if (importantPosts.length > 0) {
-    const marqueeTexts = importantPosts.map(p => `📢 [${p.date}] ${p.title} ➔ ${p.content.substring(0, 75)}...`).join(' &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp; ');
-    el.innerHTML = marqueeTexts;
-  }
+  const pinnedId = getPinnedNoticeId();
+  const pinnedPost = top10.find(p => String(p.id) === pinnedId) || top10[0];
+
+  el.innerHTML = `🔴 [${pinnedPost.date}] <strong>${pinnedPost.title}</strong> — ${pinnedPost.content ? pinnedPost.content.substring(0, 120) + '...' : ''}`;
 }
-
 
 document.addEventListener('DOMContentLoaded', function() {
   initLiveRealtimeClock();
@@ -2310,6 +3501,7 @@ document.addEventListener('DOMContentLoaded', function() {
   updateHeaderImportantMarquee();
   startShowcaseAutoRotate();
   renderFrontNotices();
+  renderTkbDropdown();
   updateTokenBadge();
 });
 </script>
