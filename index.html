@@ -736,8 +736,8 @@ body {
       <li><a href="#" class="active">Trang Chủ</a></li>
       <li><a href="#phan-he">4 Phân Hệ Trọng Tâm</a></li>
       <li><a href="#doan-the">Đoàn Thể & Cộng Đồng</a></li>
-      <li><a href="#lich-tuan">Lịch Công Tác Tuần</a></li>
-      <li><a href="#thong-bao-sec">Thông Báo</a></li>
+      <li><a href="#lich-tuan" onclick="openTabNav('tab-lich-content', event)">Lịch Công Tác Tuần</a></li>
+      <li><a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)">Thông Báo & Tin Tức</a></li>
     </ul>
     <button class="nav-admin-btn" onclick="openAdminModal()">🔒 Quản Trị Viên</button>
   </div>
@@ -771,7 +771,7 @@ body {
         <li>Cơ sở vật chất & Thiết bị dạy học</li>
         <li>Chính sách hỗ trợ học sinh bán trú</li>
       </ul>
-      <a href="#thong-bao-sec" class="btn-primary">Xem Báo Cáo Công Khai ➔</a>
+      <a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)" class="btn-primary">Xem Báo Cáo Công Khai ➔</a>
     </div>
 
     <!-- CARD 2 -->
@@ -799,7 +799,7 @@ body {
       </ul>
       <div class="module-actions">
         <a href="#ban-tru-info" class="btn-primary" style="flex:1;">Góc Bán Trú ➔</a>
-        <a href="#thong-bao-sec" class="btn-primary" style="flex:1; background:#f59e0b; color:white; border-color:#f59e0b;">Xem Hoạt Động ➔</a>
+        <a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)" class="btn-primary" style="flex:1; background:#f59e0b; color:white; border-color:#f59e0b;">Xem Hoạt Động ➔</a>
       </div>
     </div>
 
@@ -815,7 +815,7 @@ body {
       </ul>
       <div class="module-actions">
         <a href="#lich-tuan" class="btn-primary" style="flex:1;">Xem Lịch Tuần ➔</a>
-        <a href="#lich-tuan" class="btn-primary btn-sky" style="flex:1;">Thời Khóa Biểu ➔</a>
+        <a href="#lich-tuan" onclick="openTkbSection(event)" class="btn-primary btn-sky" style="flex:1;">Tải TKB Các Tuần ➔</a>
       </div>
     </div>
 
@@ -866,7 +866,7 @@ body {
               </div>
 
               <!-- TUAN 11: 16/11/2026 (MOI NHAT - HIEN HANH) -->
-              <a href="tkb/TKB_Tuan_11_161126.xls" download="TKB_Tuan_11_161126.xls" style="display:flex; justify-content:space-between; align-items:center; padding:11px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9; background:#ecfdf5;">
+              <a href="TKB_Tuan_11_161126.xls" download="TKB_Tuan_11_161126.xls" style="display:flex; justify-content:space-between; align-items:center; padding:11px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9; background:#ecfdf5;">
                 <div>
                   <div style="display:flex; align-items:center; gap:6px;">
                     <strong style="color:#059669; font-size:13.5px;">⭐ TKB Hiện hành (Tuần 11)</strong>
@@ -878,7 +878,7 @@ body {
               </a>
 
               <!-- TUAN 10: 09/11/2026 -->
-              <a href="tkb/TKB_Tuan_10_09112026.xls" download="TKB_Tuan_10_09112026.xls" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
+              <a href="TKB_Tuan_10_09112026.xls" download="TKB_Tuan_10_09112026.xls" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
                 <div>
                   <strong style="font-size:13px;">📋 TKB Tuần 10</strong><br>
                   <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>09/11/2026</strong> &bull; Excel (.xls)</small>
@@ -887,7 +887,7 @@ body {
               </a>
 
               <!-- TUAN 09: 02/11/2026 -->
-              <a href="tkb/TKB_Tuan_09_02112026.xls" download="TKB_Tuan_09_02112026.xls" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
+              <a href="TKB_Tuan_09_02112026.xls" download="TKB_Tuan_09_02112026.xls" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
                 <div>
                   <strong style="font-size:13px;">📋 TKB Tuần 09</strong><br>
                   <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>02/11/2026</strong> &bull; Excel (.xls)</small>
@@ -896,7 +896,7 @@ body {
               </a>
 
               <!-- TUAN 05: 02/10/2026 -->
-              <a href="tkb/TKB_Tuan_05_021026.xls" download="TKB_Tuan_05_021026.xls" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
+              <a href="TKB_Tuan_05_021026.xls" download="TKB_Tuan_05_021026.xls" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; text-decoration:none; color:#0f3460; font-size:13px; border-bottom:1px solid #f1f5f9;">
                 <div>
                   <strong style="font-size:13px;">📋 TKB Tuần 05</strong><br>
                   <small style="color:#64748b; font-size:12px;">Ngày áp dụng: <strong>02/10/2026</strong> &bull; Excel (.xls)</small>
@@ -1001,9 +1001,9 @@ body {
 
     <div class="footer-col">
       <h3>VĂN BẢN & DỮ LIỆU CÔNG KHAI</h3>
-      <p><a href="#lich-tuan">📋 Lịch Công Tác Tuần Ban Giám Hiệu</a></p>
-      <p><a href="#lich-tuan">📅 Thời Khóa Biểu Nhà Trường</a></p>
-      <p><a href="#thong-bao-sec">📜 Báo Cáo Công Khai Thông Tư 09/2024</a></p>
+      <p><a href="#lich-tuan" onclick="openTabNav('tab-lich-content', event)">📋 Lịch Công Tác Tuần Ban Giám Hiệu</a></p>
+      <p><a href="#lich-tuan" onclick="openTkbSection(event)">📅 Thời Khóa Biểu Nhà Trường</a></p>
+      <p><a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)">📜 Báo Cáo Công Khai Thông Tư 09/2024</a></p>
       <p><a href="#phan-he">💡 Kế Hoạch Chuyên Môn & Giáo Dục STEM</a></p>
       <p><a href="#doan-the">🤝 Hoạt Động Đoàn Thể & Đền Ơn Đáp Nghĩa</a></p>
     </div>
@@ -1020,83 +1020,6 @@ body {
   </div>
 </footer>
 
-<script>
-function showTab(evt, tabId) {
-  const panels = document.querySelectorAll('.tab-panel');
-  panels.forEach(p => p.classList.remove('active'));
-  
-  const buttons = document.querySelectorAll('.tab-btn');
-  buttons.forEach(b => b.classList.remove('active'));
-  
-  document.getElementById(tabId).classList.add('active');
-  evt.currentTarget.classList.add('active');
-}
-
-// TKB DROPDOWN TOGGLE
-function toggleTkbDropdown(e) {
-  e.stopPropagation();
-  const m = document.getElementById('tkbDropdownMenu');
-  m.style.display = m.style.display === 'block' ? 'none' : 'block';
-}
-document.addEventListener('click', function(e) {
-  const m = document.getElementById('tkbDropdownMenu');
-  if (m && !e.target.closest('.dropdown-wrapper')) {
-    m.style.display = 'none';
-  }
-});
-
-// PUBLISH NEW NOTICE WITH ATTACHMENT
-function publishNewNotice() {
-  const title = document.getElementById('postTitle').value.trim();
-  const cat = document.getElementById('postCategory').value;
-  const fileName = document.getElementById('postFileName').value.trim();
-  const fileUrl = document.getElementById('postFileUrl').value.trim();
-  const content = document.getElementById('postContent').value.trim();
-
-  if (!title) {
-    alert('Vui lòng nhập Tiêu đề thông báo!');
-    return;
-  }
-
-  let badgeColor = '#dbeafe', badgeText = '#1e40af';
-  if (cat === 'Đoàn Thể') { badgeColor = '#fee2e2'; badgeText = '#b91c1c'; }
-  else if (cat === 'Chuyên Môn') { badgeColor = '#dcfce7'; badgeText = '#15803d'; }
-
-  let attachmentHtml = '';
-  if (fileUrl) {
-    const label = fileName || 'Xem tệp đính kèm (PDF)';
-    attachmentHtml = `<div style="margin-top:10px;"><a href="${fileUrl}" target="_blank" rel="noopener" class="attachment-btn">📎 Tải Tệp Đính Kèm: <strong>${label}</strong> ↗</a></div>`;
-  }
-
-  const newPostHtml = `
-  <div style="padding: 12px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 16px; animation: modalFadeIn 0.3s ease;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-      <h4 style="color:var(--primary-navy); font-size:16px; font-weight:700;">📢 ${title}</h4>
-      <span style="font-size:12px; background:${badgeColor}; color:${badgeText}; padding:2px 8px; border-radius:4px; font-weight:600;">${cat}</span>
-    </div>
-    <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">${content || 'Không có mô tả chi tiết.'}</p>
-    ${attachmentHtml}
-  </div>`;
-
-  const container = document.getElementById('tab-thongbao-content');
-  container.insertAdjacentHTML('afterbegin', newPostHtml);
-
-  // Switch to Tab Thong Bao to let admin see
-  showTab({ currentTarget: document.querySelectorAll('.tab-btn')[1] }, 'tab-thongbao-content');
-  closeAdminModalDirect();
-
-  // Reset form
-  document.getElementById('postTitle').value = '';
-  document.getElementById('postFileName').value = '';
-  document.getElementById('postFileUrl').value = '';
-  document.getElementById('postContent').value = '';
-
-  alert('Đã đăng thông báo mới thành công! Người xem sẽ thấy bài viết cùng nút tải tệp đính kèm ngay lập tức.');
-}
-
-</script>
-
-
 <!-- ================= ADMIN MANAGEMENT MODAL ================= -->
 <div id="adminModal" class="admin-modal-backdrop" onclick="closeAdminModal(event)">
   <div class="admin-modal-card" onclick="event.stopPropagation()">
@@ -1106,55 +1029,88 @@ function publishNewNotice() {
       <div style="font-size:32px;">🛡️</div>
       <div>
         <h3 style="font-size:18px; color:var(--primary-navy); font-weight:800;">TRUNG TÂM QUẢN TRỊ NỘI DUNG</h3>
-        <p style="font-size:13px; color:var(--text-muted);">Trường THCS Bán trú Canh Thuận (Vân Canh, Gia Lai)</p>
+        <p style="font-size:13px; color:var(--text-muted);">Trường THCS Bán trú Canh Thuận (Vân Canh, Bình Định)</p>
       </div>
     </div>
 
     <!-- PIN SECURITY CHECK -->
-    <div id="adminPinSection">
-      <p style="font-size:14px; color:#475569; margin-bottom:16px;">Vui lòng nhập <strong>Mã PIN Quản Trị</strong> để mở Bảng điều khiển và tải lên văn bản mới:</p>
-      <div style="display:flex; gap:10px; margin-bottom:12px;">
-        <input type="password" id="adminPinInput" placeholder="Nhập mã PIN quản trị..." style="flex:1; padding:12px 16px; border:1px solid #cbd5e1; border-radius:8px; font-size:15px;" onkeyup="if(event.key==='Enter') verifyAdminPin()">
-        <button onclick="verifyAdminPin()" style="background:var(--primary-navy); color:white; border:none; padding:12px 20px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer;">Mở Khóa</button>
+    <div id="adminPinSection" style="text-align:center; padding:20px 10px;">
+      <p style="font-size:14px; color:var(--text-dark); margin-bottom:12px; font-weight:600;">Nhập mã PIN Quản trị viên để tiếp tục:</p>
+      <input type="password" id="adminPinInput" maxlength="6" placeholder="Nhập PIN (2026)..." style="font-size:18px; letter-spacing:4px; text-align:center; width:180px; padding:10px; border:2px solid var(--border-light); border-radius:8px; outline:none; margin-bottom:14px;" onkeypress="if(event.key==='Enter') verifyAdminPin()">
+      <div>
+        <button onclick="verifyAdminPin()" style="background:var(--primary-navy); color:white; border:none; padding:10px 24px; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer;">Xác Nhận ➔</button>
       </div>
-      <p id="adminPinError" style="color:#dc2626; font-size:13px; display:none;">⚠️ Mã PIN chưa chính xác. Vui lòng kiểm tra lại!</p>
-      <p style="font-size:12.5px; color:#94a3b8; margin-top:8px;"><em>(Mã PIN mặc định của Thầy: <strong>2026</strong>)</em></p>
+      <p id="adminPinError" style="display:none; color:#dc2626; font-size:13px; margin-top:10px; font-weight:600;">Mã PIN không chính xác! Vui lòng thử lại.</p>
     </div>
 
-    <!-- ADMIN DASHBOARD (UNLOCKED) -->
-    <div id="adminDashboardSection" style="display:none;">
-      <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:10px 14px; border-radius:8px; margin-bottom:16px; font-size:13px; color:#15803d; font-weight:600;">
-        ✅ Đã xác thực quyền Quản trị viên: <strong>thcsbtcanhthuan</strong>
-      </div>
-      
-      <!-- CÔNG CỤ SOẠN TIN ĐÍNH KÈM FILE -->
-      <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:18px; margin-bottom:20px;">
-        <h4 style="color:var(--primary-navy); font-size:15px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
-          <span>📝</span> <strong>Đăng Thông Báo Mới & Đính Kèm Tệp</strong>
+    <!-- ADMIN DASHBOARD -->
+    <div id="adminDashboardSection" style="display:none; max-height:75vh; overflow-y:auto; padding-right:5px;">
+
+      <!-- POSTING BOX -->
+      <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:16px; margin-bottom:20px;">
+        <h4 style="font-size:15px; color:#0f3460; margin-bottom:12px; font-weight:700; display:flex; align-items:center; gap:8px;">
+          <span>📝</span> SOẠN & ĐĂNG BÀI VIẾT / THÔNG BÁO (CÓ ĐÍNH KÈM FILE)
         </h4>
+
         <div style="margin-bottom:10px;">
-          <input type="text" id="postTitle" placeholder="Tiêu đề thông báo / văn bản..." style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13.5px; box-sizing:border-box;">
+          <input type="text" id="postTitle" placeholder="Tiêu đề thông báo / bài viết (Bắt buộc)..." style="width:100%; padding:10px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13.5px; box-sizing:border-box;">
         </div>
+
         <div style="display:flex; gap:10px; margin-bottom:10px;">
           <select id="postCategory" style="flex:1; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;">
             <option value="Thông Báo">Nhãn: 📢 Thông Báo Chung</option>
-            <option value="Đoàn Thể">Nhãn: 🤝 Đoàn Thể - Xã Hội</option>
             <option value="Chuyên Môn">Nhãn: 📚 Chuyên Môn - STEM</option>
-            <option value="Công Khai">Nhãn: 📜 Công Khai TT 09</option>
+            <option value="Đoàn Thể">Nhãn: 🤝 Đoàn Thể - Xã Hội</option>
+            <option value="Công Khai">Nhãn: 📜 Công Khai TT 09/2024</option>
           </select>
-          <input type="text" id="postFileName" placeholder="Tên tệp đính kèm (VD: Ke_hoach_so_45.pdf)..." style="flex:1.5; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;">
         </div>
+
         <div style="margin-bottom:10px;">
-          <input type="text" id="postFileUrl" placeholder="Dán link tệp tải về từ Google Drive (hoặc link văn bản)..." style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;">
+          <textarea id="postContent" placeholder="Nội dung tóm tắt chi tiết bài viết..." rows="3" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;"></textarea>
         </div>
-        <div style="margin-bottom:12px;">
-          <textarea id="postContent" placeholder="Nội dung tóm tắt thông báo..." rows="2" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;"></textarea>
+
+        <!-- FILE ATTACHMENT BOX -->
+        <div style="background:#ffffff; border:1px dashed #94a3b8; border-radius:6px; padding:12px; margin-bottom:12px;">
+          <div style="font-size:13px; font-weight:700; color:#334155; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+            <span>📎</span> ĐÍNH KÈM FILE VĂN BẢN (CHỌN 1 TRONG 2 CÁCH):
+          </div>
+
+          <!-- Method 1: Choose File from Computer -->
+          <div style="margin-bottom:8px;">
+            <label style="display:inline-block; background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd; padding:6px 12px; border-radius:5px; font-size:12.5px; font-weight:600; cursor:pointer;">
+              📂 Chọn tệp từ máy tính...
+              <input type="file" id="postFileInput" onchange="handleFileSelect(event)" style="display:none;" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png,.zip">
+            </label>
+            <span id="fileSelectedDisplay" style="display:none; margin-left:10px; font-size:12.5px; color:#15803d; font-weight:600; background:#dcfce7; padding:4px 8px; border-radius:4px;">
+              Đã chọn: <strong id="selectedFileName"></strong> (<span id="selectedFileSize"></span>)
+              <button type="button" onclick="clearSelectedFile()" style="margin-left:6px; color:#dc2626; border:none; background:none; cursor:pointer; font-weight:bold;">✕</button>
+            </span>
+          </div>
+
+          <!-- Method 2: Google Drive / Web URL -->
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:12px; color:#64748b; white-space:nowrap;">Hoặc dán Link Drive:</span>
+            <input type="text" id="postFileUrl" placeholder="https://drive.google.com/file/d/... (Nếu file dung lượng lớn)" style="flex:1; padding:7px 10px; border:1px solid #cbd5e1; border-radius:5px; font-size:12px; box-sizing:border-box;">
+          </div>
         </div>
-        <button onclick="publishNewNotice()" style="background:#16a34a; color:white; border:none; padding:10px 18px; border-radius:6px; font-size:13.5px; font-weight:700; cursor:pointer; width:100%;">
+
+        <button onclick="publishNewNotice()" style="background:#16a34a; color:white; border:none; padding:11px 20px; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer; width:100%; box-shadow:0 2px 6px rgba(22, 163, 74, 0.3);">
           🚀 ĐĂNG THÔNG BÁO LÊN WEBSITE
         </button>
       </div>
 
+      <!-- RECENT NOTICES MANAGER -->
+      <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:14px; margin-bottom:20px;">
+        <h4 style="font-size:14px; color:#0f3460; margin-bottom:10px; font-weight:700; display:flex; align-items:center; justify-content:space-between;">
+          <span>📋 CÁC TIN ĐÃ ĐĂNG BỞI QUẢN TRỊ VIÊN:</span>
+          <small style="font-size:11.5px; color:#64748b; font-weight:normal;">Lưu tự động trên trình duyệt</small>
+        </h4>
+        <div id="adminNoticeList" style="max-height:180px; overflow-y:auto;">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- 5 GOOGLE DRIVE FOLDERS -->
       <p style="font-size:13.5px; color:#475569; margin-bottom:12px; font-weight:700;">HỆ THỐNG 5 THƯ MỤC GOOGLE DRIVE (TẢI LÊN & QUẢN LÝ TỆP):</p>
       
       <a href="https://drive.google.com/drive/folders/1Xnfeh7-pGIFBLD8qlquaURpfjpmDhdIt" target="_blank" rel="noopener" class="admin-hub-link">
@@ -1187,7 +1143,79 @@ function publishNewNotice() {
   </div>
 </div>
 
+<!-- ================= JAVASCRIPT LOGIC ================= -->
 <script>
+// CURRENT ATTACHMENT CACHE
+let currentAttachedFile = null;
+
+// TAB NAVIGATION & INTERACTION
+function showTab(evt, tabId) {
+  const panels = document.querySelectorAll('.tab-panel');
+  panels.forEach(p => p.classList.remove('active'));
+  
+  const buttons = document.querySelectorAll('.tab-btn');
+  buttons.forEach(b => b.classList.remove('active'));
+  
+  const targetPanel = document.getElementById(tabId);
+  if (targetPanel) targetPanel.classList.add('active');
+  if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+}
+
+// OPEN TAB FROM ANY LINK (NAV, CARDS, FOOTER)
+function openTabNav(tabId, evt) {
+  if (evt) evt.preventDefault();
+  
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  let targetBtn = null;
+  if (tabId === 'tab-lich-content') targetBtn = tabButtons[0];
+  else if (tabId === 'tab-thongbao-content') targetBtn = tabButtons[1];
+  else if (tabId === 'tab-guongsang-content') targetBtn = tabButtons[2];
+
+  showTab({ currentTarget: targetBtn }, tabId);
+
+  const container = document.getElementById('lich-tuan');
+  if (container) {
+    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// OPEN TKB DROPDOWN AND HIGHLIGHT
+function openTkbSection(evt) {
+  if (evt) evt.preventDefault();
+  
+  // Switch to Tab Lich
+  openTabNav('tab-lich-content');
+
+  // Open and highlight dropdown
+  setTimeout(() => {
+    const m = document.getElementById('tkbDropdownMenu');
+    const btn = document.querySelector('.dropdown-wrapper button');
+    if (m) {
+      m.style.display = 'block';
+      if (btn) {
+        btn.style.boxShadow = '0 0 0 3px #10b981';
+        setTimeout(() => { btn.style.boxShadow = ''; }, 2000);
+      }
+    }
+  }, 250);
+}
+
+// TKB DROPDOWN TOGGLE
+function toggleTkbDropdown(e) {
+  e.stopPropagation();
+  const m = document.getElementById('tkbDropdownMenu');
+  if (m) {
+    m.style.display = m.style.display === 'block' ? 'none' : 'block';
+  }
+}
+document.addEventListener('click', function(e) {
+  const m = document.getElementById('tkbDropdownMenu');
+  if (m && !e.target.closest('.dropdown-wrapper')) {
+    m.style.display = 'none';
+  }
+});
+
+// ADMIN MODAL CONTROL
 function openAdminModal() {
   document.getElementById('adminModal').style.display = 'flex';
   document.getElementById('adminPinInput').focus();
@@ -1202,77 +1230,201 @@ function closeAdminModalDirect() {
 }
 function verifyAdminPin() {
   const pin = document.getElementById('adminPinInput').value.trim();
-  // Master PIN for Thay Quan / BGH
   if (pin === '2026' || pin === '1985') {
     document.getElementById('adminPinSection').style.display = 'none';
     document.getElementById('adminDashboardSection').style.display = 'block';
+    renderAdminNoticeList();
   } else {
     document.getElementById('adminPinError').style.display = 'block';
   }
 }
 
-// TKB DROPDOWN TOGGLE
-function toggleTkbDropdown(e) {
-  e.stopPropagation();
-  const m = document.getElementById('tkbDropdownMenu');
-  m.style.display = m.style.display === 'block' ? 'none' : 'block';
-}
-document.addEventListener('click', function(e) {
-  const m = document.getElementById('tkbDropdownMenu');
-  if (m && !e.target.closest('.dropdown-wrapper')) {
-    m.style.display = 'none';
-  }
-});
+// ATTACHMENT FILE HANDLER
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
 
-// PUBLISH NEW NOTICE WITH ATTACHMENT
+  const sizeKb = Math.round(file.size / 1024);
+  const sizeStr = sizeKb > 1024 ? (sizeKb / 1024).toFixed(1) + ' MB' : sizeKb + ' KB';
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    currentAttachedFile = {
+      name: file.name,
+      size: sizeStr,
+      dataUrl: e.target.result
+    };
+    document.getElementById('selectedFileName').textContent = file.name;
+    document.getElementById('selectedFileSize').textContent = sizeStr;
+    document.getElementById('fileSelectedDisplay').style.display = 'inline-block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearSelectedFile() {
+  currentAttachedFile = null;
+  document.getElementById('postFileInput').value = '';
+  document.getElementById('fileSelectedDisplay').style.display = 'none';
+}
+
+// STORAGE MANAGER (LOCALSTORAGE)
+function getSavedNotices() {
+  try {
+    return JSON.parse(localStorage.getItem('canhthuan_published_notices') || '[]');
+  } catch(e) {
+    return [];
+  }
+}
+function saveNotices(list) {
+  localStorage.setItem('canhthuan_published_notices', JSON.stringify(list));
+}
+
+// PUBLISH NEW NOTICE
 function publishNewNotice() {
   const title = document.getElementById('postTitle').value.trim();
   const cat = document.getElementById('postCategory').value;
-  const fileName = document.getElementById('postFileName').value.trim();
-  const fileUrl = document.getElementById('postFileUrl').value.trim();
   const content = document.getElementById('postContent').value.trim();
+  const driveUrl = document.getElementById('postFileUrl').value.trim();
 
   if (!title) {
     alert('Vui lòng nhập Tiêu đề thông báo!');
     return;
   }
 
-  let badgeColor = '#dbeafe', badgeText = '#1e40af';
-  if (cat === 'Đoàn Thể') { badgeColor = '#fee2e2'; badgeText = '#b91c1c'; }
-  else if (cat === 'Chuyên Môn') { badgeColor = '#dcfce7'; badgeText = '#15803d'; }
+  let finalFileName = '';
+  let finalFileUrl = '';
+  let finalFileSize = '';
 
-  let attachmentHtml = '';
-  if (fileUrl) {
-    const label = fileName || 'Xem tệp đính kèm (PDF)';
-    attachmentHtml = `<div style="margin-top:10px;"><a href="${fileUrl}" target="_blank" rel="noopener" class="attachment-btn">📎 Tải Tệp Đính Kèm: <strong>${label}</strong> ↗</a></div>`;
+  if (currentAttachedFile) {
+    finalFileName = currentAttachedFile.name;
+    finalFileUrl = currentAttachedFile.dataUrl;
+    finalFileSize = currentAttachedFile.size;
+  } else if (driveUrl) {
+    finalFileName = 'Văn bản đính kèm (Drive)';
+    finalFileUrl = driveUrl;
+    finalFileSize = 'Liên kết Drive';
   }
 
-  const newPostHtml = `
-  <div style="padding: 12px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 16px; animation: modalFadeIn 0.3s ease;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-      <h4 style="color:var(--primary-navy); font-size:16px; font-weight:700;">📢 ${title}</h4>
-      <span style="font-size:12px; background:${badgeColor}; color:${badgeText}; padding:2px 8px; border-radius:4px; font-weight:600;">${cat}</span>
-    </div>
-    <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">${content || 'Không có mô tả chi tiết.'}</p>
-    ${attachmentHtml}
-  </div>`;
+  const newPost = {
+    id: Date.now(),
+    title: title,
+    category: cat,
+    content: content,
+    date: new Date().toLocaleDateString('vi-VN'),
+    fileName: finalFileName,
+    fileUrl: finalFileUrl,
+    fileSize: finalFileSize
+  };
 
-  const container = document.getElementById('tab-thongbao-content');
-  container.insertAdjacentHTML('afterbegin', newPostHtml);
+  const list = getSavedNotices();
+  list.unshift(newPost);
+  saveNotices(list);
 
-  // Switch to Tab Thong Bao to let admin see
-  showTab({ currentTarget: document.querySelectorAll('.tab-btn')[1] }, 'tab-thongbao-content');
-  closeAdminModalDirect();
+  // Render on front-end
+  renderFrontNotices();
+  renderAdminNoticeList();
 
   // Reset form
   document.getElementById('postTitle').value = '';
-  document.getElementById('postFileName').value = '';
-  document.getElementById('postFileUrl').value = '';
   document.getElementById('postContent').value = '';
+  document.getElementById('postFileUrl').value = '';
+  clearSelectedFile();
+
+  // Switch to Tab Thong Bao
+  openTabNav('tab-thongbao-content');
+  closeAdminModalDirect();
 
   alert('Đã đăng thông báo mới thành công! Người xem sẽ thấy bài viết cùng nút tải tệp đính kèm ngay lập tức.');
 }
 
+// DELETE NOTICE
+function deleteNotice(id) {
+  if (!confirm('Thầy có chắc chắn muốn xóa bài viết này không?')) return;
+  let list = getSavedNotices();
+  list = list.filter(item => item.id !== id);
+  saveNotices(list);
+  renderFrontNotices();
+  renderAdminNoticeList();
+}
+
+// RENDER ADMIN LIST
+function renderAdminNoticeList() {
+  const container = document.getElementById('adminNoticeList');
+  if (!container) return;
+  const list = getSavedNotices();
+
+  if (list.length === 0) {
+    container.innerHTML = '<div style="font-size:12.5px; color:#94a3b8; font-style:italic; padding:6px 0;">Chưa có bài đăng nào được tạo qua bảng Quản trị.</div>';
+    return;
+  }
+
+  let html = '';
+  list.forEach(item => {
+    html += `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px dashed #e2e8f0; font-size:12.5px;">
+      <div style="flex:1; padding-right:10px;">
+        <strong>📢 ${item.title}</strong>
+        <div style="color:#64748b; font-size:11.5px;">${item.date} &bull; ${item.category} ${item.fileName ? '• 📎 ' + item.fileName : ''}</div>
+      </div>
+      <button onclick="deleteNotice(${item.id})" style="background:#fee2e2; color:#b91c1c; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:11px; font-weight:700;">Xóa</button>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// RENDER FRONT-END NOTICES
+function renderFrontNotices() {
+  const container = document.getElementById('tab-thongbao-content');
+  if (!container) return;
+
+  // Keep static default posts and inject user published posts at the top
+  const list = getSavedNotices();
+  
+  // Remove existing dynamic posts
+  document.querySelectorAll('.dynamic-admin-post').forEach(el => el.remove());
+
+  list.slice().reverse().forEach(item => {
+    let badgeColor = '#dbeafe', badgeText = '#1e40af';
+    if (item.category === 'Đoàn Thể') { badgeColor = '#fee2e2'; badgeText = '#b91c1c'; }
+    else if (item.category === 'Chuyên Môn') { badgeColor = '#dcfce7'; badgeText = '#15803d'; }
+    else if (item.category === 'Công Khai') { badgeColor = '#fef3c7'; badgeText = '#b45309'; }
+
+    let attachmentHtml = '';
+    if (item.fileUrl) {
+      attachmentHtml = `
+      <div style="margin-top:12px; display:inline-flex; align-items:center; gap:12px; background:#f0fdf4; border:1px solid #bbf7d0; padding:10px 16px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05); flex-wrap:wrap;">
+        <span style="font-size:22px;">📎</span>
+        <div>
+          <div style="font-weight:700; color:#15803d; font-size:13.5px;">Tệp đính kèm: <strong>${item.fileName}</strong></div>
+          <small style="color:#64748b; font-size:12px;">Dung lượng: ${item.fileSize || 'Văn bản gốc'} &bull; Định dạng gốc</small>
+        </div>
+        <a href="${item.fileUrl}" download="${item.fileName}" target="_blank" rel="noopener" style="background:#16a34a; color:white; text-decoration:none; padding:7px 14px; border-radius:6px; font-weight:700; font-size:12.5px; margin-left:auto; display:inline-flex; align-items:center; gap:6px;">
+          📥 Tải Về Máy
+        </a>
+      </div>`;
+    }
+
+    const postHtml = `
+    <div class="dynamic-admin-post" style="padding: 14px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 16px; animation: modalFadeIn 0.3s ease;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
+        <h4 style="color:var(--primary-navy); font-size:16px; font-weight:700;">📢 ${item.title}</h4>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <small style="color:#64748b; font-size:12px;">${item.date}</small>
+          <span style="font-size:12px; background:${badgeColor}; color:${badgeText}; padding:2px 8px; border-radius:4px; font-weight:600;">${item.category}</span>
+        </div>
+      </div>
+      <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">${item.content || 'Không có mô tả chi tiết.'}</p>
+      ${attachmentHtml}
+    </div>`;
+
+    container.insertAdjacentHTML('afterbegin', postHtml);
+  });
+}
+
+// INITIALIZE ON LOAD
+document.addEventListener('DOMContentLoaded', function() {
+  renderFrontNotices();
+});
 </script>
 
 </body>
