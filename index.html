@@ -2059,7 +2059,7 @@ html, body {
       </div>
 
       <!-- 1B. ĐỔI MÃ PIN QUẢN TRỊ VIÊN -->
-      <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:10px 14px; margin-bottom:14px;">
+      <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:10px 14px; margin-bottom:10px;">
         <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleChangePinBox()">
           <span style="font-size:13px; font-weight:700; color:#9a3412; display:flex; align-items:center; gap:6px;">
             <span>🔐</span> ĐỔI MÃ PIN QUẢN TRỊ VIÊN (BẢO MẬT)
@@ -2075,6 +2075,26 @@ html, body {
           <div style="display:flex; gap:8px; align-items:center;">
             <button type="button" onclick="changeAdminPin()" style="background:#ea580c; color:white; border:none; padding:7px 14px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">💾 Lưu Mã PIN Mới</button>
             <button type="button" onclick="resetDefaultPin()" style="background:#f1f5f9; color:#475569; border:1px solid #cbd5e1; padding:7px 12px; border-radius:5px; font-size:12px; font-weight:600; cursor:pointer;">↺ Khôi phục PIN mặc định</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1C. KẾT NỐI TỰ ĐỘNG ĐĂNG FANPAGE FACEBOOK (MAKE.COM WEBHOOK) -->
+      <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px 14px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleFbWebhookBox()">
+          <span style="font-size:13px; font-weight:700; color:#1d4ed8; display:flex; align-items:center; gap:6px;">
+            <span>📘</span> KẾT NỐI FANPAGE FACEBOOK TRƯỜNG (TỰ ĐỘNG ĐĂNG BÀI):
+          </span>
+          <span id="fbWebhookBadge" style="font-size:11px; padding:2px 7px; border-radius:4px; font-weight:700; background:#dbeafe; color:#1e40af;">Chưa cấu hình</span>
+        </div>
+        <div id="fbWebhookBody" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed #93c5fd;">
+          <p style="font-size:12px; color:#334155; margin-bottom:8px; line-height:1.5;">
+            Dán đường dẫn <strong>Webhook URL</strong> lấy từ <strong>Make.com</strong> vào ô dưới đây (chỉ làm 1 lần duy nhất). Khi đăng bài có tích chọn <em>Đăng lên Fanpage Facebook</em>, bài viết &amp; ảnh sẽ tự động xuất hiện trên Trang Facebook của trường sau 3–5 giây:
+          </p>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <input type="text" id="fbWebhookInput" placeholder="https://hook.eu2.make.com/xxxxxxxxxxxxxxxxxxxx" style="flex:1; min-width:200px; padding:7px 10px; border:1px solid #93c5fd; border-radius:5px; font-size:12px;">
+            <button type="button" onclick="saveFbWebhook()" style="background:#1d4ed8; color:white; border:none; padding:7px 12px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">💾 Lưu Webhook</button>
+            <button type="button" onclick="testFbWebhook()" style="background:#ffffff; color:#1d4ed8; border:1px solid #93c5fd; padding:7px 10px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">🧪 Gửi thử mẫu</button>
           </div>
         </div>
       </div>
@@ -2126,6 +2146,12 @@ html, body {
             <input type="checkbox" id="postIsPinned" style="width:16px; height:16px; cursor:pointer;">
             <label for="postIsPinned" style="font-size:12.5px; font-weight:700; color:#b91c1c; cursor:pointer;">
               📌 GHIM tin này chạy trên thanh ngang TIN QUAN TRỌNG đầu trang (Chỉ 1 tin được ghim)
+            </label>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; padding-top:4px; border-top:1px dashed #fcd34d;">
+            <input type="checkbox" id="postToFacebook" style="width:16px; height:16px; cursor:pointer;" checked>
+            <label for="postToFacebook" style="font-size:12.5px; font-weight:700; color:#1d4ed8; cursor:pointer;">
+              📘 Đăng đồng thời bài viết này lên Fanpage Facebook Trường (tự động kèm ảnh &amp; link)
             </label>
           </div>
         </div>
@@ -2650,13 +2676,115 @@ function resetShowcaseTimer() {
 function onCategoryChange() {
   const cat = document.getElementById('postCategory').value;
   const tkbBox = document.getElementById('tkbExtraFields');
+  const fbChk = document.getElementById('postToFacebook');
   if (cat === '02') {
     tkbBox.style.display = 'block';
     document.getElementById('postTitle').placeholder = 'VD: Thời Khóa Biểu Tuần 12 (Năm học 2026 - 2027)...';
+    if (fbChk) fbChk.checked = false; // Mặc định không đẩy TKB lên FB trừ khi Admin tự tích
   } else {
     tkbBox.style.display = 'none';
     document.getElementById('postTitle').placeholder = 'Tiêu đề thông báo / Tên bài viết (Bắt buộc)...';
+    if (fbChk) fbChk.checked = (cat === '05'); // Tự động tích sẵn cho Chuyên mục 05 (Hoạt động - Đảng - Đoàn thể)
   }
+}
+
+// FACEBOOK FANPAGE AUTO-POST VIA MAKE.COM WEBHOOK
+function getFbWebhookUrl() {
+  return localStorage.getItem('canhthuan_fb_webhook') || '';
+}
+function toggleFbWebhookBox() {
+  const b = document.getElementById('fbWebhookBody');
+  if (!b) return;
+  b.style.display = b.style.display === 'block' ? 'none' : 'block';
+  if (b.style.display === 'block') {
+    document.getElementById('fbWebhookInput').value = getFbWebhookUrl();
+  }
+}
+function updateFbWebhookBadge() {
+  const badge = document.getElementById('fbWebhookBadge');
+  if (!badge) return;
+  if (getFbWebhookUrl()) {
+    badge.textContent = '✔ Đã kết nối Fanpage';
+    badge.style.background = '#dcfce7';
+    badge.style.color = '#15803d';
+  } else {
+    badge.textContent = 'Chưa cấu hình';
+    badge.style.background = '#dbeafe';
+    badge.style.color = '#1e40af';
+  }
+}
+function saveFbWebhook() {
+  const val = document.getElementById('fbWebhookInput').value.trim();
+  if (val) {
+    if (!/^https:\/\/hook\./i.test(val) && !/^https:\/\//i.test(val)) {
+      alert('Đường dẫn Webhook không hợp lệ (phải bắt đầu bằng https://...).');
+      return;
+    }
+    localStorage.setItem('canhthuan_fb_webhook', val);
+    updateFbWebhookBadge();
+    alert('✔ Đã lưu liên kết kết nối Fanpage Facebook thành công!');
+  } else {
+    localStorage.removeItem('canhthuan_fb_webhook');
+    updateFbWebhookBadge();
+    alert('Đã gỡ liên kết Webhook Facebook.');
+  }
+}
+async function sendPostToFacebookWebhook(postObj) {
+  const webhookUrl = getFbWebhookUrl();
+  if (!webhookUrl) return { ok: false, reason: 'no_webhook' };
+
+  const files = getPostFiles(postObj);
+  const firstImg = files.find(f => isImageFile(f.name, f.url));
+  let publicImageUrl = '';
+  if (firstImg && firstImg.url && !firstImg.url.startsWith('data:')) {
+    publicImageUrl = getGithubRawFallback(firstImg.url);
+  }
+
+  const fullMessage = `${postObj.categoryName || '🏛️ HOẠT ĐỘNG - ĐẢNG - ĐOÀN THỂ'}\n📢 ${(postObj.title || '').toUpperCase()}\n\n${postObj.content || ''}\n\n👉 Xem chi tiết & tài liệu đính kèm tại Cổng thông tin điện tử nhà trường:\nhttps://thcsbtcanhthuan.github.io/\n\n#THCSBanTruCanhThuan #VanCanh #GiaLai`.trim();
+
+  const payload = {
+    title: postObj.title || '',
+    content: postObj.content || '',
+    category: postObj.category || '05',
+    categoryName: postObj.categoryName || '🏛️ Hoạt Động - Đảng - Đoàn Thể',
+    date: postObj.date || new Date().toLocaleDateString('vi-VN'),
+    imageUrl: publicImageUrl,
+    hasImage: Boolean(publicImageUrl),
+    postUrl: 'https://thcsbtcanhthuan.github.io/',
+    fullMessage: fullMessage
+  };
+
+  try {
+    const res = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    return { ok: res.ok };
+  } catch (err) {
+    console.error('FB Webhook error:', err);
+    return { ok: false, reason: err.message };
+  }
+}
+async function testFbWebhook() {
+  const url = document.getElementById('fbWebhookInput').value.trim() || getFbWebhookUrl();
+  if (!url) {
+    alert('Thầy hãy dán đường dẫn Webhook URL từ Make.com vào ô trước khi bấm Gửi thử mẫu nhé!');
+    return;
+  }
+  localStorage.setItem('canhthuan_fb_webhook', url);
+  updateFbWebhookBadge();
+  const sample = {
+    title: 'Thử nghiệm kết nối tự động Cổng thông tin Trường THCS Bán trú Canh Thuận',
+    content: 'Hệ thống đồng bộ tin tức tự động từ Website nhà trường sang Fanpage Facebook đã kết nối thành công!',
+    category: '05',
+    categoryName: '🏛️ Hoạt Động - Đảng - Đoàn Thể',
+    date: new Date().toLocaleDateString('vi-VN'),
+    files: [{ name: 'BANNER_THCS_CANH_THUAN.jpg', url: 'BANNER_THCS_CANH_THUAN.jpg' }]
+  };
+  const r = await sendPostToFacebookWebhook(sample);
+  if (r.ok) alert('✔ Đã gửi tín hiệu mẫu sang Make.com thành công! Thầy quay sang trang Make.com để hoàn tất ghép nối vào Fanpage.');
+  else alert('❌ Không gửi được tín hiệu tới Make.com. Thầy kiểm tra lại đường dẫn Webhook URL nhé.');
 }
 
 // TAB NAVIGATION & SCROLLING
@@ -3286,6 +3414,15 @@ async function publishNewNotice() {
     await syncDatabaseToGitHub(`Đăng/Cập nhật bài viết: ${title}`);
   }
 
+  // Đăng đồng thời sang Fanpage Facebook qua Make.com Webhook nếu được tích chọn
+  let fbPosted = false;
+  const wantFb = document.getElementById('postToFacebook') ? document.getElementById('postToFacebook').checked : false;
+  if (wantFb && !isEditing && getFbWebhookUrl()) {
+    btn.textContent = '📘 Đang gửi bài sang Fanpage Facebook Trường...';
+    const fbRes = await sendPostToFacebookWebhook(newPost);
+    fbPosted = fbRes.ok;
+  }
+
   // Reset edit mode
   editingPostId = null;
   const cancelBtn = document.getElementById('btnCancelEdit');
@@ -3320,7 +3457,8 @@ async function publishNewNotice() {
   if (isEditing) {
     alert('Đã lưu chỉnh sửa bài viết thành công!');
   } else if (token) {
-    alert(`Đăng bài và đồng bộ ${uploadedFiles.length} tệp lên GitHub thành công! Web toàn trường sẽ cập nhật trong khoảng 1 phút.`);
+    const fbNote = fbPosted ? '\n📘 Đã tự động đăng đồng thời lên Fanpage Facebook Trường!' : '';
+    alert(`Đăng bài và đồng bộ ${uploadedFiles.length} tệp lên GitHub thành công! Web toàn trường sẽ cập nhật trong khoảng 1 phút.${fbNote}`);
   } else {
     alert('Đã đăng bài thành công lên Website! (Gợi ý: Thầy có thể dán GitHub Token ở phần Cấu hình để hệ thống tự động đẩy lên GitHub cho cả trường xem).');
   }
@@ -3780,6 +3918,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   renderFrontNotices();
   renderTkbDropdown();
   updateTokenBadge();
+  updateFbWebhookBadge();
 });
 
 // ================= BỘ XEM THỜI KHÓA BIỂU HIỆN HÀNH (CHUYỂN EXCEL SANG DẠNG ẢNH/BẢNG SIÊU NÉT) =================
