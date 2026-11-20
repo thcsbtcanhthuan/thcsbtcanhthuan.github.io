@@ -3034,6 +3034,57 @@ async function pushToGitHubApi(repoPath, base64Content, commitMessage) {
   }
 }
 
+// ĐỒNG BỘ HÓA CƠ SỞ DỮ LIỆU CHUNG (data.json) LÊN GITHUB ĐỂ MỌI THIẾT BỊ ĐỀU THẤY NGAY
+function utf8ToBase64(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
+async function syncDatabaseToGitHub(commitMsg) {
+  const token = getGhToken();
+  if (!token) return false;
+  try {
+    const custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
+    // Chỉ lưu các đường dẫn nhẹ vào data.json (bỏ qua dataUrl quá lớn chưa đẩy lên GH)
+    const cleanPosts = custom.map(p => ({
+      ...p,
+      fileUrl: (p.fileUrl && p.fileUrl.startsWith('data:')) ? '' : p.fileUrl,
+      files: Array.isArray(p.files) ? p.files.filter(f => f.url && !f.url.startsWith('data:')) : []
+    }));
+    const dbPayload = {
+      updatedAt: new Date().toISOString(),
+      pinnedNoticeId: localStorage.getItem('canhthuan_pinned_notice_id') || '',
+      hiddenDefaultIds: getHiddenDefaultIds(),
+      posts: cleanPosts
+    };
+    const jsonStr = JSON.stringify(dbPayload, null, 2);
+    return await pushToGitHubApi('data.json', utf8ToBase64(jsonStr), commitMsg || 'Cập nhật dữ liệu website (data.json)');
+  } catch (e) {
+    console.error('Sync data.json error:', e);
+    return false;
+  }
+}
+
+async function loadCloudDatabaseFromGitHub() {
+  try {
+    const rawUrl = `https://raw.githubusercontent.com/thcsbtcanhthuan/thcsbtcanhthuan.github.io/main/data.json?t=${Date.now()}`;
+    const res = await fetch(rawUrl);
+    if (!res.ok) return false;
+    const db = await res.json();
+    if (Array.isArray(db.posts)) {
+      localStorage.setItem('canhthuan_posts_v2', JSON.stringify(db.posts));
+    }
+    if (Array.isArray(db.hiddenDefaultIds)) {
+      localStorage.setItem('canhthuan_hidden_default_ids', JSON.stringify(db.hiddenDefaultIds));
+    }
+    if (db.pinnedNoticeId) {
+      localStorage.setItem('canhthuan_pinned_notice_id', String(db.pinnedNoticeId));
+    }
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 // XÓA TỆP TRÊN GITHUB QUA API (DÙNG KHI DỌN KHO HOẶC XÓA BÀI)
 async function deleteFromGitHubApi(repoPath, sha, commitMessage) {
   const token = getGhToken();
@@ -3086,7 +3137,7 @@ async function cleanGitHubRootJunk() {
     const isProtected = (item) => {
       if (item.type !== 'file') return true; // Giữ nguyên mọi thư mục (như uploads/)
       const n = item.name;
-      if (['index.html', 'README.md', 'BANNER_THCS_CANH_THUAN.jpg', 'CNAME', '.nojekyll'].includes(n)) return true;
+      if (['index.html', 'README.md', 'BANNER_THCS_CANH_THUAN.jpg', 'data.json', 'CNAME', '.nojekyll'].includes(n)) return true;
       return false;
     };
 
@@ -3229,6 +3280,12 @@ async function publishNewNotice() {
     localStorage.setItem('canhthuan_pinned_notice_id', String(newPost.id));
   }
 
+  // Đồng bộ tệp data.json lên GitHub để mọi phụ huynh/giáo viên trên mọi điện thoại đều thấy bài mới ngay!
+  if (token) {
+    btn.textContent = '⏳ Đang đồng bộ dữ liệu trang web (data.json)...';
+    await syncDatabaseToGitHub(`Đăng/Cập nhật bài viết: ${title}`);
+  }
+
   // Reset edit mode
   editingPostId = null;
   const cancelBtn = document.getElementById('btnCancelEdit');
@@ -3269,13 +3326,52 @@ async function publishNewNotice() {
   }
 }
 
-// TỰ ĐỘNG HIỂN THỊ DANH SÁCH TKB TỪ CHUYÊN MỤC 02 (MỚI NHẤT TRÊN CÙNG)
-function renderTkbDropdown() {
+// TỰ ĐỘNG HIỂN THỊ DANH SÁCH TKB TỪ CHUYÊN MỤC 02 + TỰ QUÉT THƯ MỤC uploads/02_ThoiKhoaBieu TRÊN GITHUB
+function parseTkbMetaFromFilename(filename) {
+  const weekMatch = filename.match(/tu[aầ]n\s*(\d+)/i);
+  const weekNum = weekMatch ? parseInt(weekMatch[1], 10) : 0;
+  const weekLabel = weekNum ? `Tuần ${weekNum}` : filename.replace(/\.(xls|xlsx)$/i, '');
+
+  let applyDate = '';
+  const dateMatch = filename.match(/\((\d{6,8})\)/) || filename.match(/_(\d{6,8})\./);
+  if (dateMatch) {
+    const d = dateMatch[1];
+    if (d.length === 8) applyDate = `${d.slice(0,2)}/${d.slice(2,4)}/${d.slice(4,8)}`;
+    else if (d.length === 6) applyDate = `${d.slice(0,2)}/${d.slice(2,4)}/20${d.slice(4,6)}`;
+  }
+  return { weekNum, weekLabel, applyDate };
+}
+
+async function renderTkbDropdown() {
   const listEl = document.getElementById('tkbDynamicList');
   if (!listEl) return;
 
   const custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
-  const tkbPosts = custom.filter(p => p.category === '02');
+  let tkbPosts = custom.filter(p => p.category === '02');
+
+  // Nếu chưa có trong localStorage (hoặc người xem mở từ máy/điện thoại mới) -> tự động quét trực tiếp thư mục uploads/02_ThoiKhoaBieu/ trên GitHub!
+  if (tkbPosts.length === 0) {
+    listEl.innerHTML = `<div style="padding:12px; text-align:center; font-size:12px; color:#64748b;">⏳ Đang tải danh sách TKB từ hệ thống...</div>`;
+    try {
+      const res = await fetch('https://api.github.com/repos/thcsbtcanhthuan/thcsbtcanhthuan.github.io/contents/uploads/02_ThoiKhoaBieu');
+      if (res.ok) {
+        const items = await res.json();
+        const files = items.filter(it => it.type === 'file' && /\.(xls|xlsx|pdf|jpg|jpeg|png)$/i.test(it.name));
+        tkbPosts = files.map(f => {
+          const meta = parseTkbMetaFromFilename(f.name);
+          return {
+            title: meta.weekLabel,
+            weekName: meta.weekLabel,
+            weekNum: meta.weekNum,
+            applyDate: meta.applyDate || 'Hiện hành',
+            fileName: f.name,
+            fileUrl: f.download_url,
+            files: [{ name: f.name, url: f.download_url, size: '' }]
+          };
+        }).sort((a, b) => (b.weekNum - a.weekNum) || b.fileName.localeCompare(a.fileName, undefined, { numeric: true }));
+      }
+    } catch (e) {}
+  }
 
   if (tkbPosts.length === 0) {
     listEl.innerHTML = `<div style="padding:14px; text-align:center; font-size:12.5px; color:#64748b;">Chưa có Thời khóa biểu nào được đăng.<br><small>Quản trị viên vui lòng đăng TKB tại Chuyên mục 02.</small></div>`;
@@ -3453,6 +3549,9 @@ async function deleteCustomPost(id) {
   renderCentralShowcase();
   renderVerticalAutoScrollTicker();
   updateHeaderImportantMarquee();
+  if (getGhToken()) {
+    syncDatabaseToGitHub(`Xóa bài viết ID ${id}`);
+  }
   renderAdminNoticeList();
   renderFrontNotices();
   renderTkbDropdown();
@@ -3565,6 +3664,7 @@ function pinNoticeToMarquee(id) {
   renderVerticalAutoScrollTicker();
   updateHeaderImportantMarquee();
   renderAdminNoticeList();
+  if (getGhToken()) syncDatabaseToGitHub(`Ghim thông báo ID ${id} lên thanh ngang`);
   alert('Đã ghim tin này chạy trên thanh ngang TIN QUAN TRỌNG đầu trang!');
 }
 
@@ -3669,8 +3769,10 @@ function updateHeaderImportantMarquee() {
   el.innerHTML = `🔴 [${pinnedPost.date}] <strong>${pinnedPost.title}</strong> — ${pinnedPost.content ? pinnedPost.content.substring(0, 120) + '...' : ''}`;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   initLiveRealtimeClock();
+  // Tải trước dữ liệu chung data.json từ GitHub để mọi máy tính & điện thoại đều đồng bộ tin tức mới nhất
+  await loadCloudDatabaseFromGitHub();
   renderCentralShowcase();
   renderVerticalAutoScrollTicker();
   updateHeaderImportantMarquee();
