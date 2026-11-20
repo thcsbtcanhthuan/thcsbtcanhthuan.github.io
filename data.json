@@ -1,8 +1,59 @@
 {
-  "updatedAt": "2026-11-20T13:31:24.966Z",
+  "updatedAt": "2026-11-20T13:33:50.220Z",
   "pinnedNoticeId": "",
   "hiddenDefaultIds": [],
   "posts": [
+    {
+      "id": 1795181630220,
+      "title": "Lễ trao giải Hội thao Chào mừng kỷ niệm 44 năm Ngày Nhà Giáo Việt Nam (20/11/1982- 20/11/2026)",
+      "category": "05",
+      "categoryName": "🏛️ Hoạt Động - Đảng - Đoàn Thể",
+      "content": "",
+      "date": "20/11/2026",
+      "weekName": "",
+      "applyDate": "",
+      "fileName": "z8511851004142_7242ac29134fd29efb905e8314e6e3bc.jpg",
+      "fileUrl": "uploads/05_HoatDong_Dang_DoanThe/z8511851004142_7242ac29134fd29efb905e8314e6e3bc.jpg",
+      "fileSize": "500 KB",
+      "files": [
+        {
+          "name": "z8511851004142_7242ac29134fd29efb905e8314e6e3bc.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/z8511851004142_7242ac29134fd29efb905e8314e6e3bc.jpg",
+          "size": "500 KB"
+        },
+        {
+          "name": "z8511851011435_f60c4a8e0bcab1e55553bc62faab4ad4.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/z8511851011435_f60c4a8e0bcab1e55553bc62faab4ad4.jpg",
+          "size": "453 KB"
+        },
+        {
+          "name": "z8511851017999_7294dc629e43485183836c30fdcbe330.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/z8511851017999_7294dc629e43485183836c30fdcbe330.jpg",
+          "size": "498 KB"
+        },
+        {
+          "name": "z8511851023170_1d2bb1856d744212df1aecdcb3e60bd1.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/z8511851023170_1d2bb1856d744212df1aecdcb3e60bd1.jpg",
+          "size": "491 KB"
+        },
+        {
+          "name": "z8511851030353_8fe1304c1abb81139de6d3db3bb4e9e5.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/z8511851030353_8fe1304c1abb81139de6d3db3bb4e9e5.jpg",
+          "size": "434 KB"
+        },
+        {
+          "name": "z8511851034270_30e84ddaa3c066d21eeb81b437004401.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/z8511851034270_30e84ddaa3c066d21eeb81b437004401.jpg",
+          "size": "453 KB"
+        },
+        {
+          "name": "z8511851040729_05227fa711d4a2638e25007e42060b8a.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/z8511851040729_05227fa711d4a2638e25007e42060b8a.jpg",
+          "size": "513 KB"
+        }
+      ],
+      "isImportant": true
+    },
     {
       "id": 1795181484965,
       "title": "Tập thể CBGVNV Trường THCS Bán trú Canh Thuận tham gia Giao lưu với các Trường học trên địa bàn xã và Hội thao Chào mừng kỷ niệm 44 năm Ngày Nhà Giáo Việt Nam (20/11/1982- 20/11/2026)",
