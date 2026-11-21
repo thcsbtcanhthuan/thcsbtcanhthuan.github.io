@@ -589,9 +589,10 @@ body {
 }
 .school-stat-bar {
   display: grid;
-  grid-template-columns: 1fr 1.15fr 1.15fr;
+  grid-template-columns: 1fr 1.08fr 1.12fr;
   gap: 10px;
   margin-bottom: 10px;
+  align-items: stretch;
 }
 @media (max-width: 1100px) {
   .school-stat-bar { grid-template-columns: 1fr; }
@@ -603,6 +604,8 @@ body {
   padding: 9px 11px;
   position: relative;
   border-top: 3px solid #0f3460;
+  display: flex;
+  flex-direction: column;
 }
 .stat-group-box.grp-class { border-top-color: #0284c7; }
 .stat-group-box.grp-boarding { border-top-color: #059669; }
@@ -611,7 +614,7 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 6px;
-  padding-bottom: 4px;
+  padding-bottom: 5px;
   border-bottom: 1px solid #e2e8f0;
 }
 .stat-group-name {
@@ -628,35 +631,56 @@ body {
   color: #fde047;
   font-size: 11.5px;
   font-weight: 800;
-  padding: 1px 8px;
+  padding: 1.5px 9px;
   border-radius: 12px;
 }
 .grp-class .stat-group-total { background: #0284c7; color: #ffffff; }
 .grp-boarding .stat-group-total { background: #059669; color: #ffffff; }
-.stat-row-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 5px;
-  align-items: center;
+
+/* BẢNG LƯỚI THỐNG KÊ THẲNG HÀNG - THẲNG CỘT TUYỆT ĐỐI (H2) */
+.stat-matrix-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 4px;
+  flex: 1;
 }
-.stat-row-chips:last-child { margin-bottom: 0; }
-.stat-row-label {
+.stat-matrix-table td {
+  vertical-align: middle;
+  padding: 0;
+}
+.stat-matrix-label {
+  width: 74px;
   font-size: 11px;
   font-weight: 700;
-  color: #475569;
-  margin-right: 2px;
+  color: #334155;
+  white-space: nowrap;
+  padding-right: 6px !important;
 }
+.stat-cells-grid {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+}
+.stat-cells-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.stat-cells-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.stat-cells-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.stat-cells-grid.cols-1 { grid-template-columns: 1fr; }
 .stat-chip {
   background: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
-  padding: 1.5px 6px;
+  padding: 2.5px 5px;
   font-size: 11px;
-  color: #1e293b;
+  color: #334155;
   font-weight: 600;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+  box-sizing: border-box;
 }
+.stat-chip.span-2 { grid-column: span 2; }
 .stat-chip b {
   color: #0f3460;
   font-weight: 800;
@@ -3517,98 +3541,154 @@ function renderSchoolStatsSection() {
   const bar = document.getElementById('dynamicSchoolStatBar');
   if (bar) {
     bar.innerHTML = `
-      <!-- KHỐI 1: ĐỘI NGŨ CBGVNV -->
+      <!-- KHỐI 1: ĐỘI NGŨ CBGVNV (MA TRẬN 4 HÀNG × 4 CỘT THẲNG TẮP) -->
       <div class="stat-group-box grp-staff">
         <div class="stat-group-head">
           <span class="stat-group-name">👨‍🏫 I. ĐỘI NGŨ CBGVNV</span>
           <span class="stat-group-total">Tổng số: ${s.staffTotal} người</span>
         </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• Cơ cấu:</span>
-          <span class="stat-chip">Nam: <b>${s.staffMale}</b></span>
-          <span class="stat-chip">Nữ: <b>${s.staffFemale}</b></span>
-          <span class="stat-chip">Dân tộc: <b>${s.staffEthnic}</b></span>
-        </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• Độ tuổi:</span>
-          <span class="stat-chip">&gt;50t: <b>${s.ageOver50}</b></span>
-          <span class="stat-chip">40–49t: <b>${s.age40to49}</b></span>
-          <span class="stat-chip">30–39t: <b>${s.age30to39}</b></span>
-          <span class="stat-chip">&lt;30t: <b>${s.ageUnder30}</b></span>
-        </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• TĐCM:</span>
-          <span class="stat-chip">Trên ĐH: <b>${s.qualPostGrad}</b></span>
-          <span class="stat-chip">ĐH: <b>${s.qualUni}</b></span>
-          <span class="stat-chip">CĐ: <b>${s.qualCollege}</b></span>
-          <span class="stat-chip">TC/Khác: <b>${s.qualInterm}</b></span>
-        </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• TĐLLCT:</span>
-          <span class="stat-chip">Cao cấp: <b>${s.polHigh}</b></span>
-          <span class="stat-chip">Trung cấp: <b>${s.polMid}</b></span>
-          <span class="stat-chip">Sơ cấp: <b>${s.polElem}</b></span>
-        </div>
+        <table class="stat-matrix-table">
+          <tr>
+            <td class="stat-matrix-label">• Cơ cấu:</td>
+            <td>
+              <div class="stat-cells-grid cols-4">
+                <span class="stat-chip"><span>Nam:</span><b>${s.staffMale}</b></span>
+                <span class="stat-chip"><span>Nữ:</span><b>${s.staffFemale}</b></span>
+                <span class="stat-chip span-2"><span>Dân tộc thiểu số:</span><b>${s.staffEthnic}</b></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="stat-matrix-label">• Độ tuổi:</td>
+            <td>
+              <div class="stat-cells-grid cols-4">
+                <span class="stat-chip"><span>&gt;50t:</span><b>${s.ageOver50}</b></span>
+                <span class="stat-chip"><span>40–49t:</span><b>${s.age40to49}</b></span>
+                <span class="stat-chip"><span>30–39t:</span><b>${s.age30to39}</b></span>
+                <span class="stat-chip"><span>&lt;30t:</span><b>${s.ageUnder30}</b></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="stat-matrix-label">• TĐCM:</td>
+            <td>
+              <div class="stat-cells-grid cols-4">
+                <span class="stat-chip"><span>Trên ĐH:</span><b>${s.qualPostGrad}</b></span>
+                <span class="stat-chip"><span>ĐH:</span><b>${s.qualUni}</b></span>
+                <span class="stat-chip"><span>CĐ:</span><b>${s.qualCollege}</b></span>
+                <span class="stat-chip"><span>TC/Khác:</span><b>${s.qualInterm}</b></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="stat-matrix-label">• TĐLLCT:</td>
+            <td>
+              <div class="stat-cells-grid cols-4">
+                <span class="stat-chip"><span>Cao cấp:</span><b>${s.polHigh}</b></span>
+                <span class="stat-chip"><span>Tr.cấp:</span><b>${s.polMid}</b></span>
+                <span class="stat-chip span-2"><span>Sơ cấp:</span><b>${s.polElem}</b></span>
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
 
-      <!-- KHỐI 2: CƠ CẤU LỚP & HỌC SINH -->
+      <!-- KHỐI 2: CƠ CẤU LỚP & HỌC SINH (MA TRẬN 4 HÀNG THẲNG CỘT) -->
       <div class="stat-group-box grp-class">
         <div class="stat-group-head">
           <span class="stat-group-name">🏫 II. CƠ CẤU LỚP &amp; HỌC SINH</span>
           <span class="stat-group-total">${s.classTotal} Lớp • ${s.stuTotal} HS</span>
         </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• Số lớp:</span>
-          <span class="stat-chip">Tổng: <b>${s.classTotal} lớp</b></span>
-          <span class="stat-chip">K6: <b>${s.classG6}</b></span>
-          <span class="stat-chip">K7: <b>${s.classG7}</b></span>
-          <span class="stat-chip">K8: <b>${s.classG8}</b></span>
-          <span class="stat-chip">K9: <b>${s.classG9}</b></span>
-        </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• Học sinh:</span>
-          <span class="stat-chip">Nam: <b>${s.stuMale}</b></span>
-          <span class="stat-chip">Nữ: <b>${s.stuFemale}</b></span>
-          <span class="stat-chip">Dân tộc: <b>${s.stuEthnic}</b></span>
-        </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• Khối 6, 7:</span>
-          <span class="stat-chip">K6: <b>${s.stuG6}</b></span>
-          <span class="stat-chip">K7: <b>${s.stuG7}</b></span>
-        </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• Khối 8, 9:</span>
-          <span class="stat-chip">K8: <b>${s.stuG8}</b></span>
-          <span class="stat-chip">K9: <b>${s.stuG9}</b></span>
-        </div>
+        <table class="stat-matrix-table">
+          <tr>
+            <td class="stat-matrix-label">• Số lớp (${s.classTotal}):</td>
+            <td>
+              <div class="stat-cells-grid cols-4">
+                <span class="stat-chip"><span>Khối 6:</span><b>${s.classG6}</b></span>
+                <span class="stat-chip"><span>Khối 7:</span><b>${s.classG7}</b></span>
+                <span class="stat-chip"><span>Khối 8:</span><b>${s.classG8}</b></span>
+                <span class="stat-chip"><span>Khối 9:</span><b>${s.classG9}</b></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="stat-matrix-label">• Học sinh:</td>
+            <td>
+              <div class="stat-cells-grid cols-4">
+                <span class="stat-chip"><span>Nam:</span><b>${s.stuMale}</b></span>
+                <span class="stat-chip"><span>Nữ:</span><b>${s.stuFemale}</b></span>
+                <span class="stat-chip span-2"><span>Dân tộc thiểu số:</span><b>${s.stuEthnic}</b></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="stat-matrix-label">• Khối 6, 7:</td>
+            <td>
+              <div class="stat-cells-grid cols-2">
+                <span class="stat-chip"><span>K6:</span><b>${s.stuG6}</b></span>
+                <span class="stat-chip"><span>K7:</span><b>${s.stuG7}</b></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="stat-matrix-label">• Khối 8, 9:</td>
+            <td>
+              <div class="stat-cells-grid cols-2">
+                <span class="stat-chip"><span>K8:</span><b>${s.stuG8}</b></span>
+                <span class="stat-chip"><span>K9:</span><b>${s.stuG9}</b></span>
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
 
-      <!-- KHỐI 3: HỌC SINH BÁN TRÚ (Ở LẠI TRƯỜNG) -->
+      <!-- KHỐI 3: HỌC SINH BÁN TRÚ (MA TRẬN 4 HÀNG × 4 CỘT THẲNG TẮP) -->
       <div class="stat-group-box grp-boarding">
         <div class="stat-group-head">
           <span class="stat-group-name">🏡 III. HỌC SINH BÁN TRÚ (Ở LẠI TRƯỜNG)</span>
           <span class="stat-group-total">Tổng số: ${s.brdTotal} HS</span>
         </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• Cơ cấu:</span>
-          <span class="stat-chip">Nam: <b>${s.brdMale}</b></span>
-          <span class="stat-chip">Nữ: <b>${s.brdFemale}</b></span>
-          <span class="stat-chip">DT: <b>${s.brdEthnic}</b></span>
-        </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• Theo khối:</span>
-          <span class="stat-chip"><b>${s.brdByGrade}</b></span>
-        </div>
-        <div class="stat-row-chips">
-          <span class="stat-row-label">• Nơi ở (Thôn/Làng):</span>
-          <span class="stat-chip">Canh Sơn: <b>${s.brdCanhSon}</b></span>
-          <span class="stat-chip">Hòn Mẻ: <b>${s.brdHonMe}</b></span>
-          <span class="stat-chip">Canh Hòa: <b>${s.brdCanhHoa}</b></span>
-          <span class="stat-chip">Canh Giao: <b>${s.brdCanhGiao}</b></span>
-          <span class="stat-chip">Canh Tiến: <b>${s.brdCanhTien}</b></span>
-          <span class="stat-chip">Hà Văn Trên: <b>${s.brdHaVanTren}</b></span>
-          <span class="stat-chip">Khác: <b>${s.brdOther}</b></span>
-        </div>
+        <table class="stat-matrix-table">
+          <tr>
+            <td class="stat-matrix-label">• Cơ cấu:</td>
+            <td>
+              <div class="stat-cells-grid cols-4">
+                <span class="stat-chip"><span>Nam:</span><b>${s.brdMale}</b></span>
+                <span class="stat-chip"><span>Nữ:</span><b>${s.brdFemale}</b></span>
+                <span class="stat-chip span-2"><span>Dân tộc thiểu số:</span><b>${s.brdEthnic}</b></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="stat-matrix-label">• Theo khối:</td>
+            <td>
+              <div class="stat-cells-grid cols-1">
+                <span class="stat-chip" style="justify-content:center;"><b>${s.brdByGrade}</b></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="stat-matrix-label">• Nơi ở (1):</td>
+            <td>
+              <div class="stat-cells-grid cols-4">
+                <span class="stat-chip"><span>Canh Sơn:</span><b>${s.brdCanhSon}</b></span>
+                <span class="stat-chip"><span>Hòn Mẻ:</span><b>${s.brdHonMe}</b></span>
+                <span class="stat-chip"><span>Canh Hòa:</span><b>${s.brdCanhHoa}</b></span>
+                <span class="stat-chip"><span>Canh Giao:</span><b>${s.brdCanhGiao}</b></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="stat-matrix-label">• Nơi ở (2):</td>
+            <td>
+              <div class="stat-cells-grid cols-4">
+                <span class="stat-chip"><span>Canh Tiến:</span><b>${s.brdCanhTien}</b></span>
+                <span class="stat-chip span-2"><span>Hà Văn Trên:</span><b>${s.brdHaVanTren}</b></span>
+                <span class="stat-chip"><span>Khác:</span><b>${s.brdOther}</b></span>
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
     `;
   }
@@ -3771,18 +3851,110 @@ function downloadSchoolStatsExcelTemplate() {
     return;
   }
   const s = getSchoolStatsData();
-  const rows = [
-    ['PHỤ LỤC SỐ LIỆU THÔNG TIN - THỐNG KÊ NHÀ TRƯỜNG (ĐÍNH KÈM CHUYÊN MỤC 03 - VĂN BẢN CÔNG KHAI)', '', '', ''],
-    ['Hướng dẫn: Thầy/Cô chỉ cần chỉnh sửa cột "GIÁ TRỊ SỐ LIỆU" (Cột C), giữ nguyên cột "MÃ TRƯỜNG" (Cột A). Khi đăng kèm vào Chuyên mục 03, Web sẽ tự động nạp 100% số liệu lên trang chủ!', '', '', ''],
-    ['MÃ TRƯỜNG (KHÔNG SỬA)', 'NHÓM THỐNG KÊ', 'CHỈ TIÊU THỐNG KÊ CHI TIẾT', 'GIÁ TRỊ SỐ LIỆU']
+
+  // SHEET 1: 01_BIEU_THONG_KE_CHUNG (BIỂU BÁO CÁO MA TRẬN CHUYÊN MÔN CÓ CÔNG THỨC SUM / COUNTA TỰ ĐỘNG)
+  const aoa1 = [
+    ['ỦY BAN NHÂN DÂN XÃ VÂN CANH', '', '', '', '', 'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM', '', '', '', '', '', '', '', '', '', '', '', ''],
+    ['TRƯỜNG THCS BÁN TRÚ CANH THUẬN', '', '', '', '', 'Độc lập - Tự do - Hạnh phúc', '', '', '', '', '', '', '', '', '', '', '', ''],
+    [],
+    ['BIỂU THỐNG KÊ TỔNG HỢP ĐỘI NGŨ CBGVNV, CƠ CẤU TRƯỜNG LỚP VÀ HỌC SINH BÁN TRÚ'],
+    ['(Phụ lục ban hành kèm theo Báo cáo công khai đầu năm học theo Thông tư số 09/2024/TT-BGDĐT — Tự động đồng bộ Website Nhà trường)'],
+    ['', '', '', '', '', '', 'Năm học:', s.schoolYear || '2026 - 2027'],
+    [],
+    ['I. THỐNG KÊ ĐỘI NGŨ CÁN BỘ, GIÁO VIÊN, NHÂN VIÊN (CBGVNV)'],
+    ['TT', 'Phân loại đội ngũ', 'Tổng số', 'Chia theo Giới tính & Dân tộc', '', '', 'Chia theo Nhóm độ tuổi', '', '', '', 'Trình độ chuyên môn (TĐCM)', '', '', '', 'Lý luận chính trị (LLCT)', '', ''],
+    ['', '', '', 'Nam', 'Nữ', 'Dân tộc', 'Trên 50', 'Từ 40–49', 'Từ 30–39', 'Dưới 30', 'Trên ĐH', 'Đại học', 'Cao đẳng', 'TC / Khác', 'Cao cấp', 'Trung cấp', 'Sơ cấp'],
+    [1, 'Cán bộ quản lý (BGH)',        { f: 'D11+E11' }, 1, 0, 1,  0, 1, 0, 0,  0, 1, 0, 0,  0, 1, 0],
+    [2, 'Giáo viên (Biên chế & HĐ)',   { f: 'D12+E12' }, 9, 11, 3, 3, 12, 3, 2, 1, 17, 2, 0, 0, 4, 7],
+    [3, 'Nhân viên & HĐ NĐ 111/NĐ 66', { f: 'D13+E13' }, 1, 7, 1,  0, 1, 6, 1,  0, 2, 1, 5,  0, 0, 2],
+    ['', 'TỔNG CỘNG ĐỘI NGŨ', { f: 'SUM(C11:C13)' }, { f: 'SUM(D11:D13)' }, { f: 'SUM(E11:E13)' }, { f: 'SUM(F11:F13)' }, { f: 'SUM(G11:G13)' }, { f: 'SUM(H11:H13)' }, { f: 'SUM(I11:I13)' }, { f: 'SUM(J11:J13)' }, { f: 'SUM(K11:K13)' }, { f: 'SUM(L11:L13)' }, { f: 'SUM(M11:M13)' }, { f: 'SUM(N11:N13)' }, { f: 'SUM(O11:O13)' }, { f: 'SUM(P11:P13)' }, { f: 'SUM(Q11:Q13)' }],
+    [],
+    ['II. THỐNG KÊ CƠ CẤU LỚP HỌC, SĨ SỐ HỌC SINH VÀ HỌC SINH BÁN TRÚ (Ở LẠI TRƯỜNG) THEO KHỐI / LỚP / THÔN LÀNG'],
+    ['TT', 'Khối', 'Lớp', 'Học sinh toàn trường', '', '', '', 'Học sinh Bán trú (Ở lại trường)', '', '', '', 'Phân bổ Học sinh Bán trú theo Nơi ở (Thôn / Làng)', '', '', '', '', '', ''],
+    ['', '', '', 'Tổng HS', 'Nam', 'Nữ', 'Dân tộc', 'Tổng BT', 'BT Nam', 'BT Nữ', 'BT Dân tộc', 'Canh Sơn', 'Hòn Mẻ', 'Canh Hòa', 'Canh Giao', 'Canh Tiến', 'Hà Văn Trên', 'Khác'],
+    [1, 'Khối 6', '6A1', { f: 'E19+F19' }, 16, 15, 31, { f: 'SUM(L19:R19)' }, 6, 6, 12, 3, 1, 2, 2, 2, 1, 1],
+    [2, 'Khối 6', '6A2', { f: 'E20+F20' }, 18, 17, 35, { f: 'SUM(L20:R20)' }, 6, 6, 12, 3, 2, 2, 2, 2, 1, 0],
+    [3, 'Khối 6', '6A3', { f: 'E21+F21' }, 17, 15, 31, { f: 'SUM(L21:R21)' }, 6, 6, 12, 2, 2, 2, 3, 2, 1, 0],
+    [4, 'Khối 7', '7A1', { f: 'E22+F22' }, 23, 21, 41, { f: 'SUM(L22:R22)' }, 8, 8, 16, 4, 2, 3, 3, 2, 2, 0],
+    [5, 'Khối 7', '7A2', { f: 'E23+F23' }, 22, 20, 41, { f: 'SUM(L23:R23)' }, 8, 8, 16, 3, 2, 3, 3, 3, 1, 1],
+    [6, 'Khối 8', '8A1', { f: 'E24+F24' }, 18, 17, 33, { f: 'SUM(L24:R24)' }, 7, 7, 14, 3, 1, 3, 3, 2, 1, 1],
+    [7, 'Khối 8', '8A2', { f: 'E25+F25' }, 18, 16, 31, { f: 'SUM(L25:R25)' }, 7, 6, 13, 3, 2, 2, 2, 2, 2, 0],
+    [8, 'Khối 9', '9A1', { f: 'E26+F26' }, 21, 18, 39, { f: 'SUM(L26:R26)' }, 7, 7, 14, 4, 1, 2, 3, 2, 2, 0],
+    [9, 'Khối 9', '9A2', { f: 'E27+F27' }, 20, 19, 37, { f: 'SUM(L27:R27)' }, 7, 7, 14, 3, 1, 3, 3, 2, 1, 1],
+    ['', 'TỔNG TOÀN TRƯỜNG', { f: 'COUNTA(C19:C27)' }, { f: 'SUM(D19:D27)' }, { f: 'SUM(E19:E27)' }, { f: 'SUM(F19:F27)' }, { f: 'SUM(G19:G27)' }, { f: 'SUM(H19:H27)' }, { f: 'SUM(I19:I27)' }, { f: 'SUM(J19:J27)' }, { f: 'SUM(K19:K27)' }, { f: 'SUM(L19:L27)' }, { f: 'SUM(M19:M27)' }, { f: 'SUM(N19:N27)' }, { f: 'SUM(O19:O27)' }, { f: 'SUM(P19:P27)' }, { f: 'SUM(Q19:Q27)' }, { f: 'SUM(R19:R27)' }],
+    ['', 'Tổng Khối 6', { f: 'COUNTA(C19:C21)' }, { f: 'SUM(D19:D21)' }, { f: 'SUM(E19:E21)' }, { f: 'SUM(F19:F21)' }, { f: 'SUM(G19:G21)' }, { f: 'SUM(H19:H21)' }, { f: 'SUM(I19:I21)' }, { f: 'SUM(J19:J21)' }, { f: 'SUM(K19:K21)' }, { f: 'SUM(L19:L21)' }, { f: 'SUM(M19:M21)' }, { f: 'SUM(N19:N21)' }, { f: 'SUM(O19:O21)' }, { f: 'SUM(P19:P21)' }, { f: 'SUM(Q19:Q21)' }, { f: 'SUM(R19:R21)' }],
+    ['', 'Tổng Khối 7', { f: 'COUNTA(C22:C23)' }, { f: 'SUM(D22:D23)' }, { f: 'SUM(E22:E23)' }, { f: 'SUM(F22:F23)' }, { f: 'SUM(G22:G23)' }, { f: 'SUM(H22:H23)' }, { f: 'SUM(I22:I23)' }, { f: 'SUM(J22:J23)' }, { f: 'SUM(K22:K23)' }, { f: 'SUM(L22:L23)' }, { f: 'SUM(M22:M23)' }, { f: 'SUM(N22:N23)' }, { f: 'SUM(O22:O23)' }, { f: 'SUM(P22:P23)' }, { f: 'SUM(Q22:Q23)' }, { f: 'SUM(R22:R23)' }],
+    ['', 'Tổng Khối 8', { f: 'COUNTA(C24:C25)' }, { f: 'SUM(D24:D25)' }, { f: 'SUM(E24:E25)' }, { f: 'SUM(F24:F25)' }, { f: 'SUM(G24:G25)' }, { f: 'SUM(H24:H25)' }, { f: 'SUM(I24:I25)' }, { f: 'SUM(J24:J25)' }, { f: 'SUM(K24:K25)' }, { f: 'SUM(L24:L25)' }, { f: 'SUM(M24:M25)' }, { f: 'SUM(N24:N25)' }, { f: 'SUM(O24:O25)' }, { f: 'SUM(P24:P25)' }, { f: 'SUM(Q24:Q25)' }, { f: 'SUM(R24:R25)' }],
+    ['', 'Tổng Khối 9', { f: 'COUNTA(C26:C27)' }, { f: 'SUM(D26:D27)' }, { f: 'SUM(E26:E27)' }, { f: 'SUM(F26:F27)' }, { f: 'SUM(G26:G27)' }, { f: 'SUM(H26:H27)' }, { f: 'SUM(I26:I27)' }, { f: 'SUM(J26:J27)' }, { f: 'SUM(K26:K27)' }, { f: 'SUM(L26:L27)' }, { f: 'SUM(M26:M27)' }, { f: 'SUM(N26:N27)' }, { f: 'SUM(O26:O27)' }, { f: 'SUM(P26:P27)' }, { f: 'SUM(Q26:Q27)' }, { f: 'SUM(R26:R27)' }]
   ];
-  STATS_FIELD_SCHEMA.forEach(f => {
-    rows.push([f.key, f.group, f.label, s[f.key] !== undefined ? s[f.key] : '']);
-  });
-  const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{ wch: 18 }, { wch: 26 }, { wch: 36 }, { wch: 34 }];
+
+  const ws1 = XLSX.utils.aoa_to_sheet(aoa1);
+  ws1['!cols'] = [{ wch: 5 }, { wch: 24 }, { wch: 10 }, { wch: 10 }, { wch: 8 }, { wch: 8 }, { wch: 9 }, { wch: 10 }, { wch: 9 }, { wch: 9 }, { wch: 10 }, { wch: 10 }, { wch: 9 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 12 }, { wch: 8 }];
+  ws1['!merges'] = [
+    { s: { r: 8, c: 0 }, e: { r: 9, c: 0 } },
+    { s: { r: 8, c: 1 }, e: { r: 9, c: 1 } },
+    { s: { r: 8, c: 2 }, e: { r: 9, c: 2 } },
+    { s: { r: 8, c: 3 }, e: { r: 8, c: 5 } },
+    { s: { r: 8, c: 6 }, e: { r: 8, c: 9 } },
+    { s: { r: 8, c: 10 }, e: { r: 8, c: 13 } },
+    { s: { r: 8, c: 14 }, e: { r: 8, c: 16 } },
+    { s: { r: 16, c: 0 }, e: { r: 17, c: 0 } },
+    { s: { r: 16, c: 1 }, e: { r: 17, c: 1 } },
+    { s: { r: 16, c: 2 }, e: { r: 17, c: 2 } },
+    { s: { r: 16, c: 3 }, e: { r: 16, c: 6 } },
+    { s: { r: 16, c: 7 }, e: { r: 16, c: 10 } },
+    { s: { r: 16, c: 11 }, e: { r: 16, c: 17 } }
+  ];
+
+  // SHEET 2: 02_DONG_BO_WEB (LIÊN KẾT CÔNG THỨC TỰ ĐỘNG TỪ SHEET 1)
+  const s1Ref = "'01_BIEU_THONG_KE_CHUNG'!";
+  const aoa2 = [
+    ['BẢNG TRÍCH XUẤT TỰ ĐỘNG ĐỒNG BỘ WEBSITE (100% CÔNG THỨC TỰ TÍNH TỪ SHEET 01_BIEU_THONG_KE_CHUNG)'],
+    ['Lưu ý: Chỉ cần nhập số liệu tại Sheet 01_BIEU_THONG_KE_CHUNG, Sheet này sẽ tự động nhảy số bằng công thức Excel!'],
+    ['MÃ TRƯỜNG (KHÔNG SỬA)', 'NHÓM THỐNG KÊ', 'CHỈ TIÊU THỐNG KÊ CHI TIẾT', 'GIÁ TRỊ TỰ ĐỘNG ĐỒNG BỘ WEB'],
+    ['schoolYear',   '0. Thông tin chung',       'Năm học thống kê',                 { f: `${s1Ref}H6` }],
+    ['staffTotal',   '1. Đội ngũ CBGVNV',        'Tổng số CBGVNV',                   { f: `${s1Ref}C14` }],
+    ['staffMale',    '1. Đội ngũ CBGVNV',        'CBGVNV Nam',                       { f: `${s1Ref}D14` }],
+    ['staffFemale',  '1. Đội ngũ CBGVNV',        'CBGVNV Nữ',                        { f: `${s1Ref}E14` }],
+    ['staffEthnic',  '1. Đội ngũ CBGVNV',        'CBGVNV Dân tộc thiểu số',          { f: `${s1Ref}F14` }],
+    ['ageOver50',    '1. Đội ngũ CBGVNV',        'Độ tuổi Trên 50',                  { f: `${s1Ref}G14` }],
+    ['age40to49',    '1. Đội ngũ CBGVNV',        'Độ tuổi Từ 40 đến dưới 50',        { f: `${s1Ref}H14` }],
+    ['age30to39',    '1. Đội ngũ CBGVNV',        'Độ tuổi Từ 30 đến dưới 40',        { f: `${s1Ref}I14` }],
+    ['ageUnder30',   '1. Đội ngũ CBGVNV',        'Độ tuổi Dưới 30',                  { f: `${s1Ref}J14` }],
+    ['qualPostGrad', '1. Đội ngũ CBGVNV',        'TĐCM Trên Đại học',                { f: `${s1Ref}K14` }],
+    ['qualUni',      '1. Đội ngũ CBGVNV',        'TĐCM Đại học',                     { f: `${s1Ref}L14` }],
+    ['qualCollege',  '1. Đội ngũ CBGVNV',        'TĐCM Cao đẳng',                    { f: `${s1Ref}M14` }],
+    ['qualInterm',   '1. Đội ngũ CBGVNV',        'TĐCM Trung cấp / Khác',            { f: `${s1Ref}N14` }],
+    ['polHigh',      '1. Đội ngũ CBGVNV',        'TĐLLCT Cao cấp (CC)',              { f: `${s1Ref}O14` }],
+    ['polMid',       '1. Đội ngũ CBGVNV',        'TĐLLCT Trung cấp (TC)',            { f: `${s1Ref}P14` }],
+    ['polElem',      '1. Đội ngũ CBGVNV',        'TĐLLCT Sơ cấp (SC)',               { f: `${s1Ref}Q14` }],
+    ['classTotal',   '2. Cơ cấu Lớp & Học sinh', 'Tổng số lớp',                      { f: `${s1Ref}C28` }],
+    ['classG6',      '2. Cơ cấu Lớp & Học sinh', 'Số lớp Khối 6',                    { f: `${s1Ref}C29` }],
+    ['classG7',      '2. Cơ cấu Lớp & Học sinh', 'Số lớp Khối 7',                    { f: `${s1Ref}C30` }],
+    ['classG8',      '2. Cơ cấu Lớp & Học sinh', 'Số lớp Khối 8',                    { f: `${s1Ref}C31` }],
+    ['classG9',      '2. Cơ cấu Lớp & Học sinh', 'Số lớp Khối 9',                    { f: `${s1Ref}C32` }],
+    ['stuTotal',     '2. Cơ cấu Lớp & Học sinh', 'Tổng số học sinh toàn trường',     { f: `${s1Ref}D28` }],
+    ['stuMale',      '2. Cơ cấu Lớp & Học sinh', 'Học sinh Nam',                     { f: `${s1Ref}E28` }],
+    ['stuFemale',    '2. Cơ cấu Lớp & Học sinh', 'Học sinh Nữ',                      { f: `${s1Ref}F28` }],
+    ['stuEthnic',    '2. Cơ cấu Lớp & Học sinh', 'Học sinh Dân tộc thiểu số',        { f: `${s1Ref}G28` }],
+    ['brdTotal',     '3. Học sinh Bán trú',      'Tổng số HS bán trú (ở lại trường)',{ f: `${s1Ref}H28` }],
+    ['brdMale',      '3. Học sinh Bán trú',      'HS Bán trú Nam',                   { f: `${s1Ref}I28` }],
+    ['brdFemale',    '3. Học sinh Bán trú',      'HS Bán trú Nữ',                    { f: `${s1Ref}J28` }],
+    ['brdEthnic',    '3. Học sinh Bán trú',      'HS Bán trú Dân tộc',               { f: `${s1Ref}K28` }],
+    ['brdCanhSon',   '3. Học sinh Bán trú',      'Nơi ở: Canh Sơn',                  { f: `${s1Ref}L28` }],
+    ['brdHonMe',     '3. Học sinh Bán trú',      'Nơi ở: Hòn Mẻ',                    { f: `${s1Ref}M28` }],
+    ['brdCanhHoa',   '3. Học sinh Bán trú',      'Nơi ở: Canh Hòa',                  { f: `${s1Ref}N28` }],
+    ['brdCanhGiao',  '3. Học sinh Bán trú',      'Nơi ở: Canh Giao',                 { f: `${s1Ref}O28` }],
+    ['brdCanhTien',  '3. Học sinh Bán trú',      'Nơi ở: Canh Tiến',                 { f: `${s1Ref}P28` }],
+    ['brdHaVanTren', '3. Học sinh Bán trú',      'Nơi ở: Hà Văn Trên',               { f: `${s1Ref}Q28` }],
+    ['brdOther',     '3. Học sinh Bán trú',      'Nơi ở: Khác',                      { f: `${s1Ref}R28` }]
+  ];
+  const ws2 = XLSX.utils.aoa_to_sheet(aoa2);
+  ws2['!cols'] = [{ wch: 20 }, { wch: 26 }, { wch: 36 }, { wch: 42 }];
+
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'PHU_LUC_THONG_KE');
+  XLSX.utils.book_append_sheet(wb, ws1, '01_BIEU_THONG_KE_CHUNG');
+  XLSX.utils.book_append_sheet(wb, ws2, '02_DONG_BO_WEB');
   XLSX.writeFile(wb, 'Phu_luc_Thong_ke_Cong_khai_THCS_BT_Canh_Thuan.xlsx');
 }
 
@@ -3794,12 +3966,107 @@ function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
     const extracted = {};
     let matchCount = 0;
 
+    // 1. Ưu tiên đọc trực tiếp từ Bảng Báo cáo Tổng hợp Ma trận (Sheet 01_BIEU_THONG_KE_CHUNG) và tự tính tổng nếu ô công thức chưa cache
+    const mainShName = wb.SheetNames.find(n => n.includes('01_BIEU') || n.includes('THONG_KE_CHUNG'));
+    if (mainShName) {
+      const ws = wb.Sheets[mainShName];
+      const cellVal = (addr) => (ws[addr] && ws[addr].v !== undefined) ? ws[addr].v : null;
+      const numVal = (addr) => parseFloat(cellVal(addr)) || 0;
+      const sumCol = (colLet, r1, r2) => {
+        let s = 0;
+        for (let r = r1; r <= r2; r++) s += numVal(`${colLet}${r}`);
+        return s;
+      };
+
+      const yr = cellVal('H6');
+      if (yr) extracted.schoolYear = String(yr).trim();
+
+      // Đội ngũ (Rows 11-13, Tổng Row 14)
+      const sMale = numVal('D14') || sumCol('D', 11, 13);
+      const sFem  = numVal('E14') || sumCol('E', 11, 13);
+      const sTot  = numVal('C14') || (sMale + sFem);
+      if (sTot > 0) {
+        extracted.staffTotal   = sTot;
+        extracted.staffMale    = sMale;
+        extracted.staffFemale  = sFem;
+        extracted.staffEthnic  = numVal('F14') || sumCol('F', 11, 13);
+        extracted.ageOver50    = numVal('G14') || sumCol('G', 11, 13);
+        extracted.age40to49    = numVal('H14') || sumCol('H', 11, 13);
+        extracted.age30to39    = numVal('I14') || sumCol('I', 11, 13);
+        extracted.ageUnder30   = numVal('J14') || sumCol('J', 11, 13);
+        extracted.qualPostGrad = numVal('K14') || sumCol('K', 11, 13);
+        extracted.qualUni      = numVal('L14') || sumCol('L', 11, 13);
+        extracted.qualCollege  = numVal('M14') || sumCol('M', 11, 13);
+        extracted.qualInterm   = numVal('N14') || sumCol('N', 11, 13);
+        extracted.polHigh      = numVal('O14') || sumCol('O', 11, 13);
+        extracted.polMid       = numVal('P14') || sumCol('P', 11, 13);
+        extracted.polElem      = numVal('Q14') || sumCol('Q', 11, 13);
+        matchCount += 15;
+      }
+
+      // Lớp & Học sinh (Rows 19-27: 9 lớp)
+      const clsStu = (r) => numVal(`D${r}`) || (numVal(`E${r}`) + numVal(`F${r}`));
+      const clsBrd = (r) => numVal(`H${r}`) || (numVal(`L${r}`) + numVal(`M${r}`) + numVal(`N${r}`) + numVal(`O${r}`) + numVal(`P${r}`) + numVal(`Q${r}`) + numVal(`R${r}`));
+
+      const stuMale = numVal('E28') || sumCol('E', 19, 27);
+      const stuFem  = numVal('F28') || sumCol('F', 19, 27);
+      const stuTot  = numVal('D28') || (stuMale + stuFem);
+
+      if (stuTot > 0) {
+        extracted.classTotal = numVal('C28') || 9;
+        extracted.classG6    = numVal('C29') || 3;
+        extracted.classG7    = numVal('C30') || 2;
+        extracted.classG8    = numVal('C31') || 2;
+        extracted.classG9    = numVal('C32') || 2;
+        extracted.stuTotal   = stuTot;
+        extracted.stuMale    = stuMale;
+        extracted.stuFemale  = stuFem;
+        extracted.stuEthnic  = numVal('G28') || sumCol('G', 19, 27);
+
+        const g6Tot = clsStu(19) + clsStu(20) + clsStu(21);
+        const g7Tot = clsStu(22) + clsStu(23);
+        const g8Tot = clsStu(24) + clsStu(25);
+        const g9Tot = clsStu(26) + clsStu(27);
+
+        extracted.stuG6 = `${g6Tot} (${cellVal('C19')||'6A1'}: ${clsStu(19)}, ${cellVal('C20')||'6A2'}: ${clsStu(20)}, ${cellVal('C21')||'6A3'}: ${clsStu(21)})`;
+        extracted.stuG7 = `${g7Tot} (${cellVal('C22')||'7A1'}: ${clsStu(22)}, ${cellVal('C23')||'7A2'}: ${clsStu(23)})`;
+        extracted.stuG8 = `${g8Tot} (${cellVal('C24')||'8A1'}: ${clsStu(24)}, ${cellVal('C25')||'8A2'}: ${clsStu(25)})`;
+        extracted.stuG9 = `${g9Tot} (${cellVal('C26')||'9A1'}: ${clsStu(26)}, ${cellVal('C27')||'9A2'}: ${clsStu(27)})`;
+
+        // Bán trú
+        const bSon  = numVal('L28') || sumCol('L', 19, 27);
+        const bMe   = numVal('M28') || sumCol('M', 19, 27);
+        const bHoa  = numVal('N28') || sumCol('N', 19, 27);
+        const bGiao = numVal('O28') || sumCol('O', 19, 27);
+        const bTien = numVal('P28') || sumCol('P', 19, 27);
+        const bVan  = numVal('Q28') || sumCol('Q', 19, 27);
+        const bKhac = numVal('R28') || sumCol('R', 19, 27);
+        const bTot  = numVal('H28') || (bSon + bMe + bHoa + bGiao + bTien + bVan + bKhac);
+
+        extracted.brdTotal     = bTot;
+        extracted.brdMale      = numVal('I28') || sumCol('I', 19, 27);
+        extracted.brdFemale    = numVal('J28') || sumCol('J', 19, 27);
+        extracted.brdEthnic    = numVal('K28') || sumCol('K', 19, 27);
+        extracted.brdByGrade   = `K6: ${clsBrd(19)+clsBrd(20)+clsBrd(21)} • K7: ${clsBrd(22)+clsBrd(23)} • K8: ${clsBrd(24)+clsBrd(25)} • K9: ${clsBrd(26)+clsBrd(27)}`;
+        extracted.brdCanhSon   = bSon;
+        extracted.brdHonMe     = bMe;
+        extracted.brdCanhHoa   = bHoa;
+        extracted.brdCanhGiao  = bGiao;
+        extracted.brdCanhTien  = bTien;
+        extracted.brdHaVanTren = bVan;
+        extracted.brdOther     = bKhac;
+        matchCount += 20;
+      }
+    }
+
+    // 2. Đọc bổ sung từ Sheet 02_DONG_BO_WEB (nếu người dùng có thêm chỉnh sửa riêng)
     wb.SheetNames.forEach(shName => {
+      if (shName === mainShName) return;
       const rows = XLSX.utils.sheet_to_json(wb.Sheets[shName], { header: 1, blankrows: false });
       rows.forEach(r => {
         if (!Array.isArray(r) || r.length < 2) return;
         const k = String(r[0] || '').trim();
-        if (validKeys.has(k)) {
+        if (validKeys.has(k) && extracted[k] === undefined) {
           const val = r[3] !== undefined && r[3] !== null && String(r[3]).trim() !== '' ? r[3] : r[1];
           if (val !== undefined && val !== null) {
             extracted[k] = String(val).trim();
@@ -3808,7 +4075,12 @@ function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
         }
       });
     });
-    return matchCount >= 3 ? extracted : null;
+
+    if (matchCount >= 3) {
+      Object.assign(extracted, computeDynamicBottomKpis({ ...getSchoolStatsData(), ...extracted }));
+      return extracted;
+    }
+    return null;
   } catch (e) {
     return null;
   }
