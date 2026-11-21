@@ -3441,12 +3441,13 @@ const DEFAULT_SCHOOL_STATS = {
   staffMale: 11,
   staffFemale: 18,
   staffEthnic: 5,
+  staffParty: 17,
   ageOver50: 3,
   age40to49: 14,
   age30to39: 9,
   ageUnder30: 3,
-  qualPostGrad: 0,
-  qualUni: 21,
+  qualPostGrad: 1,
+  qualUni: 20,
   qualCollege: 3,
   qualInterm: 5,
   polHigh: 0,
@@ -3554,7 +3555,8 @@ function renderSchoolStatsSection() {
               <div class="stat-cells-grid cols-4">
                 <span class="stat-chip"><span>Nam:</span><b>${s.staffMale}</b></span>
                 <span class="stat-chip"><span>Nữ:</span><b>${s.staffFemale}</b></span>
-                <span class="stat-chip span-2"><span>Dân tộc thiểu số:</span><b>${s.staffEthnic}</b></span>
+                <span class="stat-chip"><span>Dân tộc:</span><b>${s.staffEthnic}</b></span>
+                <span class="stat-chip" style="border-color:#fca5a5; background:#fef2f2;"><span style="color:#b91c1c;">Đảng viên:</span><b style="color:#dc2626;">${s.staffParty !== undefined ? s.staffParty : 17}</b></span>
               </div>
             </td>
           </tr>
@@ -3702,47 +3704,48 @@ function renderSchoolStatsSection() {
 }
 
 const STATS_FIELD_SCHEMA = [
-  { key: 'schoolYear', label: 'Năm học thống kê', group: '0. Thông tin chung' },
-  { key: 'staffTotal', label: 'Tổng số CBGVNV', group: '1. Đội ngũ CBGVNV' },
-  { key: 'staffMale', label: 'CBGVNV Nam', group: '1. Đội ngũ CBGVNV' },
-  { key: 'staffFemale', label: 'CBGVNV Nữ', group: '1. Đội ngũ CBGVNV' },
-  { key: 'staffEthnic', label: 'CBGVNV Dân tộc thiểu số', group: '1. Đội ngũ CBGVNV' },
-  { key: 'ageOver50', label: 'Độ tuổi Trên 50', group: '1. Đội ngũ CBGVNV' },
-  { key: 'age40to49', label: 'Độ tuổi Từ 40 đến dưới 50', group: '1. Đội ngũ CBGVNV' },
-  { key: 'age30to39', label: 'Độ tuổi Từ 30 đến dưới 40', group: '1. Đội ngũ CBGVNV' },
-  { key: 'ageUnder30', label: 'Độ tuổi Dưới 30', group: '1. Đội ngũ CBGVNV' },
-  { key: 'qualPostGrad', label: 'TĐCM Trên Đại học', group: '1. Đội ngũ CBGVNV' },
-  { key: 'qualUni', label: 'TĐCM Đại học', group: '1. Đội ngũ CBGVNV' },
-  { key: 'qualCollege', label: 'TĐCM Cao đẳng', group: '1. Đội ngũ CBGVNV' },
-  { key: 'qualInterm', label: 'TĐCM Trung cấp / Khác', group: '1. Đội ngũ CBGVNV' },
-  { key: 'polHigh', label: 'TĐLLCT Cao cấp (CC)', group: '1. Đội ngũ CBGVNV' },
-  { key: 'polMid', label: 'TĐLLCT Trung cấp (TC)', group: '1. Đội ngũ CBGVNV' },
-  { key: 'polElem', label: 'TĐLLCT Sơ cấp (SC)', group: '1. Đội ngũ CBGVNV' },
-  { key: 'classTotal', label: 'Tổng số lớp', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'classG6', label: 'Số lớp Khối 6', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'classG7', label: 'Số lớp Khối 7', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'classG8', label: 'Số lớp Khối 8', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'classG9', label: 'Số lớp Khối 9', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'stuTotal', label: 'Tổng số học sinh toàn trường', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'stuMale', label: 'Học sinh Nam', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'stuFemale', label: 'Học sinh Nữ', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'stuEthnic', label: 'Học sinh Dân tộc thiểu số', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'stuG6', label: 'Chi tiết HS Khối 6 (các lớp)', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'stuG7', label: 'Chi tiết HS Khối 7 (các lớp)', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'stuG8', label: 'Chi tiết HS Khối 8 (các lớp)', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'stuG9', label: 'Chi tiết HS Khối 9 (các lớp)', group: '2. Cơ cấu Lớp & Học sinh' },
-  { key: 'brdTotal', label: 'Tổng số HS bán trú (ở lại trường)', group: '3. Học sinh Bán trú' },
-  { key: 'brdMale', label: 'HS Bán trú Nam', group: '3. Học sinh Bán trú' },
-  { key: 'brdFemale', label: 'HS Bán trú Nữ', group: '3. Học sinh Bán trú' },
-  { key: 'brdEthnic', label: 'HS Bán trú Dân tộc', group: '3. Học sinh Bán trú' },
-  { key: 'brdByGrade', label: 'HS Bán trú chia theo Khối/Lớp', group: '3. Học sinh Bán trú' },
-  { key: 'brdCanhSon', label: 'Nơi ở: Canh Sơn', group: '3. Học sinh Bán trú' },
-  { key: 'brdHonMe', label: 'Nơi ở: Hòn Mẻ', group: '3. Học sinh Bán trú' },
-  { key: 'brdCanhHoa', label: 'Nơi ở: Canh Hòa', group: '3. Học sinh Bán trú' },
-  { key: 'brdCanhGiao', label: 'Nơi ở: Canh Giao', group: '3. Học sinh Bán trú' },
-  { key: 'brdCanhTien', label: 'Nơi ở: Canh Tiến', group: '3. Học sinh Bán trú' },
-  { key: 'brdHaVanTren', label: 'Nơi ở: Hà Văn Trên', group: '3. Học sinh Bán trú' },
-  { key: 'brdOther', label: 'Nơi ở: Khác', group: '3. Học sinh Bán trú' },
+  { key: 'schoolYear', label: 'Năm học thống kê (Ô A6)', group: '0. Thông tin chung' },
+  { key: 'staffTotal', label: 'Tổng số CBGVNV (Ô C14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'staffMale', label: 'CBGVNV Nam (Ô D14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'staffFemale', label: 'CBGVNV Nữ (Ô E14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'staffEthnic', label: 'CBGVNV Dân tộc (Ô F14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'staffParty', label: 'Đảng viên (Ô R14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'ageOver50', label: 'Độ tuổi Trên 50 (Ô G14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'age40to49', label: 'Độ tuổi Từ 40–49 (Ô H14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'age30to39', label: 'Độ tuổi Từ 30–39 (Ô I14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'ageUnder30', label: 'Độ tuổi Dưới 30 (Ô J14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'qualPostGrad', label: 'TĐCM Trên Đại học (Ô K14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'qualUni', label: 'TĐCM Đại học (Ô L14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'qualCollege', label: 'TĐCM Cao đẳng (Ô M14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'qualInterm', label: 'TĐCM TC / Khác (Ô N14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'polHigh', label: 'TĐLLCT Cao cấp (Ô O14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'polMid', label: 'TĐLLCT Trung cấp (Ô P14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'polElem', label: 'TĐLLCT Sơ cấp (Ô Q14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'classTotal', label: 'Tổng số lớp (Ô C28)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'classG6', label: 'Số lớp Khối 6 (Ô C29)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'classG7', label: 'Số lớp Khối 7 (Ô C30)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'classG8', label: 'Số lớp Khối 8 (Ô C31)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'classG9', label: 'Số lớp Khối 9 (Ô C32)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuTotal', label: 'Tổng số HS toàn trường (Ô D28)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuMale', label: 'Học sinh Nam (Ô E28)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuFemale', label: 'Học sinh Nữ (Ô F28)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuEthnic', label: 'Học sinh Dân tộc (Ô G28)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuG6', label: 'Chi tiết HS Khối 6 (Ô C19:D21)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuG7', label: 'Chi tiết HS Khối 7 (Ô C22:D23)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuG8', label: 'Chi tiết HS Khối 8 (Ô C24:D25)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuG9', label: 'Chi tiết HS Khối 9 (Ô C26:D27)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'brdTotal', label: 'Tổng số HS bán trú (Ô H28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdMale', label: 'HS Bán trú Nam (Ô I28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdFemale', label: 'HS Bán trú Nữ (Ô J28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdEthnic', label: 'HS Bán trú Dân tộc (Ô K28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdByGrade', label: 'HS Bán trú theo Khối (Ô H29:H32)', group: '3. Học sinh Bán trú' },
+  { key: 'brdCanhSon', label: 'Nơi ở: Canh Sơn (Ô L28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdHonMe', label: 'Nơi ở: Hòn Mẻ (Ô M28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdCanhHoa', label: 'Nơi ở: Canh Hòa (Ô N28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdCanhGiao', label: 'Nơi ở: Canh Giao (Ô O28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdCanhTien', label: 'Nơi ở: Canh Tiến (Ô P28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdHaVanTren', label: 'Nơi ở: Hà Văn Trên (Ô Q28)', group: '3. Học sinh Bán trú' },
+  { key: 'brdOther', label: 'Nơi ở: Khác (Ô R28)', group: '3. Học sinh Bán trú' },
   { key: 'kpi1Num', label: 'Ô chỉ số 1 (Số liệu)', group: '4. Thanh 4 Chỉ số Công khai' },
   { key: 'kpi1Lbl', label: 'Ô chỉ số 1 (Nhãn mô tả)', group: '4. Thanh 4 Chỉ số Công khai' },
   { key: 'kpi2Num', label: 'Ô chỉ số 2 (Số liệu)', group: '4. Thanh 4 Chỉ số Công khai' },
@@ -3852,22 +3855,22 @@ function downloadSchoolStatsExcelTemplate() {
   }
   const s = getSchoolStatsData();
 
-  // SHEET 1: 01_BIEU_THONG_KE_CHUNG (BIỂU BÁO CÁO MA TRẬN CHUYÊN MÔN CÓ CÔNG THỨC SUM / COUNTA TỰ ĐỘNG)
+  // SHEET 1: 01_BIEU_THONG_KE_CHUNG (BIỂU BÁO CÁO MA TRẬN 18 CỘT A..R CHUẨN MẪU THẦY QUAN)
   const aoa1 = [
     ['ỦY BAN NHÂN DÂN XÃ VÂN CANH', '', '', '', '', 'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM', '', '', '', '', '', '', '', '', '', '', '', ''],
     ['TRƯỜNG THCS BÁN TRÚ CANH THUẬN', '', '', '', '', 'Độc lập - Tự do - Hạnh phúc', '', '', '', '', '', '', '', '', '', '', '', ''],
     [],
     ['BIỂU THỐNG KÊ TỔNG HỢP ĐỘI NGŨ CBGVNV, CƠ CẤU TRƯỜNG LỚP VÀ HỌC SINH BÁN TRÚ'],
     ['(Phụ lục ban hành kèm theo Báo cáo công khai đầu năm học theo Thông tư số 09/2024/TT-BGDĐT — Tự động đồng bộ Website Nhà trường)'],
-    ['', '', '', '', '', '', 'Năm học:', s.schoolYear || '2026 - 2027'],
+    [`Năm học: ${s.schoolYear || '2026 - 2027'}`],
     [],
     ['I. THỐNG KÊ ĐỘI NGŨ CÁN BỘ, GIÁO VIÊN, NHÂN VIÊN (CBGVNV)'],
-    ['TT', 'Phân loại đội ngũ', 'Tổng số', 'Chia theo Giới tính & Dân tộc', '', '', 'Chia theo Nhóm độ tuổi', '', '', '', 'Trình độ chuyên môn (TĐCM)', '', '', '', 'Lý luận chính trị (LLCT)', '', ''],
-    ['', '', '', 'Nam', 'Nữ', 'Dân tộc', 'Trên 50', 'Từ 40–49', 'Từ 30–39', 'Dưới 30', 'Trên ĐH', 'Đại học', 'Cao đẳng', 'TC / Khác', 'Cao cấp', 'Trung cấp', 'Sơ cấp'],
-    [1, 'Cán bộ quản lý (BGH)',        { f: 'D11+E11' }, 1, 0, 1,  0, 1, 0, 0,  0, 1, 0, 0,  0, 1, 0],
-    [2, 'Giáo viên (Biên chế & HĐ)',   { f: 'D12+E12' }, 9, 11, 3, 3, 12, 3, 2, 1, 17, 2, 0, 0, 4, 7],
-    [3, 'Nhân viên & HĐ NĐ 111/NĐ 66', { f: 'D13+E13' }, 1, 7, 1,  0, 1, 6, 1,  0, 2, 1, 5,  0, 0, 2],
-    ['', 'TỔNG CỘNG ĐỘI NGŨ', { f: 'SUM(C11:C13)' }, { f: 'SUM(D11:D13)' }, { f: 'SUM(E11:E13)' }, { f: 'SUM(F11:F13)' }, { f: 'SUM(G11:G13)' }, { f: 'SUM(H11:H13)' }, { f: 'SUM(I11:I13)' }, { f: 'SUM(J11:J13)' }, { f: 'SUM(K11:K13)' }, { f: 'SUM(L11:L13)' }, { f: 'SUM(M11:M13)' }, { f: 'SUM(N11:N13)' }, { f: 'SUM(O11:O13)' }, { f: 'SUM(P11:P13)' }, { f: 'SUM(Q11:Q13)' }],
+    ['TT', 'Phân loại đội ngũ', 'Tổng số', 'Chia theo Giới tính & Dân tộc', '', '', 'Chia theo Nhóm độ tuổi', '', '', '', 'Trình độ chuyên môn (TĐCM)', '', '', '', 'Lý luận chính trị (LLCT)', '', '', 'Đảng viên'],
+    ['', '', '', 'Nam', 'Nữ', 'Dân tộc', 'Trên 50', 'Từ 40–49', 'Từ 30–39', 'Dưới 30', 'Trên ĐH', 'Đại học', 'Cao đẳng', 'TC / Khác', 'Cao cấp', 'Trung cấp', 'Sơ cấp', ''],
+    [1, 'Cán bộ quản lý (BGH)',        { f: 'D11+E11' }, 1, 0, 1,  0, 1, 0, 0,  0, 1, 0, 0,  0, 1, 0, 1],
+    [2, 'Giáo viên (Biên chế & HĐ)',   { f: 'D12+E12' }, 9, 11, 3, 3, 12, 3, 2, 1, 17, 2, 0, 0, 4, 7, 15],
+    [3, 'Nhân viên & HĐ NĐ 111/NĐ 66', { f: 'D13+E13' }, 1, 7, 1,  0, 1, 6, 1,  0, 2, 1, 5,  0, 0, 2, 1],
+    ['', 'TỔNG CỘNG ĐỘI NGŨ', { f: 'SUM(C11:C13)' }, { f: 'SUM(D11:D13)' }, { f: 'SUM(E11:E13)' }, { f: 'SUM(F11:F13)' }, { f: 'SUM(G11:G13)' }, { f: 'SUM(H11:H13)' }, { f: 'SUM(I11:I13)' }, { f: 'SUM(J11:J13)' }, { f: 'SUM(K11:K13)' }, { f: 'SUM(L11:L13)' }, { f: 'SUM(M11:M13)' }, { f: 'SUM(N11:N13)' }, { f: 'SUM(O11:O13)' }, { f: 'SUM(P11:P13)' }, { f: 'SUM(Q11:Q13)' }, { f: 'SUM(R11:R13)' }],
     [],
     ['II. THỐNG KÊ CƠ CẤU LỚP HỌC, SĨ SỐ HỌC SINH VÀ HỌC SINH BÁN TRÚ (Ở LẠI TRƯỜNG) THEO KHỐI / LỚP / THÔN LÀNG'],
     ['TT', 'Khối', 'Lớp', 'Học sinh toàn trường', '', '', '', 'Học sinh Bán trú (Ở lại trường)', '', '', '', 'Phân bổ Học sinh Bán trú theo Nơi ở (Thôn / Làng)', '', '', '', '', '', ''],
@@ -3889,7 +3892,7 @@ function downloadSchoolStatsExcelTemplate() {
   ];
 
   const ws1 = XLSX.utils.aoa_to_sheet(aoa1);
-  ws1['!cols'] = [{ wch: 5 }, { wch: 24 }, { wch: 10 }, { wch: 10 }, { wch: 8 }, { wch: 8 }, { wch: 9 }, { wch: 10 }, { wch: 9 }, { wch: 9 }, { wch: 10 }, { wch: 10 }, { wch: 9 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 12 }, { wch: 8 }];
+  ws1['!cols'] = [{ wch: 5 }, { wch: 24 }, { wch: 10 }, { wch: 10 }, { wch: 8 }, { wch: 8 }, { wch: 9 }, { wch: 10 }, { wch: 9 }, { wch: 9 }, { wch: 10 }, { wch: 10 }, { wch: 9 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 12 }, { wch: 10 }];
   ws1['!merges'] = [
     { s: { r: 8, c: 0 }, e: { r: 9, c: 0 } },
     { s: { r: 8, c: 1 }, e: { r: 9, c: 1 } },
@@ -3898,6 +3901,7 @@ function downloadSchoolStatsExcelTemplate() {
     { s: { r: 8, c: 6 }, e: { r: 8, c: 9 } },
     { s: { r: 8, c: 10 }, e: { r: 8, c: 13 } },
     { s: { r: 8, c: 14 }, e: { r: 8, c: 16 } },
+    { s: { r: 8, c: 17 }, e: { r: 9, c: 17 } },
     { s: { r: 16, c: 0 }, e: { r: 17, c: 0 } },
     { s: { r: 16, c: 1 }, e: { r: 17, c: 1 } },
     { s: { r: 16, c: 2 }, e: { r: 17, c: 2 } },
@@ -3912,11 +3916,12 @@ function downloadSchoolStatsExcelTemplate() {
     ['BẢNG TRÍCH XUẤT TỰ ĐỘNG ĐỒNG BỘ WEBSITE (100% CÔNG THỨC TỰ TÍNH TỪ SHEET 01_BIEU_THONG_KE_CHUNG)'],
     ['Lưu ý: Chỉ cần nhập số liệu tại Sheet 01_BIEU_THONG_KE_CHUNG, Sheet này sẽ tự động nhảy số bằng công thức Excel!'],
     ['MÃ TRƯỜNG (KHÔNG SỬA)', 'NHÓM THỐNG KÊ', 'CHỈ TIÊU THỐNG KÊ CHI TIẾT', 'GIÁ TRỊ TỰ ĐỘNG ĐỒNG BỘ WEB'],
-    ['schoolYear',   '0. Thông tin chung',       'Năm học thống kê',                 { f: `${s1Ref}H6` }],
+    ['schoolYear',   '0. Thông tin chung',       'Năm học thống kê',                 { f: `TRIM(SUBSTITUTE(${s1Ref}A6,"Năm học:",""))` }],
     ['staffTotal',   '1. Đội ngũ CBGVNV',        'Tổng số CBGVNV',                   { f: `${s1Ref}C14` }],
     ['staffMale',    '1. Đội ngũ CBGVNV',        'CBGVNV Nam',                       { f: `${s1Ref}D14` }],
     ['staffFemale',  '1. Đội ngũ CBGVNV',        'CBGVNV Nữ',                        { f: `${s1Ref}E14` }],
     ['staffEthnic',  '1. Đội ngũ CBGVNV',        'CBGVNV Dân tộc thiểu số',          { f: `${s1Ref}F14` }],
+    ['staffParty',   '1. Đội ngũ CBGVNV',        'Đảng viên',                        { f: `${s1Ref}R14` }],
     ['ageOver50',    '1. Đội ngũ CBGVNV',        'Độ tuổi Trên 50',                  { f: `${s1Ref}G14` }],
     ['age40to49',    '1. Đội ngũ CBGVNV',        'Độ tuổi Từ 40 đến dưới 50',        { f: `${s1Ref}H14` }],
     ['age30to39',    '1. Đội ngũ CBGVNV',        'Độ tuổi Từ 30 đến dưới 40',        { f: `${s1Ref}I14` }],
@@ -3966,8 +3971,8 @@ function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
     const extracted = {};
     let matchCount = 0;
 
-    // 1. Ưu tiên đọc trực tiếp từ Bảng Báo cáo Tổng hợp Ma trận (Sheet 01_BIEU_THONG_KE_CHUNG) và tự tính tổng nếu ô công thức chưa cache
-    const mainShName = wb.SheetNames.find(n => n.includes('01_BIEU') || n.includes('THONG_KE_CHUNG'));
+    // 1. Đọc chính xác theo Tọa độ Ô (Cell Address) trên Sheet 1 (01_BIEU_THONG_KE_CHUNG) chuẩn mẫu Thầy Quan
+    const mainShName = wb.SheetNames.find(n => n.includes('01_BIEU') || n.includes('THONG_KE_CHUNG')) || wb.SheetNames[0];
     if (mainShName) {
       const ws = wb.Sheets[mainShName];
       const cellVal = (addr) => (ws[addr] && ws[addr].v !== undefined) ? ws[addr].v : null;
@@ -3978,10 +3983,16 @@ function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
         return s;
       };
 
-      const yr = cellVal('H6');
-      if (yr) extracted.schoolYear = String(yr).trim();
+      // Năm học: Hỗ trợ cả ô A6 ("Năm học: 2026 - 2027") lẫn ô H6
+      const rawA6 = String(cellVal('A6') || '').trim();
+      const rawH6 = String(cellVal('H6') || '').trim();
+      if (rawA6 && /\d{4}/.test(rawA6)) {
+        extracted.schoolYear = rawA6.replace(/^năm\s*học\s*:\s*/i, '').trim();
+      } else if (rawH6 && /\d{4}/.test(rawH6)) {
+        extracted.schoolYear = rawH6.replace(/^năm\s*học\s*:\s*/i, '').trim();
+      }
 
-      // Đội ngũ (Rows 11-13, Tổng Row 14)
+      // Bảng I: Đội ngũ CBGVNV (Dòng 11..13, Tổng cộng tại Dòng 14: C14..R14)
       const sMale = numVal('D14') || sumCol('D', 11, 13);
       const sFem  = numVal('E14') || sumCol('E', 11, 13);
       const sTot  = numVal('C14') || (sMale + sFem);
@@ -4001,10 +4012,11 @@ function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
         extracted.polHigh      = numVal('O14') || sumCol('O', 11, 13);
         extracted.polMid       = numVal('P14') || sumCol('P', 11, 13);
         extracted.polElem      = numVal('Q14') || sumCol('Q', 11, 13);
-        matchCount += 15;
+        extracted.staffParty   = numVal('R14') || sumCol('R', 11, 13);
+        matchCount += 16;
       }
 
-      // Lớp & Học sinh (Rows 19-27: 9 lớp)
+      // Bảng II: Cơ cấu lớp, Học sinh & Bán trú (Dòng 19..27, Tổng tại Dòng 28, Tổng 4 khối tại Dòng 29..32)
       const clsStu = (r) => numVal(`D${r}`) || (numVal(`E${r}`) + numVal(`F${r}`));
       const clsBrd = (r) => numVal(`H${r}`) || (numVal(`L${r}`) + numVal(`M${r}`) + numVal(`N${r}`) + numVal(`O${r}`) + numVal(`P${r}`) + numVal(`Q${r}`) + numVal(`R${r}`));
 
@@ -4023,17 +4035,17 @@ function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
         extracted.stuFemale  = stuFem;
         extracted.stuEthnic  = numVal('G28') || sumCol('G', 19, 27);
 
-        const g6Tot = clsStu(19) + clsStu(20) + clsStu(21);
-        const g7Tot = clsStu(22) + clsStu(23);
-        const g8Tot = clsStu(24) + clsStu(25);
-        const g9Tot = clsStu(26) + clsStu(27);
+        const g6Tot = numVal('D29') || (clsStu(19) + clsStu(20) + clsStu(21));
+        const g7Tot = numVal('D30') || (clsStu(22) + clsStu(23));
+        const g8Tot = numVal('D31') || (clsStu(24) + clsStu(25));
+        const g9Tot = numVal('D32') || (clsStu(26) + clsStu(27));
 
         extracted.stuG6 = `${g6Tot} (${cellVal('C19')||'6A1'}: ${clsStu(19)}, ${cellVal('C20')||'6A2'}: ${clsStu(20)}, ${cellVal('C21')||'6A3'}: ${clsStu(21)})`;
         extracted.stuG7 = `${g7Tot} (${cellVal('C22')||'7A1'}: ${clsStu(22)}, ${cellVal('C23')||'7A2'}: ${clsStu(23)})`;
         extracted.stuG8 = `${g8Tot} (${cellVal('C24')||'8A1'}: ${clsStu(24)}, ${cellVal('C25')||'8A2'}: ${clsStu(25)})`;
         extracted.stuG9 = `${g9Tot} (${cellVal('C26')||'9A1'}: ${clsStu(26)}, ${cellVal('C27')||'9A2'}: ${clsStu(27)})`;
 
-        // Bán trú
+        // Bán trú (Cột H..R, Tổng tại Dòng 28: H28..R28)
         const bSon  = numVal('L28') || sumCol('L', 19, 27);
         const bMe   = numVal('M28') || sumCol('M', 19, 27);
         const bHoa  = numVal('N28') || sumCol('N', 19, 27);
@@ -4043,11 +4055,16 @@ function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
         const bKhac = numVal('R28') || sumCol('R', 19, 27);
         const bTot  = numVal('H28') || (bSon + bMe + bHoa + bGiao + bTien + bVan + bKhac);
 
+        const bG6 = numVal('H29') || (clsBrd(19) + clsBrd(20) + clsBrd(21));
+        const bG7 = numVal('H30') || (clsBrd(22) + clsBrd(23));
+        const bG8 = numVal('H31') || (clsBrd(24) + clsBrd(25));
+        const bG9 = numVal('H32') || (clsBrd(26) + clsBrd(27));
+
         extracted.brdTotal     = bTot;
         extracted.brdMale      = numVal('I28') || sumCol('I', 19, 27);
         extracted.brdFemale    = numVal('J28') || sumCol('J', 19, 27);
         extracted.brdEthnic    = numVal('K28') || sumCol('K', 19, 27);
-        extracted.brdByGrade   = `K6: ${clsBrd(19)+clsBrd(20)+clsBrd(21)} • K7: ${clsBrd(22)+clsBrd(23)} • K8: ${clsBrd(24)+clsBrd(25)} • K9: ${clsBrd(26)+clsBrd(27)}`;
+        extracted.brdByGrade   = `K6: ${bG6} • K7: ${bG7} • K8: ${bG8} • K9: ${bG9}`;
         extracted.brdCanhSon   = bSon;
         extracted.brdHonMe     = bMe;
         extracted.brdCanhHoa   = bHoa;
@@ -4059,7 +4076,7 @@ function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
       }
     }
 
-    // 2. Đọc bổ sung từ Sheet 02_DONG_BO_WEB (nếu người dùng có thêm chỉnh sửa riêng)
+    // 2. Đọc bổ sung từ Sheet 02_DONG_BO_WEB (bỏ qua nếu giá trị = "0" ở dòng schoolYear)
     wb.SheetNames.forEach(shName => {
       if (shName === mainShName) return;
       const rows = XLSX.utils.sheet_to_json(wb.Sheets[shName], { header: 1, blankrows: false });
@@ -4068,7 +4085,7 @@ function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
         const k = String(r[0] || '').trim();
         if (validKeys.has(k) && extracted[k] === undefined) {
           const val = r[3] !== undefined && r[3] !== null && String(r[3]).trim() !== '' ? r[3] : r[1];
-          if (val !== undefined && val !== null) {
+          if (val !== undefined && val !== null && !(k === 'schoolYear' && String(val).trim() === '0')) {
             extracted[k] = String(val).trim();
             matchCount++;
           }
