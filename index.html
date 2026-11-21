@@ -2080,23 +2080,23 @@ html, body {
       <!-- Render tự động từ dữ liệu Chuyên mục 03 / Phụ lục Excel hoặc Cài đặt Quản trị -->
     </div>
 
-    <!-- THANH NGANG 2 (DƯỚI): 4 CHỈ SỐ CHẤT LƯỢNG CÔNG KHAI (ĐỒNG BỘ ĐỘNG, KHÔNG CÒN CỐ ĐỊNH HẰNG SỐ) -->
+    <!-- THANH NGANG 2 (DƯỚI): 4 CHỈ SỐ CÔNG KHAI TỰ ĐỘNG TÍNH TOÁN & ĐỒNG BỘ 100% TỪ SỐ LIỆU TRƯỜNG LỚP -->
     <div class="stats-banner" style="margin-bottom:0 !important;">
       <div>
-        <div class="stat-number" id="kpiNum1">99.2%</div>
-        <div class="stat-label" id="kpiLbl1">Tỷ lệ chuyên cần học sinh bán trú</div>
+        <div class="stat-number" id="kpiNum1">29 CBGVNV</div>
+        <div class="stat-label" id="kpiLbl1">82.8% Trình độ Đại học &bull; 11 Nam / 18 Nữ</div>
       </div>
       <div>
-        <div class="stat-number" id="kpiNum2">100%</div>
-        <div class="stat-label" id="kpiLbl2">Bữa ăn bán trú an toàn dinh dưỡng</div>
+        <div class="stat-number" id="kpiNum2">09 Lớp / 331 HS</div>
+        <div class="stat-label" id="kpiLbl2">96.4% Học sinh Dân tộc thiểu số (319 em)</div>
       </div>
       <div>
-        <div class="stat-number" id="kpiNum3">100%</div>
-        <div class="stat-label" id="kpiLbl3">Học sinh được cấp phát hỗ trợ đầy đủ</div>
+        <div class="stat-number" id="kpiNum3">123 HS Bán Trú</div>
+        <div class="stat-label" id="kpiLbl3">37.2% Học sinh ăn ở tập trung tại trường</div>
       </div>
       <div>
-        <div class="stat-number" id="kpiNum4">09/2024</div>
-        <div class="stat-label" id="kpiLbl4">Minh bạch theo Thông tư BGDĐT</div>
+        <div class="stat-number" id="kpiNum4">100% Minh Bạch</div>
+        <div class="stat-label" id="kpiLbl4">Công khai theo Thông tư 09/2024/TT-BGDĐT</div>
       </div>
     </div>
   </section>
@@ -2310,16 +2310,16 @@ html, body {
       </div>
 
       <!-- 1E. CẬP NHẬT SỐ LIỆU "THÔNG TIN - THỐNG KÊ" & BIỂU MẪU PHỤ LỤC CÔNG KHAI (CHUYÊN MỤC 03) -->
-      <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; padding:10px 14px; margin-bottom:14px;">
+      <div style="background:#ecfdf5; border:2px solid #10b981; border-radius:8px; padding:12px 14px; margin-bottom:14px; box-shadow:0 3px 10px rgba(16,185,129,0.12);">
         <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleStatsConfigBox()">
-          <span style="font-size:13px; font-weight:700; color:#065f46; display:flex; align-items:center; gap:6px;">
-            <span>📊</span> CẬP NHẬT SỐ LIỆU "THÔNG TIN - THỐNG KÊ" (PHỤ LỤC CHUYÊN MỤC 03):
+          <span style="font-size:13.5px; font-weight:800; color:#065f46; display:flex; align-items:center; gap:6px;">
+            <span>📊</span> ĐIỀU CHỈNH THỦ CÔNG &amp; NẠP PHỤ LỤC "THÔNG TIN - THỐNG KÊ" (2 THANH NGANG):
           </span>
-          <span style="font-size:11px; padding:2px 7px; border-radius:4px; font-weight:700; background:#d1fae5; color:#047857;">Tải Phụ lục / Chỉnh sửa ▾</span>
+          <span id="statsToggleBtnBadge" style="font-size:11px; padding:3px 9px; border-radius:4px; font-weight:800; background:#059669; color:#ffffff;">Đang mở bảng sửa ▴</span>
         </div>
-        <div id="statsConfigBody" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed #6ee7b7;">
+        <div id="statsConfigBody" style="display:block; margin-top:10px; padding-top:10px; border-top:1px dashed #6ee7b7;">
           <p style="font-size:12px; color:#065f46; margin-bottom:8px; line-height:1.5;">
-            💡 <strong>Cơ chế Tự động 2 chiều:</strong> Thầy có thể bấm <strong>📥 Tải Biểu Mẫu Phụ Lục Excel (.xlsx)</strong> để điền số liệu đầu năm rồi đính kèm khi đăng bài ở <em>Chuyên mục 03 - Văn bản công khai</em> (hoặc nạp trực tiếp tại đây), Web sẽ <strong>tự động bóc tách 100% số liệu</strong> lên 2 thanh ngang <em>THÔNG TIN - THỐNG KÊ</em>! Ngoài ra Thầy có thể sửa nhanh từng ô bên dưới:
+            💡 <strong>Hai cách cập nhật linh hoạt:</strong> (1) <strong>Chỉnh sửa thủ công trực tiếp</strong> tại các ô bên dưới rồi bấm <em>💾 Lưu &amp; Đồng Bộ</em> (4 chỉ số trên thanh ngang xanh phía dưới sẽ tự động tính toán lại tỷ lệ % ngay lập tức, hoặc Thầy có thể tự gõ ghi đè); hoặc (2) Nạp từ <strong>Biểu mẫu Phụ lục Excel</strong> của <em>Chuyên mục 03 - Văn bản công khai</em>:
           </p>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
             <button type="button" onclick="downloadSchoolStatsExcelTemplate()" style="background:#059669; color:white; border:none; padding:7px 12px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">📥 1. Tải Biểu Mẫu Phụ Lục Excel (.xlsx)</button>
@@ -2327,13 +2327,15 @@ html, body {
               📂 2. Nạp Số Liệu Từ File Phụ Lục Excel
               <input type="file" accept=".xlsx,.xls" onchange="importSchoolStatsFromExcel(event)" style="display:none;">
             </label>
-            <button type="button" onclick="resetSchoolStatsDefault()" style="background:#ffffff; color:#475569; border:1px solid #cbd5e1; padding:7px 10px; border-radius:5px; font-size:11.5px; font-weight:600; cursor:pointer;">↺ Khôi phục số liệu chuẩn</button>
+            <button type="button" onclick="autoRecomputeBottomKpiInForm()" style="background:#fef3c7; color:#b45309; border:1px solid #f59e0b; padding:7px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">⚡ Tự tính lại 4 ô thanh ngang xanh theo số liệu trên</button>
+            <button type="button" onclick="resetSchoolStatsDefault()" style="background:#ffffff; color:#475569; border:1px solid #cbd5e1; padding:7px 10px; border-radius:5px; font-size:11.5px; font-weight:600; cursor:pointer;">↺ Khôi phục mặc định</button>
           </div>
           <div id="statsQuickEditForm" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:6px; padding:10px; font-size:11.5px;">
             <!-- Form chỉnh nhanh số liệu được render tự động -->
           </div>
-          <div style="margin-top:8px; text-align:right;">
-            <button type="button" onclick="saveSchoolStatsFromForm()" style="background:#0f3460; color:#fde047; border:none; padding:8px 16px; border-radius:5px; font-size:12.5px; font-weight:700; cursor:pointer;">💾 Lưu &amp; Đồng Bộ Số Liệu Thống Kê Lên Web</button>
+          <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span style="font-size:11px; color:#047857; font-weight:600;">* Khi sửa số CBGVNV / Lớp / Học sinh ở trên, 4 ô thanh ngang xanh tự động cập nhật đồng bộ!</span>
+            <button type="button" onclick="saveSchoolStatsFromForm()" style="background:#0f3460; color:#fde047; border:none; padding:9px 18px; border-radius:6px; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 3px 8px rgba(15,52,96,0.25);">💾 LƯU &amp; ĐỒNG BỘ SỐ LIỆU THỐNG KÊ LÊN WEB</button>
           </div>
         </div>
       </div>
@@ -3050,6 +3052,7 @@ function verifyAdminPin() {
     document.getElementById('adminPinSection').style.display = 'none';
     document.getElementById('adminDashboardSection').style.display = 'block';
     renderAdminNoticeList();
+    renderStatsQuickEditForm();
     updateTokenBadge();
     updateFbWebhookBadge();
     applySiteLockUI();
@@ -3452,25 +3455,58 @@ const DEFAULT_SCHOOL_STATS = {
   brdCanhTien: 19,
   brdHaVanTren: 12,
   brdOther: 4,
-  // 4. THANH CHỈ SỐ CHẤT LƯỢNG CÔNG KHAI (THANH NGANG DƯỚI)
-  kpi1Num: "99.2%",
-  kpi1Lbl: "Tỷ lệ chuyên cần học sinh bán trú",
-  kpi2Num: "100%",
-  kpi2Lbl: "Bữa ăn bán trú an toàn dinh dưỡng",
-  kpi3Num: "100%",
-  kpi3Lbl: "Học sinh được cấp phát hỗ trợ đầy đủ",
-  kpi4Num: "09/2024",
-  kpi4Lbl: "Minh bạch theo Thông tư BGDĐT"
+  // 4. THANH CHỈ SỐ TỔNG HỢP CÔNG KHAI (THANH NGANG XANH DƯỚI - TỰ ĐỘNG ĐỒNG BỘ TỪ SỐ LIỆU TRÊN)
+  kpi1Num: "29 CBGVNV",
+  kpi1Lbl: "82.8% ĐH trở lên • 11 Nam / 18 Nữ",
+  kpi2Num: "09 Lớp / 331 HS",
+  kpi2Lbl: "96.4% Học sinh Dân tộc thiểu số (319 em)",
+  kpi3Num: "123 HS Bán Trú",
+  kpi3Lbl: "37.2% Học sinh ăn ở tập trung tại trường",
+  kpi4Num: "100% Minh Bạch",
+  kpi4Lbl: "Công khai theo Thông tư 09/2024/TT-BGDĐT"
 };
+
+function computeDynamicBottomKpis(s) {
+  const staffTot = parseFloat(s.staffTotal) || 0;
+  const uniPlus = (parseFloat(s.qualPostGrad) || 0) + (parseFloat(s.qualUni) || 0);
+  const uniPct = staffTot > 0 ? ((uniPlus / staffTot) * 100).toFixed(1) : '100';
+
+  const stuTot = parseFloat(s.stuTotal) || 0;
+  const stuEth = parseFloat(s.stuEthnic) || 0;
+  const ethPct = stuTot > 0 ? ((stuEth / stuTot) * 100).toFixed(1) : '98.0';
+
+  const brdTot = parseFloat(s.brdTotal) || 0;
+  const brdPct = stuTot > 0 ? ((brdTot / stuTot) * 100).toFixed(1) : '37.2';
+
+  const clsTot = String(s.classTotal || 9).padStart(2, '0');
+
+  return {
+    kpi1Num: `${s.staffTotal} CBGVNV`,
+    kpi1Lbl: `${uniPct}% ĐH trở lên • ${s.staffMale} Nam / ${s.staffFemale} Nữ`,
+    kpi2Num: `${clsTot} Lớp / ${s.stuTotal} HS`,
+    kpi2Lbl: `${ethPct}% Học sinh Dân tộc thiểu số (${s.stuEthnic} em)`,
+    kpi3Num: `${s.brdTotal} HS Bán Trú`,
+    kpi3Lbl: `${brdPct}% Học sinh ở lại trường (${s.brdMale} Nam / ${s.brdFemale} Nữ)`,
+    kpi4Num: `NH ${s.schoolYear || '2026 - 2027'}`,
+    kpi4Lbl: `100% Công khai theo Thông tư 09/2024/TT-BGDĐT`
+  };
+}
 
 function getSchoolStatsData() {
   try {
     const saved = JSON.parse(localStorage.getItem('canhthuan_school_stats_v1') || 'null');
     if (saved && typeof saved === 'object') {
-      return { ...DEFAULT_SCHOOL_STATS, ...saved };
+      const merged = { ...DEFAULT_SCHOOL_STATS, ...saved };
+      // Nếu thanh dưới còn đang mang hằng số cũ 99.2% thì tự động nâng cấp sang chỉ số động
+      if (merged.kpi1Num === '99.2%' && merged.kpi4Num === '09/2024') {
+        Object.assign(merged, computeDynamicBottomKpis(merged));
+      }
+      return merged;
     }
   } catch (e) {}
-  return { ...DEFAULT_SCHOOL_STATS };
+  const base = { ...DEFAULT_SCHOOL_STATS };
+  Object.assign(base, computeDynamicBottomKpis(base));
+  return base;
 }
 
 function renderSchoolStatsSection() {
@@ -3639,9 +3675,14 @@ const STATS_FIELD_SCHEMA = [
 
 function toggleStatsConfigBox() {
   const b = document.getElementById('statsConfigBody');
+  const badge = document.getElementById('statsToggleBtnBadge');
   if (!b) return;
-  b.style.display = b.style.display === 'block' ? 'none' : 'block';
-  if (b.style.display === 'block') {
+  const isNowOpen = b.style.display !== 'block';
+  b.style.display = isNowOpen ? 'block' : 'none';
+  if (badge) {
+    badge.textContent = isNowOpen ? 'Đang mở bảng sửa ▴' : 'Bấm để mở bảng sửa ▾';
+  }
+  if (isNowOpen) {
     renderStatsQuickEditForm();
   }
 }
@@ -3650,17 +3691,54 @@ function renderStatsQuickEditForm() {
   const box = document.getElementById('statsQuickEditForm');
   if (!box) return;
   const s = getSchoolStatsData();
-  let html = '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(175px, 1fr)); gap:6px; max-height:220px; overflow-y:auto; padding-right:4px;">';
+  const groups = {};
   STATS_FIELD_SCHEMA.forEach(f => {
-    const val = String(s[f.key] !== undefined ? s[f.key] : '').replace(/"/g, '&quot;');
-    html += `
-      <div>
-        <label style="display:block; font-size:10.5px; color:#475569; font-weight:700; margin-bottom:2px;">${f.label}:</label>
-        <input type="text" data-stat-key="${f.key}" value="${val}" style="width:100%; padding:4px 6px; border:1px solid #cbd5e1; border-radius:4px; font-size:11.5px; font-weight:600; color:#0f3460;">
-      </div>`;
+    if (!groups[f.group]) groups[f.group] = [];
+    groups[f.group].push(f);
+  });
+
+  let html = '<div style="max-height:320px; overflow-y:auto; padding-right:4px;">';
+  Object.keys(groups).forEach(gName => {
+    html += `<div style="font-size:12px; font-weight:800; color:#0f3460; background:#e0f2fe; padding:5px 9px; border-radius:5px; margin:8px 0 6px 0; border-left:3px solid #0284c7;">📌 ${gName}</div>`;
+    html += `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(165px, 1fr)); gap:6px; margin-bottom:6px;">`;
+    groups[gName].forEach(f => {
+      const val = String(s[f.key] !== undefined ? s[f.key] : '').replace(/"/g, '&quot;');
+      const isKpi = f.key.startsWith('kpi');
+      html += `
+        <div style="${isKpi ? 'background:#eff6ff; padding:4px; border-radius:4px; border:1px dashed #93c5fd;' : ''}">
+          <label style="display:block; font-size:10.5px; color:${isKpi ? '#1e40af' : '#475569'}; font-weight:700; margin-bottom:2px;">${f.label}:</label>
+          <input type="text" data-stat-key="${f.key}" oninput="onManualStatInput('${f.key}')" value="${val}" style="width:100%; padding:5px 7px; border:1px solid #cbd5e1; border-radius:4px; font-size:11.5px; font-weight:700; color:#0f3460; box-sizing:border-box;">
+        </div>`;
+    });
+    html += `</div>`;
   });
   html += '</div>';
   box.innerHTML = html;
+}
+
+function getFormCurrentStatsObj() {
+  const s = getSchoolStatsData();
+  document.querySelectorAll('#statsQuickEditForm input[data-stat-key]').forEach(inp => {
+    const k = inp.getAttribute('data-stat-key');
+    s[k] = inp.value.trim();
+  });
+  return s;
+}
+
+function onManualStatInput(changedKey) {
+  // Khi Thầy sửa bất kỳ số liệu Đội ngũ / Lớp / Học sinh / Bán trú nào ở Nhóm 0, 1, 2, 3 -> Tự động tính lại 4 ô trên thanh ngang xanh (Nhóm 4) ngay trước mắt!
+  if (!changedKey.startsWith('kpi')) {
+    autoRecomputeBottomKpiInForm();
+  }
+}
+
+function autoRecomputeBottomKpiInForm() {
+  const temp = getFormCurrentStatsObj();
+  const computed = computeDynamicBottomKpis(temp);
+  Object.keys(computed).forEach(k => {
+    const inp = document.querySelector(`#statsQuickEditForm input[data-stat-key="${k}"]`);
+    if (inp) inp.value = computed[k];
+  });
 }
 
 async function saveSchoolStatsFromForm() {
