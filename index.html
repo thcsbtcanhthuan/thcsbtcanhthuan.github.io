@@ -3435,12 +3435,13 @@ async function loadCloudDatabaseFromGitHub() {
 
 // ================= HỆ THỐNG SỐ LIỆU "THÔNG TIN - THỐNG KÊ" ĐỘNG (ĐỒNG BỘ TỪ PHỤ LỤC CHUYÊN MỤC 03) =================
 const DEFAULT_SCHOOL_STATS = {
+  statsVersion: 202611212,
   schoolYear: "2026 - 2027",
-  // 1. ĐỘI NGŨ CBGVNV (29 nhân sự thực tế theo Đề án VTVL & PCCM 2026-2027)
+  // 1. ĐỘI NGŨ CBGVNV (29 nhân sự chuẩn theo file Phụ lục tại D:\TAQUAN\DU LIEU\Khac\Truong\Phu_luc_Thong_ke_Cong_khai_THCS_BT_Canh_Thuan.xlsx)
   staffTotal: 29,
-  staffMale: 11,
-  staffFemale: 18,
-  staffEthnic: 5,
+  staffMale: 12,
+  staffFemale: 17,
+  staffEthnic: 6,
   staffParty: 17,
   ageOver50: 3,
   age40to49: 14,
@@ -3452,7 +3453,7 @@ const DEFAULT_SCHOOL_STATS = {
   qualInterm: 5,
   polHigh: 0,
   polMid: 5,
-  polElem: 9,
+  polElem: 24,
   // 2. CƠ CẤU LỚP & HỌC SINH TOÀN TRƯỜNG (09 lớp, 331 học sinh)
   classTotal: 9,
   classG6: 3,
@@ -3482,13 +3483,13 @@ const DEFAULT_SCHOOL_STATS = {
   brdOther: 4,
   // 4. THANH CHỈ SỐ TỔNG HỢP CÔNG KHAI (THANH NGANG XANH DƯỚI - TỰ ĐỘNG ĐỒNG BỘ TỪ SỐ LIỆU TRÊN)
   kpi1Num: "29 CBGVNV",
-  kpi1Lbl: "82.8% ĐH trở lên • 11 Nam / 18 Nữ",
+  kpi1Lbl: "72.4% ĐH trở lên • 12 Nam / 17 Nữ",
   kpi2Num: "09 Lớp / 331 HS",
   kpi2Lbl: "96.4% Học sinh Dân tộc thiểu số (319 em)",
   kpi3Num: "123 HS Bán Trú",
-  kpi3Lbl: "37.2% Học sinh ăn ở tập trung tại trường",
-  kpi4Num: "100% Minh Bạch",
-  kpi4Lbl: "Công khai theo Thông tư 09/2024/TT-BGDĐT"
+  kpi3Lbl: "37.2% Học sinh ở lại trường (62 Nam / 61 Nữ)",
+  kpi4Num: "NH 2026 - 2027",
+  kpi4Lbl: "100% Công khai theo Thông tư 09/2024/TT-BGDĐT"
 };
 
 function computeDynamicBottomKpis(s) {
@@ -3521,8 +3522,14 @@ function getSchoolStatsData() {
   try {
     const saved = JSON.parse(localStorage.getItem('canhthuan_school_stats_v1') || 'null');
     if (saved && typeof saved === 'object') {
+      // Nếu bản lưu cũ trong trình duyệt chưa nâng cấp lên mốc chuẩn 202611212 của file Phụ lục mới -> Tự động đồng bộ theo số liệu Phụ lục mới
+      if (!saved.statsVersion || saved.statsVersion < 202611212) {
+        const fresh = { ...DEFAULT_SCHOOL_STATS };
+        Object.assign(fresh, computeDynamicBottomKpis(fresh));
+        localStorage.setItem('canhthuan_school_stats_v1', JSON.stringify(fresh));
+        return fresh;
+      }
       const merged = { ...DEFAULT_SCHOOL_STATS, ...saved };
-      // Nếu thanh dưới còn đang mang hằng số cũ 99.2% thì tự động nâng cấp sang chỉ số động
       if (merged.kpi1Num === '99.2%' && merged.kpi4Num === '09/2024') {
         Object.assign(merged, computeDynamicBottomKpis(merged));
       }
@@ -3564,7 +3571,7 @@ function renderSchoolStatsSection() {
             <td class="stat-matrix-label">• Độ tuổi:</td>
             <td>
               <div class="stat-cells-grid cols-4">
-                <span class="stat-chip"><span>&gt;50t:</span><b>${s.ageOver50}</b></span>
+                <span class="stat-chip"><span>&gt;=50t:</span><b>${s.ageOver50}</b></span>
                 <span class="stat-chip"><span>40–49t:</span><b>${s.age40to49}</b></span>
                 <span class="stat-chip"><span>30–39t:</span><b>${s.age30to39}</b></span>
                 <span class="stat-chip"><span>&lt;30t:</span><b>${s.ageUnder30}</b></span>
@@ -3670,7 +3677,7 @@ function renderSchoolStatsSection() {
             </td>
           </tr>
           <tr>
-            <td class="stat-matrix-label">• Nơi ở (1):</td>
+            <td class="stat-matrix-label">• Nơi ở:</td>
             <td>
               <div class="stat-cells-grid cols-4">
                 <span class="stat-chip"><span>Canh Sơn:</span><b>${s.brdCanhSon}</b></span>
@@ -3681,7 +3688,7 @@ function renderSchoolStatsSection() {
             </td>
           </tr>
           <tr>
-            <td class="stat-matrix-label">• Nơi ở (2):</td>
+            <td class="stat-matrix-label"></td>
             <td>
               <div class="stat-cells-grid cols-4">
                 <span class="stat-chip"><span>Canh Tiến:</span><b>${s.brdCanhTien}</b></span>
@@ -3710,10 +3717,10 @@ const STATS_FIELD_SCHEMA = [
   { key: 'staffFemale', label: 'CBGVNV Nữ (Ô E14)', group: '1. Đội ngũ CBGVNV' },
   { key: 'staffEthnic', label: 'CBGVNV Dân tộc (Ô F14)', group: '1. Đội ngũ CBGVNV' },
   { key: 'staffParty', label: 'Đảng viên (Ô R14)', group: '1. Đội ngũ CBGVNV' },
-  { key: 'ageOver50', label: 'Độ tuổi Trên 50 (Ô G14)', group: '1. Đội ngũ CBGVNV' },
-  { key: 'age40to49', label: 'Độ tuổi Từ 40–49 (Ô H14)', group: '1. Đội ngũ CBGVNV' },
-  { key: 'age30to39', label: 'Độ tuổi Từ 30–39 (Ô I14)', group: '1. Đội ngũ CBGVNV' },
-  { key: 'ageUnder30', label: 'Độ tuổi Dưới 30 (Ô J14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'ageOver50', label: 'Độ tuổi Từ 50t trở lên (Ô G14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'age40to49', label: 'Độ tuổi Từ 40t đến dưới 50t (Ô H14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'age30to39', label: 'Độ tuổi Từ 30t đến dưới 40t (Ô I14)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'ageUnder30', label: 'Độ tuổi Dưới 30t (Ô J14)', group: '1. Đội ngũ CBGVNV' },
   { key: 'qualPostGrad', label: 'TĐCM Trên Đại học (Ô K14)', group: '1. Đội ngũ CBGVNV' },
   { key: 'qualUni', label: 'TĐCM Đại học (Ô L14)', group: '1. Đội ngũ CBGVNV' },
   { key: 'qualCollege', label: 'TĐCM Cao đẳng (Ô M14)', group: '1. Đội ngũ CBGVNV' },
@@ -3866,10 +3873,10 @@ function downloadSchoolStatsExcelTemplate() {
     [],
     ['I. THỐNG KÊ ĐỘI NGŨ CÁN BỘ, GIÁO VIÊN, NHÂN VIÊN (CBGVNV)'],
     ['TT', 'Phân loại đội ngũ', 'Tổng số', 'Chia theo Giới tính & Dân tộc', '', '', 'Chia theo Nhóm độ tuổi', '', '', '', 'Trình độ chuyên môn (TĐCM)', '', '', '', 'Lý luận chính trị (LLCT)', '', '', 'Đảng viên'],
-    ['', '', '', 'Nam', 'Nữ', 'Dân tộc', 'Trên 50', 'Từ 40–49', 'Từ 30–39', 'Dưới 30', 'Trên ĐH', 'Đại học', 'Cao đẳng', 'TC / Khác', 'Cao cấp', 'Trung cấp', 'Sơ cấp', ''],
+    ['', '', '', 'Nam', 'Nữ', 'Dân tộc', '>=50t', 'Từ 40–49', 'Từ 30–39', 'Dưới 30', 'Trên ĐH', 'Đại học', 'Cao đẳng', 'TC / Khác', 'Cao cấp', 'Trung cấp', 'Sơ cấp', ''],
     [1, 'Cán bộ quản lý (BGH)',        { f: 'D11+E11' }, 1, 0, 1,  0, 1, 0, 0,  0, 1, 0, 0,  0, 1, 0, 1],
-    [2, 'Giáo viên (Biên chế & HĐ)',   { f: 'D12+E12' }, 9, 11, 3, 3, 12, 3, 2, 1, 17, 2, 0, 0, 4, 7, 15],
-    [3, 'Nhân viên & HĐ NĐ 111/NĐ 66', { f: 'D13+E13' }, 1, 7, 1,  0, 1, 6, 1,  0, 2, 1, 5,  0, 0, 2, 1],
+    [2, 'Giáo viên (Biên chế & HĐ)',   { f: 'D12+E12' }, 10, 14, 3, 3, 12, 3, 2, 1, 17, 2, 0, 0, 4, 20, 15],
+    [3, 'Nhân viên & HĐ NĐ 111/NĐ 66', { f: 'D13+E13' }, 1, 3, 2,  0, 1, 6, 1,  0, 2, 1, 5,  0, 0, 4, 1],
     ['', 'TỔNG CỘNG ĐỘI NGŨ', { f: 'SUM(C11:C13)' }, { f: 'SUM(D11:D13)' }, { f: 'SUM(E11:E13)' }, { f: 'SUM(F11:F13)' }, { f: 'SUM(G11:G13)' }, { f: 'SUM(H11:H13)' }, { f: 'SUM(I11:I13)' }, { f: 'SUM(J11:J13)' }, { f: 'SUM(K11:K13)' }, { f: 'SUM(L11:L13)' }, { f: 'SUM(M11:M13)' }, { f: 'SUM(N11:N13)' }, { f: 'SUM(O11:O13)' }, { f: 'SUM(P11:P13)' }, { f: 'SUM(Q11:Q13)' }, { f: 'SUM(R11:R13)' }],
     [],
     ['II. THỐNG KÊ CƠ CẤU LỚP HỌC, SĨ SỐ HỌC SINH VÀ HỌC SINH BÁN TRÚ (Ở LẠI TRƯỜNG) THEO KHỐI / LỚP / THÔN LÀNG'],
@@ -3922,10 +3929,10 @@ function downloadSchoolStatsExcelTemplate() {
     ['staffFemale',  '1. Đội ngũ CBGVNV',        'CBGVNV Nữ',                        { f: `${s1Ref}E14` }],
     ['staffEthnic',  '1. Đội ngũ CBGVNV',        'CBGVNV Dân tộc thiểu số',          { f: `${s1Ref}F14` }],
     ['staffParty',   '1. Đội ngũ CBGVNV',        'Đảng viên',                        { f: `${s1Ref}R14` }],
-    ['ageOver50',    '1. Đội ngũ CBGVNV',        'Độ tuổi Trên 50',                  { f: `${s1Ref}G14` }],
-    ['age40to49',    '1. Đội ngũ CBGVNV',        'Độ tuổi Từ 40 đến dưới 50',        { f: `${s1Ref}H14` }],
-    ['age30to39',    '1. Đội ngũ CBGVNV',        'Độ tuổi Từ 30 đến dưới 40',        { f: `${s1Ref}I14` }],
-    ['ageUnder30',   '1. Đội ngũ CBGVNV',        'Độ tuổi Dưới 30',                  { f: `${s1Ref}J14` }],
+    ['ageOver50',    '1. Đội ngũ CBGVNV',        'Độ tuổi Từ 50t trở lên',           { f: `${s1Ref}G14` }],
+    ['age40to49',    '1. Đội ngũ CBGVNV',        'Độ tuổi Từ 40t đến dưới 50t',      { f: `${s1Ref}H14` }],
+    ['age30to39',    '1. Đội ngũ CBGVNV',        'Độ tuổi Từ 30t đến dưới 40t',      { f: `${s1Ref}I14` }],
+    ['ageUnder30',   '1. Đội ngũ CBGVNV',        'Độ tuổi Dưới 30t',                 { f: `${s1Ref}J14` }],
     ['qualPostGrad', '1. Đội ngũ CBGVNV',        'TĐCM Trên Đại học',                { f: `${s1Ref}K14` }],
     ['qualUni',      '1. Đội ngũ CBGVNV',        'TĐCM Đại học',                     { f: `${s1Ref}L14` }],
     ['qualCollege',  '1. Đội ngũ CBGVNV',        'TĐCM Cao đẳng',                    { f: `${s1Ref}M14` }],
