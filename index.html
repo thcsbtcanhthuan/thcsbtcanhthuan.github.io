@@ -542,9 +542,127 @@ body {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-light);
-  overflow: hidden;
-  margin-bottom: 24px;
+  overflow: visible;
+  margin-bottom: 18px;
 }
+#tkbDynamicList {
+  max-height: 235px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#tkbDynamicList::-webkit-scrollbar {
+  width: 5px;
+}
+#tkbDynamicList::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+
+/* ================= KHU VỰC THÔNG TIN - THỐNG KÊ (2 THANH NGANG KHOA HỌC) ================= */
+.stats-master-section {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.stats-master-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--border-light);
+}
+.stats-master-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--primary-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.school-stat-bar {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1.15fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+@media (max-width: 1100px) {
+  .school-stat-bar { grid-template-columns: 1fr; }
+}
+.stat-group-box {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 9px 11px;
+  position: relative;
+  border-top: 3px solid #0f3460;
+}
+.stat-group-box.grp-class { border-top-color: #0284c7; }
+.stat-group-box.grp-boarding { border-top-color: #059669; }
+.stat-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.stat-group-name {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0f3460;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.stat-group-total {
+  background: #0f3460;
+  color: #fde047;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 1px 8px;
+  border-radius: 12px;
+}
+.grp-class .stat-group-total { background: #0284c7; color: #ffffff; }
+.grp-boarding .stat-group-total { background: #059669; color: #ffffff; }
+.stat-row-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 5px;
+  align-items: center;
+}
+.stat-row-chips:last-child { margin-bottom: 0; }
+.stat-row-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+  margin-right: 2px;
+}
+.stat-chip {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 1.5px 6px;
+  font-size: 11px;
+  color: #1e293b;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.stat-chip b {
+  color: #0f3460;
+  font-weight: 800;
+}
+.grp-class .stat-chip b { color: #0369a1; }
+.grp-boarding .stat-chip b { color: #047857; }
 .tab-nav {
   display: flex;
   background: #f8fafc;
@@ -568,10 +686,66 @@ body {
   border-bottom: 3px solid var(--accent-red);
 }
 .tab-panel {
+  display: none;
   padding: 18px;
 }
 .tab-panel.active {
   display: block;
+}
+
+/* BỘ LỌC CHUYÊN MỤC Ở TAB THÔNG BÁO (DÀNH CHO NGƯỜI XEM, KHÔNG MỞ KHO GỐC) */
+.cat-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--border-light);
+}
+.cat-filter-btn {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  padding: 6px 13px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cat-filter-btn:hover {
+  background: #e2e8f0;
+  color: #0f3460;
+}
+.cat-filter-btn.active {
+  background: #0f3460;
+  color: #fde047;
+  border-color: #0f3460;
+  box-shadow: 0 2px 6px rgba(15, 52, 96, 0.25);
+}
+
+/* MÀN HÌNH KHÓA KHẨN CẤP TOÀN TRANG (EMERGENCY SITE LOCK OVERLAY) */
+.site-lock-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #061224 0%, #0f3460 55%, #1e293b 100%);
+  z-index: 9900;
+  color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+.site-lock-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(253, 224, 71, 0.35);
+  border-radius: 18px;
+  max-width: 580px;
+  width: 100%;
+  padding: 36px 28px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
 }
 
 /* TABLE STYLING */
@@ -1738,99 +1912,79 @@ html, body {
       <div class="module-icon">🏛️</div>
       <h3 class="module-title">Quy Chế Công Khai (Thông tư 09/2024)</h3>
       <ul class="module-list">
-        <li>Báo cáo ba công khai năm học 2024 - 2025</li>
-        <li>Cơ cấu tổ chức & Đội ngũ sư phạm</li>
-        <li>Cơ sở vật chất & Thiết bị dạy học</li>
+        <li>Báo cáo ba công khai năm học 2026 - 2027</li>
+        <li>Cơ cấu tổ chức &amp; Đội ngũ sư phạm</li>
+        <li>Cơ sở vật chất &amp; Thiết bị dạy học</li>
         <li>Chính sách hỗ trợ học sinh bán trú</li>
       </ul>
-      <a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)" class="btn-primary">Xem Báo Cáo Công Khai ➔</a>
+      <a href="#lich-tuan" onclick="filterAndShowNotices('03', event)" class="btn-primary">Xem Báo Cáo Công Khai ➔</a>
     </div>
 
     <!-- CARD 2 -->
     <div class="module-card card-2">
       <div class="module-icon">📚</div>
-      <h3 class="module-title">Chuyên Môn & Đổi Mới Dạy Học</h3>
+      <h3 class="module-title">Chuyên Môn &amp; Đổi Mới Dạy Học</h3>
       <ul class="module-list">
-        <li>Đổi mới phương pháp & Chuyển đổi số</li>
+        <li>Đổi mới phương pháp &amp; Chuyển đổi số</li>
         <li>Hoạt động giáo dục STEM / STEAM</li>
-        <li>Bồi dưỡng học sinh giỏi & Phụ đạo</li>
+        <li>Bồi dưỡng học sinh giỏi &amp; Phụ đạo</li>
         <li>Hội thi giáo viên dạy giỏi các cấp</li>
       </ul>
-      <a href="#chuyen-mon-info" class="btn-primary">Xem Chuyên Đề & STEM ➔</a>
+      <a href="#lich-tuan" onclick="filterAndShowNotices('04', event)" class="btn-primary">Xem Chuyên Đề &amp; STEM ➔</a>
     </div>
 
     <!-- CARD 3 -->
     <div class="module-card card-3" id="doan-the">
       <div class="module-icon">🏡</div>
-      <h3 class="module-title">Nhịp Sống Bán Trú & Hoạt Động - Đảng - Đoàn Thể</h3>
+      <h3 class="module-title">Nhịp Sống Bán Trú &amp; Hoạt Động - Đảng - Đoàn Thể</h3>
       <ul class="module-list">
         <li>Chăm sóc dinh dưỡng bữa ăn bán trú</li>
-        <li>Hoạt động Chi bộ Đảng & Công tác phát triển Đảng</li>
-        <li>Phong trào Đoàn TNCS Hồ Chí Minh & Liên đội TNTP</li>
-        <li>Tình nguyện vì cộng đồng & Đền ơn đáp nghĩa</li>
-        <li>Bản sắc văn hóa Ba Na & Ngoại khóa trải nghiệm</li>
+        <li>Hoạt động Chi bộ Đảng &amp; Công tác phát triển Đảng</li>
+        <li>Phong trào Đoàn TNCS Hồ Chí Minh &amp; Liên đội TNTP</li>
+        <li>Tình nguyện vì cộng đồng &amp; Đền ơn đáp nghĩa</li>
+        <li>Bản sắc văn hóa Ba Na &amp; Ngoại khóa trải nghiệm</li>
       </ul>
       <div class="module-actions">
         <a href="#ban-tru-info" class="btn-primary" style="flex:1;">Góc Bán Trú ➔</a>
-        <a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)" class="btn-primary" style="flex:1; background:#f59e0b; color:white; border-color:#f59e0b;">Xem Hoạt Động ➔</a>
+        <a href="#lich-tuan" onclick="filterAndShowNotices('05', event)" class="btn-primary" style="flex:1; background:#f59e0b; color:white; border-color:#f59e0b;">Xem Hoạt Động ➔</a>
       </div>
     </div>
 
     <!-- CARD 4 -->
     <div class="module-card card-4">
       <div class="module-icon">📅</div>
-      <h3 class="module-title">Tra Cứu Học Tập & Phụ Huynh</h3>
+      <h3 class="module-title">Tra Cứu Học Tập &amp; Phụ Huynh</h3>
       <ul class="module-list">
         <li>Thời khóa biểu các tuần (Năm học 2026 - 2027)</li>
         <li>Lịch công tác tuần của Ban Giám hiệu</li>
         <li>Kế hoạch kiểm tra đánh giá định kỳ</li>
-        <li>Cẩm nang phụ huynh & An toàn trường học</li>
+        <li>Cẩm nang phụ huynh &amp; An toàn trường học</li>
       </ul>
       <div class="module-actions">
-        <a href="#lich-tuan" class="btn-primary" style="flex:1;">Xem Lịch Tuần ➔</a>
-        <a href="#lich-tuan" onclick="openTkbSection(event)" class="btn-primary btn-sky" style="flex:1;">Tải TKB Các Tuần ➔</a>
+        <a href="#lich-tuan" onclick="openTabNav('tab-lich-content', event)" class="btn-primary" style="flex:1;">Xem Lịch Tuần ➔</a>
+        <a href="javascript:void(0)" onclick="openCurrentTkbViewer()" class="btn-primary btn-sky" style="flex:1;">Xem &amp; Tải TKB ➔</a>
       </div>
     </div>
 
-  </div>
-
-  <!-- STATS HIGHLIGHT -->
-  <div class="stats-banner" id="ban-tru-info">
-    <div>
-      <div class="stat-number">99.2%</div>
-      <div class="stat-label">Tỷ lệ chuyên cần học sinh bán trú</div>
-    </div>
-    <div>
-      <div class="stat-number">100%</div>
-      <div class="stat-label">Bữa ăn bán trú an toàn dinh dưỡng</div>
-    </div>
-    <div>
-      <div class="stat-number">100%</div>
-      <div class="stat-label">Học sinh được cấp phát hỗ trợ đầy đủ</div>
-    </div>
-    <div>
-      <div class="stat-number">09/2024</div>
-      <div class="stat-label">Minh bạch theo Thông tư BGDĐT</div>
-    </div>
   </div>
 
   <!-- INTERACTIVE TAB SECTION -->
   <div class="interactive-section" id="lich-tuan">
     <div class="tab-nav">
       <button class="tab-btn active" onclick="showTab(event, 'tab-lich-content')">📅 Lịch Công Tác Tuần</button>
-      <button class="tab-btn" onclick="showTab(event, 'tab-thongbao-content')">📢 Thông Báo & Tin Tức Mới</button>
+      <button class="tab-btn" onclick="showTab(event, 'tab-thongbao-content')">📢 Thông Báo &amp; Tin Tức Mới</button>
       <button class="tab-btn" onclick="showTab(event, 'tab-guongsang-content')">🌟 Gương Sáng Canh Thuận</button>
     </div>
 
-    <!-- TAB 1: LỊCH TUẦN -->
+    <!-- TAB 1: LỊCH TUẦN (CHỈ HIỂN THỊ BÀI ĐĂNG & TỆP ĐÍNH KÈM, TUYỆT ĐỐI KHÔNG MỞ KHO DRIVE GỐC CHO NGƯỜI DÙNG) -->
     <div id="tab-lich-content" class="tab-panel active">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px dashed var(--border-light);">
-        <span style="font-size:14px; color:#475569; font-weight:500;">📌 Cập nhật định kỳ thứ 7 hàng tuần bởi Ban Giám hiệu</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px dashed var(--border-light);">
+        <span style="font-size:14px; color:#475569; font-weight:600;">📌 Kế hoạch &amp; Lịch công tác tuần do Ban Giám hiệu ban hành</span>
         <div style="display:flex; flex-wrap:wrap; gap:8px;">
-          <a href="https://drive.google.com/drive/folders/1Xnfeh7-pGIFBLD8qlquaURpfjpmDhdIt" target="_blank" rel="noopener" class="file-download-badge" style="padding:8px 14px; font-size:13px;" title="Tải toàn văn bản Kế hoạch Lịch tuần chính thức (có chữ ký BGH) dưới định dạng PDF">📥 Tải Lịch Tuần (PDF Gốc) ↗</a>
+          <button type="button" class="file-download-badge" style="padding:8px 14px; font-size:13px; cursor:pointer;" onclick="openLatestLichTuanFile()" title="Xem hoặc tải tệp Lịch công tác tuần mới nhất đã đăng">📄 Xem / Tải Lịch Tuần Mới Nhất</button>
           <div class="dropdown-wrapper" style="position:relative; display:inline-block;">
             <button class="file-download-badge" style="padding:8px 14px; font-size:13px; background:#f0fdf4; color:#15803d; border-color:#bbf7d0; cursor:pointer;" onclick="toggleTkbDropdown(event)">
-              📅 Tải TKB ▾
+              📅 Danh Sách TKB Các Tuần ▾
             </button>
             <div id="tkbDropdownMenu" class="dropdown-menu" style="display:none; position:absolute; right:0; top:110%; background:white; min-width:320px; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.15); border:1px solid #cbd5e1; z-index:50; overflow:hidden;">
               <div style="background:#f8fafc; padding:10px 14px; font-size:12px; font-weight:700; color:#334155; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
@@ -1847,11 +2001,15 @@ html, body {
           </div>
         </div>
       </div>
+
+      <!-- KHU VỰC TỰ ĐỘNG NẠP CÁC BÀI ĐĂNG LỊCH CÔNG TÁC TUẦN (CHUYÊN MỤC 01) -->
+      <div id="lichTuanDynamicBox" style="margin-bottom:14px;"></div>
+
       <table class="styled-table">
         <thead>
           <tr>
             <th style="width: 130px;">Thứ / Ngày</th>
-            <th>Nội Dung Công Tác Trọng Tâm</th>
+            <th>Nội Dung Công Tác Thường Kỳ Trọng Tâm</th>
             <th style="width: 200px;">Chủ Trì / Phối Hợp</th>
             <th style="width: 160px;">Địa Điểm</th>
           </tr>
@@ -1865,7 +2023,7 @@ html, body {
           </tr>
           <tr>
             <td><span class="day-pill" style="background:#0284c7;">Thứ Tư</span><br><small style="color:#64748b;">Giữa tuần</small></td>
-            <td>Sinh hoạt chuyên môn Tổ Tự nhiên & Tổ Xã hội; Đổi mới phương pháp dạy học STEAM và Chuyển đổi số.</td>
+            <td>Sinh hoạt chuyên môn Tổ Tự nhiên &amp; Tổ Xã hội; Đổi mới phương pháp dạy học STEM và Chuyển đổi số.</td>
             <td>Các Tổ trưởng chuyên môn, GV</td>
             <td>Phòng Hội đồng</td>
           </tr>
@@ -1879,49 +2037,69 @@ html, body {
       </table>
     </div>
 
-    <!-- TAB 2: THÔNG BÁO -->
+    <!-- TAB 2: THÔNG BÁO & TIN TỨC CHÍNH THỨC (ĐÃ DỌN SẠCH 100% TIN MẪU DEMO, CHỈ HIỂN THỊ BÀI ĐĂNG THẬT) -->
     <div id="tab-thongbao-content" class="tab-panel">
-      <div style="padding: 10px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-          <h4 style="color:var(--primary-navy); font-size:16px; font-weight:700;">🩸 Phát động Phong trào Hiến máu tình nguyện & Đền ơn đáp nghĩa</h4>
-          <span style="font-size:12px; background:#fee2e2; color:#b91c1c; padding:2px 8px; border-radius:4px; font-weight:600;">Đoàn Thể</span>
-        </div>
-        <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">
-          Chi đoàn và Công đoàn nhà trường tích cực hưởng ứng chiến dịch hiến máu nhân đạo ngành Giáo dục; tổ chức thăm hỏi, tặng quà các gia đình chính sách và người có công tại địa bàn xã Vân Canh.
-        </p>
+      <div class="cat-filter-bar" id="frontCategoryFilterBar">
+        <button type="button" class="cat-filter-btn active" data-cat="ALL" onclick="filterFrontNoticesByCat('ALL')">📋 Tất cả bài đăng</button>
+        <button type="button" class="cat-filter-btn" data-cat="05" onclick="filterFrontNoticesByCat('05')">🏛️ Hoạt Động - Đảng - Đoàn Thể</button>
+        <button type="button" class="cat-filter-btn" data-cat="01" onclick="filterFrontNoticesByCat('01')">📂 Lịch Công Tác Tuần</button>
+        <button type="button" class="cat-filter-btn" data-cat="02" onclick="filterFrontNoticesByCat('02')">📅 Thời Khóa Biểu</button>
+        <button type="button" class="cat-filter-btn" data-cat="03" onclick="filterFrontNoticesByCat('03')">📜 Công Khai Thông Tư 09</button>
+        <button type="button" class="cat-filter-btn" data-cat="04" onclick="filterFrontNoticesByCat('04')">💡 Chuyên Môn &amp; STEM</button>
       </div>
-      <div style="padding: 10px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-          <h4 style="color:var(--primary-navy); font-size:16px; font-weight:700;">📜 Kế hoạch Giáo dục Nhà trường theo Thông tư 09/2024/TT-BGDĐT</h4>
-          <span style="font-size:12px; background:#dbeafe; color:#1e40af; padding:2px 8px; border-radius:4px; font-weight:600;">Công Khai</span>
-        </div>
-        <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">
-          Nhà trường niêm yết công khai toàn bộ cam kết chất lượng giáo dục, đội ngũ giáo viên và các điều kiện đảm bảo chất lượng năm học 2024 - 2025. Quý Phụ huynh có thể tra cứu toàn văn tại Kho Drive.
-        </p>
-      </div>
-      <div style="padding: 10px 0;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-          <h4 style="color:var(--primary-navy); font-size:16px; font-weight:700;">🌿 Ngày Hội Ngoại Khóa Trải Nghiệm & Bảo Tồn Văn Hóa Ba Na</h4>
-          <span style="font-size:12px; background:#fef3c7; color:#b45309; border-radius:4px; font-weight:600; padding:2px 8px;">Ngoại Khóa</span>
-        </div>
-        <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">
-          Liên đội tổ chức sinh hoạt chủ điểm, giao lưu cồng chiêng, thi đấu các môn thể thao dân gian và rèn luyện kỹ năng tự lập, phòng chống đuối nước cho toàn thể học sinh nội trú và bán trú.
-        </p>
+      <div id="frontNoticesDynamicList">
+        <!-- Tự động nạp 100% các bài đăng chính thức của nhà trường -->
       </div>
     </div>
 
     <!-- TAB 3: GƯƠNG SÁNG -->
     <div id="tab-guongsang-content" class="tab-panel">
       <div style="padding: 10px 0;">
-        <h4 style="color:var(--primary-navy); margin-bottom:8px; font-size:16px;">Tôn vinh Thầy Cô Tâm Huyết & Học Trò Vượt Khó Vươn Lên</h4>
+        <h4 style="color:var(--primary-navy); margin-bottom:8px; font-size:16px;">Tôn vinh Thầy Cô Tâm Huyết &amp; Học Trò Vượt Khó Vươn Lên</h4>
         <p style="color:var(--text-muted); font-size:14px; line-height:1.7;">
-          Tuyên dương các thầy cô giáo tận tụy cắm bản, hết lòng vì học sinh thân yêu và các em học sinh bán trú đạt thành tích xuất sắc trong phong trào "Vở sạch chữ đẹp", học sinh giỏi các môn văn hóa và thể dục thể thao.
+          Tuyên dương các thầy cô giáo tận tụy bám trường, hết lòng vì học sinh thân yêu và các em học sinh bán trú đạt thành tích xuất sắc trong học tập, rèn luyện, các hội thi văn hóa và thể dục thể thao.
         </p>
       </div>
     </div>
 
   </div>
 
+  <!-- ================= KHU VỰC THÔNG TIN - THỐNG KÊ (2 THANH NGANG SÁT TRÊN MỤC LIÊN KẾT WEB) ================= -->
+  <section class="stats-master-section" id="ban-tru-info">
+    <div class="stats-master-header">
+      <div class="stats-master-title">
+        <span>📊</span> THÔNG TIN - THỐNG KÊ (<span id="statSchoolYearLabel">NĂM HỌC 2026 - 2027</span>)
+      </div>
+      <span id="statSourceNote" style="font-size:11px; color:#059669; font-weight:700; background:#ecfdf5; padding:2px 8px; border-radius:4px; border:1px solid #a7f3d0;">
+        ✔ Đồng bộ từ Chuyên mục 03 - Văn bản công khai (Thông tư 09/2024/TT-BGDĐT)
+      </span>
+    </div>
+
+    <!-- THANH NGANG 1 (TRÊN): SỐ LIỆU ĐỘI NGŨ - CƠ CẤU LỚP & HỌC SINH - HỌC SINH BÁN TRÚ -->
+    <div class="school-stat-bar" id="dynamicSchoolStatBar">
+      <!-- Render tự động từ dữ liệu Chuyên mục 03 / Phụ lục Excel hoặc Cài đặt Quản trị -->
+    </div>
+
+    <!-- THANH NGANG 2 (DƯỚI): 4 CHỈ SỐ CHẤT LƯỢNG CÔNG KHAI (ĐỒNG BỘ ĐỘNG, KHÔNG CÒN CỐ ĐỊNH HẰNG SỐ) -->
+    <div class="stats-banner" style="margin-bottom:0 !important;">
+      <div>
+        <div class="stat-number" id="kpiNum1">99.2%</div>
+        <div class="stat-label" id="kpiLbl1">Tỷ lệ chuyên cần học sinh bán trú</div>
+      </div>
+      <div>
+        <div class="stat-number" id="kpiNum2">100%</div>
+        <div class="stat-label" id="kpiLbl2">Bữa ăn bán trú an toàn dinh dưỡng</div>
+      </div>
+      <div>
+        <div class="stat-number" id="kpiNum3">100%</div>
+        <div class="stat-label" id="kpiLbl3">Học sinh được cấp phát hỗ trợ đầy đủ</div>
+      </div>
+      <div>
+        <div class="stat-number" id="kpiNum4">09/2024</div>
+        <div class="stat-label" id="kpiLbl4">Minh bạch theo Thông tư BGDĐT</div>
+      </div>
+    </div>
+  </section>
 
   <!-- ================= LIÊN KẾT WEBSITE NGÀNH GIÁO DỤC & CƠ QUAN QUẢN LÝ ================= -->
   <section class="edu-links-section" id="lien-ket-trang">
@@ -1974,12 +2152,12 @@ html, body {
     </div>
 
     <div class="footer-col">
-      <h3>VĂN BẢN & DỮ LIỆU CÔNG KHAI</h3>
+      <h3>VĂN BẢN &amp; DỮ LIỆU CÔNG KHAI</h3>
       <p><a href="#lich-tuan" onclick="openTabNav('tab-lich-content', event)">📋 Lịch Công Tác Tuần Ban Giám Hiệu</a></p>
-      <p><a href="#lich-tuan" onclick="openTkbSection(event)">📅 Thời Khóa Biểu Nhà Trường</a></p>
-      <p><a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)">📜 Báo Cáo Công Khai Thông Tư 09/2024</a></p>
-      <p><a href="#phan-he">💡 Kế Hoạch Chuyên Môn & Giáo Dục STEM</a></p>
-      <p><a href="#doan-the">🏛️ Hoạt Động - Đảng - Đoàn Thể</a></p>
+      <p><a href="javascript:void(0)" onclick="openCurrentTkbViewer()">📅 Thời Khóa Biểu Nhà Trường</a></p>
+      <p><a href="#lich-tuan" onclick="filterAndShowNotices('03', event)">📜 Báo Cáo Công Khai Thông Tư 09/2024</a></p>
+      <p><a href="#lich-tuan" onclick="filterAndShowNotices('04', event)">💡 Kế Hoạch Chuyên Môn &amp; Giáo Dục STEM</a></p>
+      <p><a href="#lich-tuan" onclick="filterAndShowNotices('05', event)">🏛️ Hoạt Động - Đảng - Đoàn Thể</a></p>
     </div>
 
     <div class="footer-col">
@@ -2105,6 +2283,57 @@ html, body {
             <input type="text" id="fbWebhookInput" placeholder="https://hook.eu2.make.com/xxxxxxxxxxxxxxxxxxxx" style="flex:1; min-width:200px; padding:7px 10px; border:1px solid #93c5fd; border-radius:5px; font-size:12px;">
             <button type="button" onclick="saveFbWebhook()" style="background:#1d4ed8; color:white; border:none; padding:7px 12px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">💾 Lưu Webhook</button>
             <button type="button" onclick="testFbWebhook()" style="background:#ffffff; color:#1d4ed8; border:1px solid #93c5fd; padding:7px 10px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">🧪 Gửi thử mẫu</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1D. CÔNG TẮC KHÓA TRANG KHẨN CẤP (EMERGENCY LOCKDOWN / MAINTENANCE MODE) -->
+      <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:10px 14px; margin-bottom:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleEmergencyLockBox()">
+          <span style="font-size:13px; font-weight:700; color:#b91c1c; display:flex; align-items:center; gap:6px;">
+            <span>🚨</span> CÔNG TẮC KHÓA TRANG KHẨN CẤP (BẢO VỆ AN NINH WEB):
+          </span>
+          <span id="siteLockStatusBadge" style="font-size:11px; padding:2px 7px; border-radius:4px; font-weight:700; background:#dcfce7; color:#15803d;">🟢 Đang Mở Bình Thường</span>
+        </div>
+        <div id="emergencyLockBody" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed #fca5a5;">
+          <p style="font-size:12px; color:#7f1d1d; margin-bottom:8px; line-height:1.5;">
+            Khi xảy ra tình huống bất thường trên mạng hoặc cần tạm đóng cổng để kiểm duyệt/nâng cấp, Thầy bấm <strong>🔒 KÍCH HOẠT KHÓA TRANG</strong>. Toàn bộ người truy cập sẽ chỉ thấy màn hình thông báo tạm khóa (riêng Thầy vẫn mở được Quản trị bằng mã PIN để mở lại bất cứ lúc nào):
+          </p>
+          <div style="margin-bottom:8px;">
+            <input type="text" id="siteLockMessageInput" placeholder="Thông báo hiển thị khi khóa (VD: Hệ thống đang bảo trì định kỳ, vui lòng quay lại sau...)" style="width:100%; padding:7px 10px; border:1px solid #fca5a5; border-radius:5px; font-size:12px; box-sizing:border-box;">
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" id="btnToggleSiteLock" onclick="setEmergencySiteLock(true)" style="background:#dc2626; color:white; border:none; padding:8px 14px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">🔒 KÍCH HOẠT KHÓA TRANG NGAY</button>
+            <button type="button" id="btnUnlockSite" onclick="setEmergencySiteLock(false)" style="background:#16a34a; color:white; border:none; padding:8px 14px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">🔓 MỞ KHÓA TRANG HOẠT ĐỘNG LẠI</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1E. CẬP NHẬT SỐ LIỆU "THÔNG TIN - THỐNG KÊ" & BIỂU MẪU PHỤ LỤC CÔNG KHAI (CHUYÊN MỤC 03) -->
+      <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; padding:10px 14px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleStatsConfigBox()">
+          <span style="font-size:13px; font-weight:700; color:#065f46; display:flex; align-items:center; gap:6px;">
+            <span>📊</span> CẬP NHẬT SỐ LIỆU "THÔNG TIN - THỐNG KÊ" (PHỤ LỤC CHUYÊN MỤC 03):
+          </span>
+          <span style="font-size:11px; padding:2px 7px; border-radius:4px; font-weight:700; background:#d1fae5; color:#047857;">Tải Phụ lục / Chỉnh sửa ▾</span>
+        </div>
+        <div id="statsConfigBody" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed #6ee7b7;">
+          <p style="font-size:12px; color:#065f46; margin-bottom:8px; line-height:1.5;">
+            💡 <strong>Cơ chế Tự động 2 chiều:</strong> Thầy có thể bấm <strong>📥 Tải Biểu Mẫu Phụ Lục Excel (.xlsx)</strong> để điền số liệu đầu năm rồi đính kèm khi đăng bài ở <em>Chuyên mục 03 - Văn bản công khai</em> (hoặc nạp trực tiếp tại đây), Web sẽ <strong>tự động bóc tách 100% số liệu</strong> lên 2 thanh ngang <em>THÔNG TIN - THỐNG KÊ</em>! Ngoài ra Thầy có thể sửa nhanh từng ô bên dưới:
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+            <button type="button" onclick="downloadSchoolStatsExcelTemplate()" style="background:#059669; color:white; border:none; padding:7px 12px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">📥 1. Tải Biểu Mẫu Phụ Lục Excel (.xlsx)</button>
+            <label style="background:#0284c7; color:white; padding:7px 12px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer; display:inline-block;">
+              📂 2. Nạp Số Liệu Từ File Phụ Lục Excel
+              <input type="file" accept=".xlsx,.xls" onchange="importSchoolStatsFromExcel(event)" style="display:none;">
+            </label>
+            <button type="button" onclick="resetSchoolStatsDefault()" style="background:#ffffff; color:#475569; border:1px solid #cbd5e1; padding:7px 10px; border-radius:5px; font-size:11.5px; font-weight:600; cursor:pointer;">↺ Khôi phục số liệu chuẩn</button>
+          </div>
+          <div id="statsQuickEditForm" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:6px; padding:10px; font-size:11.5px;">
+            <!-- Form chỉnh nhanh số liệu được render tự động -->
+          </div>
+          <div style="margin-top:8px; text-align:right;">
+            <button type="button" onclick="saveSchoolStatsFromForm()" style="background:#0f3460; color:#fde047; border:none; padding:8px 16px; border-radius:5px; font-size:12.5px; font-weight:700; cursor:pointer;">💾 Lưu &amp; Đồng Bộ Số Liệu Thống Kê Lên Web</button>
           </div>
         </div>
       </div>
@@ -2253,119 +2482,57 @@ html, body {
 
 <!-- ================= JAVASCRIPT LOGIC ================= -->
 <script>
-// 10 SEED POSTS FOR CATEGORY 05 (HOẠT ĐỘNG - ĐẢNG - ĐOÀN THỂ)
+// OFFICIAL FALLBACK POSTS (CHỈ LẤY DỮ LIỆU CHÍNH THỨC CỦA NHÀ TRƯỜNG - ĐÃ DỌN SẠCH 100% BÀI DEMO MẪU)
 const DEFAULT_CAT05_POSTS = [
   {
-    id: 501,
-    title: "Đại hội Chi bộ Trường THCS Canh Thuận nhiệm kỳ 2025 - 2027: Giữ vững vai trò hạt nhân chính trị, nâng cao chất lượng giáo dục vùng cao",
-    category: "05",
-    categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
-    date: "18/11/2026",
-    content: "Đại hội đã tổng kết công tác lãnh đạo toàn diện của Chi bộ trong nhiệm kỳ qua, biểu dương tinh thần trách nhiệm của đội ngũ đảng viên và đề ra phương hướng đột phá về chuyển đổi số, chăm lo đời sống học sinh bán trú người dân tộc Ba Na.",
-    fileName: "Nghi_quyet_Dai_hoi_Chi_bo_2025_2027.pdf",
-    fileUrl: "https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ",
-    fileSize: "1.4 MB"
-  },
-  {
-    id: 502,
-    title: "Lễ Kỷ niệm 42 năm Ngày Nhà giáo Việt Nam 20/11 & Tuyên dương các tấm gương nhà giáo tiêu biểu vượt khó bám trường",
+    id: 1795181797523,
+    title: "Lễ trao giải Hội thao Chào mừng kỷ niệm 44 năm Ngày Nhà Giáo Việt Nam (20/11/1982 - 20/11/2026)",
     category: "05",
     categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
     date: "20/11/2026",
-    content: "Buổi lễ diễn ra trong không khí ấm cúng, xúc động với sự tham dự của đại diện Đảng ủy, UBND xã Canh Thuận và đông đảo phụ huynh, học sinh bán trú. Tôn vinh các thầy cô giáo tận tụy cống hiến vì học sinh vùng đồng bào.",
-    fileName: "Danh_sach_Khen_thuong_20_11.pdf",
-    fileUrl: "https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ",
-    fileSize: "850 KB"
+    content: "Kết quả Hội thao Chào mừng kỷ niệm 44 năm Ngày Nhà Giáo Việt Nam (20/11/1982 - 20/11/2026), Trường THCS Bán trú Canh Thuận đã xuất sắc nhận được GIẢI BA toàn đoàn; đây là một thành tích rất đáng ghi nhận về sự nỗ lực và nhiệt huyết của tập thể Nhà trường trong Hội thao năm nay.",
+    fileName: "z8511851004142_7242ac29134fd29efb905e8314e6e3bc.jpg",
+    fileUrl: "uploads/05_HoatDong_Dang_DoanThe/z8511851004142_7242ac29134fd29efb905e8314e6e3bc.jpg",
+    fileSize: "500 KB",
+    files: [
+      { name: "z8511851004142_7242ac29134fd29efb905e8314e6e3bc.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511851004142_7242ac29134fd29efb905e8314e6e3bc.jpg", size: "500 KB" },
+      { name: "z8511851011435_f60c4a8e0bcab1e55553bc62faab4ad4.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511851011435_f60c4a8e0bcab1e55553bc62faab4ad4.jpg", size: "453 KB" },
+      { name: "z8511851017999_7294dc629e43485183836c30fdcbe330.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511851017999_7294dc629e43485183836c30fdcbe330.jpg", size: "498 KB" },
+      { name: "z8511851023170_1d2bb1856d744212df1aecdcb3e60bd1.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511851023170_1d2bb1856d744212df1aecdcb3e60bd1.jpg", size: "491 KB" },
+      { name: "z8511851030353_8fe1304c1abb81139de6d3db3bb4e9e5.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511851030353_8fe1304c1abb81139de6d3db3bb4e9e5.jpg", size: "434 KB" },
+      { name: "z8511851034270_30e84ddaa3c066d21eeb81b437004401.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511851034270_30e84ddaa3c066d21eeb81b437004401.jpg", size: "453 KB" },
+      { name: "z8511851040729_05227fa711d4a2638e25007e42060b8a.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511851040729_05227fa711d4a2638e25007e42060b8a.jpg", size: "513 KB" }
+    ],
+    isImportant: true
   },
   {
-    id: 503,
-    title: "Chi đoàn Thanh niên phát động phong trào: 'Tuổi trẻ Canh Thuận rèn đức luyện tài, xung kích vì học sinh bán trú'",
+    id: 1795181484965,
+    title: "Tập thể CBGVNV Trường THCS Bán trú Canh Thuận tham gia Giao lưu với các Trường học trên địa bàn xã và Hội thao Chào mừng kỷ niệm 44 năm Ngày Nhà Giáo Việt Nam (20/11/1982 - 20/11/2026)",
     category: "05",
     categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
-    date: "14/11/2026",
-    content: "Đoàn viên thanh niên nhà trường tích cực tham gia phụ đạo ban đêm cho học sinh bán trú, xây dựng công trình thanh niên 'Vườn hoa em chăm' và duy trì nếp sống vệ sinh nội trú gương mẫu.",
-    fileName: "",
-    fileUrl: "",
-    fileSize: ""
-  },
-  {
-    id: 504,
-    title: "Liên đội tổ chức Ngày hội Văn hóa Ba Na & Giao lưu tiếng Cồng chiêng học đường năm học 2026 - 2027",
-    category: "05",
-    categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
-    date: "10/11/2026",
-    content: "Hoạt động ngoại khóa trải nghiệm giàu bản sắc, giúp các em học sinh tự hào về nguồn cội văn hóa truyền thống, biểu diễn nhạc cụ dân tộc và tham gia các trò chơi dân gian rèn luyện thể chất.",
-    fileName: "Ke_hoach_Ngay_hoi_Van_hoa_BaNa.docx",
-    fileUrl: "https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ",
-    fileSize: "620 KB"
-  },
-  {
-    id: 505,
-    title: "Hành trình 'Đền ơn đáp nghĩa': Thầy và trò chăm sóc Đài tưởng niệm liệt sĩ xã Canh Thuận và thăm hỏi Mẹ Việt Nam anh hùng",
-    category: "05",
-    categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
-    date: "05/11/2026",
-    content: "Giáo dục truyền thống yêu nước và đạo lý uống nước nhớ nguồn thông qua những việc làm thiết thực, bồi đắp lòng biết ơn và lý tưởng sống cao đẹp cho thế hệ học sinh hôm nay.",
-    fileName: "",
-    fileUrl: "",
-    fileSize: ""
-  },
-  {
-    id: 506,
-    title: "Hội nghị Chi bộ chuyên đề: Nâng cao năng lực lãnh đạo và phẩm chất đạo đức nhà giáo trong thời đại số",
-    category: "05",
-    categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
-    date: "01/11/2026",
-    content: "Toàn thể đảng viên thảo luận sâu sắc về ứng dụng công nghệ thông tin trong quản lý, giảng dạy, đổi mới sinh hoạt chi bộ và nêu gương của người thầy vùng cao.",
-    fileName: "Chuyen_de_Sinh_hoat_Chi_bo_Thang11.pdf",
-    fileUrl: "https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ",
-    fileSize: "1.1 MB"
-  },
-  {
-    id: 507,
-    title: "Chương trình 'Áo ấm mùa đông & Bữa cơm bán trú đủ chất' do Công đoàn và Hội đồng Đội phối hợp phát động",
-    category: "05",
-    categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
-    date: "28/10/2026",
-    content: "Trao tặng hơn 150 bộ áo ấm và bổ sung nguồn thực phẩm tươi sạch cho bếp ăn nội trú, đảm bảo sức khỏe tối đa cho các em học sinh khi mùa lạnh vùng cao tràn về.",
-    fileName: "",
-    fileUrl: "",
-    fileSize: ""
-  },
-  {
-    id: 508,
-    title: "Lớp bồi dưỡng cảm tình Đảng cho đoàn viên ưu tú và cán bộ giáo viên trẻ năm học 2026 - 2027",
-    category: "05",
-    categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
-    date: "22/10/2026",
-    content: "Chi bộ cử 4 đoàn viên xuất sắc tham gia lớp bồi dưỡng nhận thức về Đảng do Huyện ủy tổ chức, tạo nguồn kế cận vững chắc cho công tác phát triển Đảng viên mới.",
-    fileName: "",
-    fileUrl: "",
-    fileSize: ""
-  },
-  {
-    id: 509,
-    title: "Hội thi Dân vũ, Nghi thức Đội và Trò chơi dân gian chào mừng Đại hội Đoàn - Đội các cấp",
-    category: "05",
-    categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
-    date: "15/10/2026",
-    content: "Sân chơi bổ ích, sôi nổi tạo sự gắn kết, rèn luyện kỹ năng sinh hoạt tập thể, kỷ luật tự giác và tinh thần đồng đội cho học sinh toàn trường.",
-    fileName: "Ket_qua_Hoi_thi_Nghi_thuc_Doi.pdf",
-    fileUrl: "https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ",
-    fileSize: "480 KB"
-  },
-  {
-    id: 510,
-    title: "Tọa đàm chuyên đề: Xây dựng trường học hạnh phúc, an toàn, không bạo lực học đường và tôn trọng bản sắc học sinh bán trú",
-    category: "05",
-    categoryName: "🏛️ Hoạt Động - Đảng - Đoàn Thể",
-    date: "08/10/2026",
-    content: "Cán bộ quản lý, giáo viên chủ nhiệm và ban đại diện cha mẹ học sinh cùng thống nhất quy chế ứng xử văn hóa, lắng nghe tâm tư và tạo dựng môi trường giáo dục chan chứa tình thương.",
-    fileName: "Quy_che_Truong_hoc_Hanh_phuc.pdf",
-    fileUrl: "https://drive.google.com/drive/folders/1oLNx1NTtQm9N-Zz43p1N1I7AE2KzsfsZ",
-    fileSize: "920 KB"
+    date: "20/11/2026",
+    content: "",
+    fileName: "z8501494166305_8d1d356cfbd443ffbb2e41847871df14.jpg",
+    fileUrl: "uploads/05_HoatDong_Dang_DoanThe/z8501494166305_8d1d356cfbd443ffbb2e41847871df14.jpg",
+    fileSize: "244 KB",
+    files: [
+      { name: "z8501494166305_8d1d356cfbd443ffbb2e41847871df14.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8501494166305_8d1d356cfbd443ffbb2e41847871df14.jpg", size: "244 KB" },
+      { name: "z8501494217400_70c4e6523b11b7c8914a412481a94cd5.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8501494217400_70c4e6523b11b7c8914a412481a94cd5.jpg", size: "380 KB" },
+      { name: "z8501494223594_9130c7b62f77d90fc8f3886a427afdbd.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8501494223594_9130c7b62f77d90fc8f3886a427afdbd.jpg", size: "336 KB" },
+      { name: "z8501506897548_a7fb1af1903d5e6e0b80e9af72ed24a4.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8501506897548_a7fb1af1903d5e6e0b80e9af72ed24a4.jpg", size: "274 KB" },
+      { name: "z8501520188781_5270d9fadef64583c37a0f81e4a44c7c.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8501520188781_5270d9fadef64583c37a0f81e4a44c7c.jpg", size: "255 KB" },
+      { name: "z8508760093001_76fe46f1e638ee9d6435571e737419f7.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8508760093001_76fe46f1e638ee9d6435571e737419f7.jpg", size: "1.0 MB" },
+      { name: "z8509062354427_333503e8c206b7b9ba4839aa5603e73b.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8509062354427_333503e8c206b7b9ba4839aa5603e73b.jpg", size: "903 KB" },
+      { name: "z8509062401812_0a4647afbd91dae2164b288a2ac8312a.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8509062401812_0a4647afbd91dae2164b288a2ac8312a.jpg", size: "1.1 MB" },
+      { name: "z8511008895976_cdaade4a34358c7cffc76d95a6ff006b.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511008895976_cdaade4a34358c7cffc76d95a6ff006b.jpg", size: "362 KB" },
+      { name: "z8511008906366_787267185ecf6d13acf82004987526f8.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511008906366_787267185ecf6d13acf82004987526f8.jpg", size: "315 KB" },
+      { name: "z8511014623996_c1d780c1dfd5d2fb58126275d7ed0f90.jpg", url: "uploads/05_HoatDong_Dang_DoanThe/z8511014623996_c1d780c1dfd5d2fb58126275d7ed0f90.jpg", size: "326 KB" }
+    ],
+    isImportant: true
   }
 ];
+
+let currentFrontFilterCat = 'ALL';
 
 // STATE VARIABLES
 let currentShowcaseIndex = 0;
@@ -2857,6 +3024,8 @@ function openAdminModal() {
   document.getElementById('adminModal').style.display = 'flex';
   document.getElementById('adminPinInput').focus();
   updateTokenBadge();
+  updateFbWebhookBadge();
+  applySiteLockUI();
 }
 function closeAdminModal(e) {
   if (e.target.id === 'adminModal') document.getElementById('adminModal').style.display = 'none';
@@ -2882,6 +3051,8 @@ function verifyAdminPin() {
     document.getElementById('adminDashboardSection').style.display = 'block';
     renderAdminNoticeList();
     updateTokenBadge();
+    updateFbWebhookBadge();
+    applySiteLockUI();
   } else {
     document.getElementById('adminPinError').style.display = 'block';
   }
@@ -3190,6 +3361,9 @@ async function syncDatabaseToGitHub(commitMsg) {
     }));
     const dbPayload = {
       updatedAt: new Date().toISOString(),
+      siteLocked: localStorage.getItem('canhthuan_site_locked') === '1',
+      siteLockMessage: localStorage.getItem('canhthuan_site_lock_msg') || '',
+      schoolStats: getSchoolStatsData(),
       pinnedNoticeId: localStorage.getItem('canhthuan_pinned_notice_id') || '',
       hiddenDefaultIds: getHiddenDefaultIds(),
       posts: cleanPosts
@@ -3217,9 +3391,421 @@ async function loadCloudDatabaseFromGitHub() {
     if (db.pinnedNoticeId) {
       localStorage.setItem('canhthuan_pinned_notice_id', String(db.pinnedNoticeId));
     }
+    if (typeof db.siteLocked === 'boolean') {
+      localStorage.setItem('canhthuan_site_locked', db.siteLocked ? '1' : '0');
+    }
+    if (typeof db.siteLockMessage === 'string') {
+      localStorage.setItem('canhthuan_site_lock_msg', db.siteLockMessage);
+    }
+    if (db.schoolStats && typeof db.schoolStats === 'object') {
+      localStorage.setItem('canhthuan_school_stats_v1', JSON.stringify(db.schoolStats));
+    }
     return true;
   } catch (e) {
     return false;
+  }
+}
+
+// ================= HỆ THỐNG SỐ LIỆU "THÔNG TIN - THỐNG KÊ" ĐỘNG (ĐỒNG BỘ TỪ PHỤ LỤC CHUYÊN MỤC 03) =================
+const DEFAULT_SCHOOL_STATS = {
+  schoolYear: "2026 - 2027",
+  // 1. ĐỘI NGŨ CBGVNV (29 nhân sự thực tế theo Đề án VTVL & PCCM 2026-2027)
+  staffTotal: 29,
+  staffMale: 11,
+  staffFemale: 18,
+  staffEthnic: 5,
+  ageOver50: 3,
+  age40to49: 14,
+  age30to39: 9,
+  ageUnder30: 3,
+  qualPostGrad: 0,
+  qualUni: 21,
+  qualCollege: 3,
+  qualInterm: 5,
+  polHigh: 0,
+  polMid: 5,
+  polElem: 9,
+  // 2. CƠ CẤU LỚP & HỌC SINH TOÀN TRƯỜNG (09 lớp, 331 học sinh)
+  classTotal: 9,
+  classG6: 3,
+  classG7: 2,
+  classG8: 2,
+  classG9: 2,
+  stuTotal: 331,
+  stuMale: 173,
+  stuFemale: 158,
+  stuEthnic: 319,
+  stuG6: "98 (6A1: 31, 6A2: 35, 6A3: 32)",
+  stuG7: "86 (7A1: 44, 7A2: 42)",
+  stuG8: "69 (8A1: 35, 8A2: 34)",
+  stuG9: "78 (9A1: 39, 9A2: 39)",
+  // 3. HỌC SINH BÁN TRÚ (Ở LẠI TRƯỜNG - 123 học sinh)
+  brdTotal: 123,
+  brdMale: 62,
+  brdFemale: 61,
+  brdEthnic: 123,
+  brdByGrade: "K6: 36 • K7: 32 • K8: 27 • K9: 28",
+  brdCanhSon: 28,
+  brdHonMe: 14,
+  brdCanhHoa: 22,
+  brdCanhGiao: 24,
+  brdCanhTien: 19,
+  brdHaVanTren: 12,
+  brdOther: 4,
+  // 4. THANH CHỈ SỐ CHẤT LƯỢNG CÔNG KHAI (THANH NGANG DƯỚI)
+  kpi1Num: "99.2%",
+  kpi1Lbl: "Tỷ lệ chuyên cần học sinh bán trú",
+  kpi2Num: "100%",
+  kpi2Lbl: "Bữa ăn bán trú an toàn dinh dưỡng",
+  kpi3Num: "100%",
+  kpi3Lbl: "Học sinh được cấp phát hỗ trợ đầy đủ",
+  kpi4Num: "09/2024",
+  kpi4Lbl: "Minh bạch theo Thông tư BGDĐT"
+};
+
+function getSchoolStatsData() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('canhthuan_school_stats_v1') || 'null');
+    if (saved && typeof saved === 'object') {
+      return { ...DEFAULT_SCHOOL_STATS, ...saved };
+    }
+  } catch (e) {}
+  return { ...DEFAULT_SCHOOL_STATS };
+}
+
+function renderSchoolStatsSection() {
+  const s = getSchoolStatsData();
+  const yrEl = document.getElementById('statSchoolYearLabel');
+  if (yrEl) yrEl.textContent = `NĂM HỌC ${s.schoolYear || '2026 - 2027'}`;
+
+  const bar = document.getElementById('dynamicSchoolStatBar');
+  if (bar) {
+    bar.innerHTML = `
+      <!-- KHỐI 1: ĐỘI NGŨ CBGVNV -->
+      <div class="stat-group-box grp-staff">
+        <div class="stat-group-head">
+          <span class="stat-group-name">👨‍🏫 I. ĐỘI NGŨ CBGVNV</span>
+          <span class="stat-group-total">Tổng số: ${s.staffTotal} người</span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• Cơ cấu:</span>
+          <span class="stat-chip">Nam: <b>${s.staffMale}</b></span>
+          <span class="stat-chip">Nữ: <b>${s.staffFemale}</b></span>
+          <span class="stat-chip">Dân tộc: <b>${s.staffEthnic}</b></span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• Độ tuổi:</span>
+          <span class="stat-chip">&gt;50t: <b>${s.ageOver50}</b></span>
+          <span class="stat-chip">40–49t: <b>${s.age40to49}</b></span>
+          <span class="stat-chip">30–39t: <b>${s.age30to39}</b></span>
+          <span class="stat-chip">&lt;30t: <b>${s.ageUnder30}</b></span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• TĐCM:</span>
+          <span class="stat-chip">Trên ĐH: <b>${s.qualPostGrad}</b></span>
+          <span class="stat-chip">ĐH: <b>${s.qualUni}</b></span>
+          <span class="stat-chip">CĐ: <b>${s.qualCollege}</b></span>
+          <span class="stat-chip">TC/Khác: <b>${s.qualInterm}</b></span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• TĐLLCT:</span>
+          <span class="stat-chip">Cao cấp: <b>${s.polHigh}</b></span>
+          <span class="stat-chip">Trung cấp: <b>${s.polMid}</b></span>
+          <span class="stat-chip">Sơ cấp: <b>${s.polElem}</b></span>
+        </div>
+      </div>
+
+      <!-- KHỐI 2: CƠ CẤU LỚP & HỌC SINH -->
+      <div class="stat-group-box grp-class">
+        <div class="stat-group-head">
+          <span class="stat-group-name">🏫 II. CƠ CẤU LỚP &amp; HỌC SINH</span>
+          <span class="stat-group-total">${s.classTotal} Lớp • ${s.stuTotal} HS</span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• Số lớp:</span>
+          <span class="stat-chip">Tổng: <b>${s.classTotal} lớp</b></span>
+          <span class="stat-chip">K6: <b>${s.classG6}</b></span>
+          <span class="stat-chip">K7: <b>${s.classG7}</b></span>
+          <span class="stat-chip">K8: <b>${s.classG8}</b></span>
+          <span class="stat-chip">K9: <b>${s.classG9}</b></span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• Học sinh:</span>
+          <span class="stat-chip">Nam: <b>${s.stuMale}</b></span>
+          <span class="stat-chip">Nữ: <b>${s.stuFemale}</b></span>
+          <span class="stat-chip">Dân tộc: <b>${s.stuEthnic}</b></span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• Khối 6, 7:</span>
+          <span class="stat-chip">K6: <b>${s.stuG6}</b></span>
+          <span class="stat-chip">K7: <b>${s.stuG7}</b></span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• Khối 8, 9:</span>
+          <span class="stat-chip">K8: <b>${s.stuG8}</b></span>
+          <span class="stat-chip">K9: <b>${s.stuG9}</b></span>
+        </div>
+      </div>
+
+      <!-- KHỐI 3: HỌC SINH BÁN TRÚ (Ở LẠI TRƯỜNG) -->
+      <div class="stat-group-box grp-boarding">
+        <div class="stat-group-head">
+          <span class="stat-group-name">🏡 III. HỌC SINH BÁN TRÚ (Ở LẠI TRƯỜNG)</span>
+          <span class="stat-group-total">Tổng số: ${s.brdTotal} HS</span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• Cơ cấu:</span>
+          <span class="stat-chip">Nam: <b>${s.brdMale}</b></span>
+          <span class="stat-chip">Nữ: <b>${s.brdFemale}</b></span>
+          <span class="stat-chip">DT: <b>${s.brdEthnic}</b></span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• Theo khối:</span>
+          <span class="stat-chip"><b>${s.brdByGrade}</b></span>
+        </div>
+        <div class="stat-row-chips">
+          <span class="stat-row-label">• Nơi ở (Thôn/Làng):</span>
+          <span class="stat-chip">Canh Sơn: <b>${s.brdCanhSon}</b></span>
+          <span class="stat-chip">Hòn Mẻ: <b>${s.brdHonMe}</b></span>
+          <span class="stat-chip">Canh Hòa: <b>${s.brdCanhHoa}</b></span>
+          <span class="stat-chip">Canh Giao: <b>${s.brdCanhGiao}</b></span>
+          <span class="stat-chip">Canh Tiến: <b>${s.brdCanhTien}</b></span>
+          <span class="stat-chip">Hà Văn Trên: <b>${s.brdHaVanTren}</b></span>
+          <span class="stat-chip">Khác: <b>${s.brdOther}</b></span>
+        </div>
+      </div>
+    `;
+  }
+
+  // Render Thanh ngang 2 (4 chỉ số công khai)
+  const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setTxt('kpiNum1', s.kpi1Num); setTxt('kpiLbl1', s.kpi1Lbl);
+  setTxt('kpiNum2', s.kpi2Num); setTxt('kpiLbl2', s.kpi2Lbl);
+  setTxt('kpiNum3', s.kpi3Num); setTxt('kpiLbl3', s.kpi3Lbl);
+  setTxt('kpiNum4', s.kpi4Num); setTxt('kpiLbl4', s.kpi4Lbl);
+}
+
+const STATS_FIELD_SCHEMA = [
+  { key: 'schoolYear', label: 'Năm học thống kê', group: '0. Thông tin chung' },
+  { key: 'staffTotal', label: 'Tổng số CBGVNV', group: '1. Đội ngũ CBGVNV' },
+  { key: 'staffMale', label: 'CBGVNV Nam', group: '1. Đội ngũ CBGVNV' },
+  { key: 'staffFemale', label: 'CBGVNV Nữ', group: '1. Đội ngũ CBGVNV' },
+  { key: 'staffEthnic', label: 'CBGVNV Dân tộc thiểu số', group: '1. Đội ngũ CBGVNV' },
+  { key: 'ageOver50', label: 'Độ tuổi Trên 50', group: '1. Đội ngũ CBGVNV' },
+  { key: 'age40to49', label: 'Độ tuổi Từ 40 đến dưới 50', group: '1. Đội ngũ CBGVNV' },
+  { key: 'age30to39', label: 'Độ tuổi Từ 30 đến dưới 40', group: '1. Đội ngũ CBGVNV' },
+  { key: 'ageUnder30', label: 'Độ tuổi Dưới 30', group: '1. Đội ngũ CBGVNV' },
+  { key: 'qualPostGrad', label: 'TĐCM Trên Đại học', group: '1. Đội ngũ CBGVNV' },
+  { key: 'qualUni', label: 'TĐCM Đại học', group: '1. Đội ngũ CBGVNV' },
+  { key: 'qualCollege', label: 'TĐCM Cao đẳng', group: '1. Đội ngũ CBGVNV' },
+  { key: 'qualInterm', label: 'TĐCM Trung cấp / Khác', group: '1. Đội ngũ CBGVNV' },
+  { key: 'polHigh', label: 'TĐLLCT Cao cấp (CC)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'polMid', label: 'TĐLLCT Trung cấp (TC)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'polElem', label: 'TĐLLCT Sơ cấp (SC)', group: '1. Đội ngũ CBGVNV' },
+  { key: 'classTotal', label: 'Tổng số lớp', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'classG6', label: 'Số lớp Khối 6', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'classG7', label: 'Số lớp Khối 7', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'classG8', label: 'Số lớp Khối 8', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'classG9', label: 'Số lớp Khối 9', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuTotal', label: 'Tổng số học sinh toàn trường', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuMale', label: 'Học sinh Nam', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuFemale', label: 'Học sinh Nữ', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuEthnic', label: 'Học sinh Dân tộc thiểu số', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuG6', label: 'Chi tiết HS Khối 6 (các lớp)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuG7', label: 'Chi tiết HS Khối 7 (các lớp)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuG8', label: 'Chi tiết HS Khối 8 (các lớp)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'stuG9', label: 'Chi tiết HS Khối 9 (các lớp)', group: '2. Cơ cấu Lớp & Học sinh' },
+  { key: 'brdTotal', label: 'Tổng số HS bán trú (ở lại trường)', group: '3. Học sinh Bán trú' },
+  { key: 'brdMale', label: 'HS Bán trú Nam', group: '3. Học sinh Bán trú' },
+  { key: 'brdFemale', label: 'HS Bán trú Nữ', group: '3. Học sinh Bán trú' },
+  { key: 'brdEthnic', label: 'HS Bán trú Dân tộc', group: '3. Học sinh Bán trú' },
+  { key: 'brdByGrade', label: 'HS Bán trú chia theo Khối/Lớp', group: '3. Học sinh Bán trú' },
+  { key: 'brdCanhSon', label: 'Nơi ở: Canh Sơn', group: '3. Học sinh Bán trú' },
+  { key: 'brdHonMe', label: 'Nơi ở: Hòn Mẻ', group: '3. Học sinh Bán trú' },
+  { key: 'brdCanhHoa', label: 'Nơi ở: Canh Hòa', group: '3. Học sinh Bán trú' },
+  { key: 'brdCanhGiao', label: 'Nơi ở: Canh Giao', group: '3. Học sinh Bán trú' },
+  { key: 'brdCanhTien', label: 'Nơi ở: Canh Tiến', group: '3. Học sinh Bán trú' },
+  { key: 'brdHaVanTren', label: 'Nơi ở: Hà Văn Trên', group: '3. Học sinh Bán trú' },
+  { key: 'brdOther', label: 'Nơi ở: Khác', group: '3. Học sinh Bán trú' },
+  { key: 'kpi1Num', label: 'Ô chỉ số 1 (Số liệu)', group: '4. Thanh 4 Chỉ số Công khai' },
+  { key: 'kpi1Lbl', label: 'Ô chỉ số 1 (Nhãn mô tả)', group: '4. Thanh 4 Chỉ số Công khai' },
+  { key: 'kpi2Num', label: 'Ô chỉ số 2 (Số liệu)', group: '4. Thanh 4 Chỉ số Công khai' },
+  { key: 'kpi2Lbl', label: 'Ô chỉ số 2 (Nhãn mô tả)', group: '4. Thanh 4 Chỉ số Công khai' },
+  { key: 'kpi3Num', label: 'Ô chỉ số 3 (Số liệu)', group: '4. Thanh 4 Chỉ số Công khai' },
+  { key: 'kpi3Lbl', label: 'Ô chỉ số 3 (Nhãn mô tả)', group: '4. Thanh 4 Chỉ số Công khai' },
+  { key: 'kpi4Num', label: 'Ô chỉ số 4 (Số liệu)', group: '4. Thanh 4 Chỉ số Công khai' },
+  { key: 'kpi4Lbl', label: 'Ô chỉ số 4 (Nhãn mô tả)', group: '4. Thanh 4 Chỉ số Công khai' }
+];
+
+function toggleStatsConfigBox() {
+  const b = document.getElementById('statsConfigBody');
+  if (!b) return;
+  b.style.display = b.style.display === 'block' ? 'none' : 'block';
+  if (b.style.display === 'block') {
+    renderStatsQuickEditForm();
+  }
+}
+
+function renderStatsQuickEditForm() {
+  const box = document.getElementById('statsQuickEditForm');
+  if (!box) return;
+  const s = getSchoolStatsData();
+  let html = '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(175px, 1fr)); gap:6px; max-height:220px; overflow-y:auto; padding-right:4px;">';
+  STATS_FIELD_SCHEMA.forEach(f => {
+    const val = String(s[f.key] !== undefined ? s[f.key] : '').replace(/"/g, '&quot;');
+    html += `
+      <div>
+        <label style="display:block; font-size:10.5px; color:#475569; font-weight:700; margin-bottom:2px;">${f.label}:</label>
+        <input type="text" data-stat-key="${f.key}" value="${val}" style="width:100%; padding:4px 6px; border:1px solid #cbd5e1; border-radius:4px; font-size:11.5px; font-weight:600; color:#0f3460;">
+      </div>`;
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+async function saveSchoolStatsFromForm() {
+  const s = getSchoolStatsData();
+  document.querySelectorAll('#statsQuickEditForm input[data-stat-key]').forEach(inp => {
+    const k = inp.getAttribute('data-stat-key');
+    s[k] = inp.value.trim();
+  });
+  localStorage.setItem('canhthuan_school_stats_v1', JSON.stringify(s));
+  renderSchoolStatsSection();
+  if (getGhToken()) {
+    await syncDatabaseToGitHub('Cập nhật số liệu Thông tin - Thống kê nhà trường');
+    alert('✔ Đã lưu và đồng bộ Số liệu Thông tin - Thống kê lên GitHub thành công!');
+  } else {
+    alert('✔ Đã cập nhật Số liệu Thông tin - Thống kê trên trang web!');
+  }
+}
+
+async function resetSchoolStatsDefault() {
+  if (!confirm('Khôi phục toàn bộ số liệu Thông tin - Thống kê về bộ số liệu chuẩn đầu năm học 2026 - 2027?')) return;
+  localStorage.setItem('canhthuan_school_stats_v1', JSON.stringify(DEFAULT_SCHOOL_STATS));
+  renderStatsQuickEditForm();
+  renderSchoolStatsSection();
+  if (getGhToken()) await syncDatabaseToGitHub('Khôi phục số liệu thống kê chuẩn năm học');
+}
+
+function downloadSchoolStatsExcelTemplate() {
+  if (typeof XLSX === 'undefined') {
+    alert('Thư viện Excel đang tải, Thầy vui lòng bấm lại sau 2 giây nhé!');
+    return;
+  }
+  const s = getSchoolStatsData();
+  const rows = [
+    ['PHỤ LỤC SỐ LIỆU THÔNG TIN - THỐNG KÊ NHÀ TRƯỜNG (ĐÍNH KÈM CHUYÊN MỤC 03 - VĂN BẢN CÔNG KHAI)', '', '', ''],
+    ['Hướng dẫn: Thầy/Cô chỉ cần chỉnh sửa cột "GIÁ TRỊ SỐ LIỆU" (Cột C), giữ nguyên cột "MÃ TRƯỜNG" (Cột A). Khi đăng kèm vào Chuyên mục 03, Web sẽ tự động nạp 100% số liệu lên trang chủ!', '', '', ''],
+    ['MÃ TRƯỜNG (KHÔNG SỬA)', 'NHÓM THỐNG KÊ', 'CHỈ TIÊU THỐNG KÊ CHI TIẾT', 'GIÁ TRỊ SỐ LIỆU']
+  ];
+  STATS_FIELD_SCHEMA.forEach(f => {
+    rows.push([f.key, f.group, f.label, s[f.key] !== undefined ? s[f.key] : '']);
+  });
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [{ wch: 18 }, { wch: 26 }, { wch: 36 }, { wch: 34 }];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'PHU_LUC_THONG_KE');
+  XLSX.writeFile(wb, 'Phu_luc_Thong_ke_Cong_khai_THCS_BT_Canh_Thuan.xlsx');
+}
+
+function parseSchoolStatsFromExcelBuffer(arrayBuffer) {
+  if (typeof XLSX === 'undefined') return null;
+  try {
+    const wb = XLSX.read(arrayBuffer, { type: 'array' });
+    const validKeys = new Set(STATS_FIELD_SCHEMA.map(f => f.key));
+    const extracted = {};
+    let matchCount = 0;
+
+    wb.SheetNames.forEach(shName => {
+      const rows = XLSX.utils.sheet_to_json(wb.Sheets[shName], { header: 1, blankrows: false });
+      rows.forEach(r => {
+        if (!Array.isArray(r) || r.length < 2) return;
+        const k = String(r[0] || '').trim();
+        if (validKeys.has(k)) {
+          const val = r[3] !== undefined && r[3] !== null && String(r[3]).trim() !== '' ? r[3] : r[1];
+          if (val !== undefined && val !== null) {
+            extracted[k] = String(val).trim();
+            matchCount++;
+          }
+        }
+      });
+    });
+    return matchCount >= 3 ? extracted : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function importSchoolStatsFromExcel(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  const arrayBuffer = await file.arrayBuffer();
+  const extracted = parseSchoolStatsFromExcelBuffer(arrayBuffer);
+  event.target.value = '';
+  if (!extracted) {
+    alert('⚠️ Tệp Excel này không đúng cấu trúc Biểu mẫu Phụ lục Thống kê. Thầy hãy bấm nút "📥 1. Tải Biểu Mẫu Phụ Lục Excel" để lấy đúng biểu mẫu chuẩn nhé!');
+    return;
+  }
+  const merged = { ...getSchoolStatsData(), ...extracted };
+  localStorage.setItem('canhthuan_school_stats_v1', JSON.stringify(merged));
+  renderStatsQuickEditForm();
+  renderSchoolStatsSection();
+  if (getGhToken()) {
+    await syncDatabaseToGitHub(`Cập nhật số liệu thống kê từ phụ lục ${file.name}`);
+  }
+  alert('✔ Đã bóc tách và cập nhật thành công toàn bộ số liệu từ Phụ lục Excel lên mục THÔNG TIN - THỐNG KÊ!');
+}
+
+// CÔNG TẮC KHÓA TRANG KHẨN CẤP (EMERGENCY SITE LOCKDOWN)
+function toggleEmergencyLockBox() {
+  const b = document.getElementById('emergencyLockBody');
+  if (!b) return;
+  b.style.display = b.style.display === 'block' ? 'none' : 'block';
+  if (b.style.display === 'block') {
+    const inp = document.getElementById('siteLockMessageInput');
+    if (inp) inp.value = localStorage.getItem('canhthuan_site_lock_msg') || 'Cổng thông tin điện tử nhà trường đang tạm khóa để bảo trì & kiểm duyệt định kỳ. Quý Thầy Cô, Phụ huynh và Học sinh vui lòng quay lại sau!';
+  }
+}
+
+function applySiteLockUI() {
+  const isLocked = localStorage.getItem('canhthuan_site_locked') === '1';
+  const msg = localStorage.getItem('canhthuan_site_lock_msg') || 'Cổng thông tin điện tử nhà trường đang tạm khóa để bảo trì & kiểm duyệt định kỳ. Quý Thầy Cô, Phụ huynh và Học sinh vui lòng quay lại sau!';
+  const overlay = document.getElementById('siteLockOverlay');
+  const msgEl = document.getElementById('siteLockDisplayMsg');
+  const badge = document.getElementById('siteLockStatusBadge');
+
+  if (msgEl) msgEl.textContent = msg;
+  if (overlay) overlay.style.display = isLocked ? 'flex' : 'none';
+  if (badge) {
+    if (isLocked) {
+      badge.textContent = '🔴 ĐANG KHÓA TRANG';
+      badge.style.background = '#fee2e2';
+      badge.style.color = '#b91c1c';
+    } else {
+      badge.textContent = '🟢 Đang Mở Bình Thường';
+      badge.style.background = '#dcfce7';
+      badge.style.color = '#15803d';
+    }
+  }
+}
+
+async function setEmergencySiteLock(lockState) {
+  const msgInput = document.getElementById('siteLockMessageInput');
+  const msg = (msgInput && msgInput.value.trim()) ? msgInput.value.trim() : 'Cổng thông tin điện tử nhà trường đang tạm khóa để bảo trì & kiểm duyệt định kỳ. Quý Thầy Cô, Phụ huynh và Học sinh vui lòng quay lại sau!';
+  const confirmText = lockState
+    ? '🚨 XÁC NHẬN KHÓA TRANG KHẨN CẤP:\nToàn bộ người dùng truy cập sẽ chỉ thấy màn hình thông báo tạm khóa (chỉ Quản trị viên có mã PIN mới mở khóa lại được).\n\nThầy có chắc chắn muốn KHÓA TRANG ngay bây giờ không?'
+    : '🔓 Mở khóa để Cổng thông tin điện tử hoạt động bình thường trở lại?';
+  if (!confirm(confirmText)) return;
+
+  localStorage.setItem('canhthuan_site_locked', lockState ? '1' : '0');
+  localStorage.setItem('canhthuan_site_lock_msg', msg);
+  applySiteLockUI();
+
+  if (getGhToken()) {
+    await syncDatabaseToGitHub(lockState ? '🚨 KHÓA TRANG KHẨN CẤP (Admin Lockdown)' : '🔓 MỞ KHÓA TRANG HOẠT ĐỘNG LẠI');
+    alert(lockState ? '🔒 Đã KÍCH HOẠT KHÓA TRANG và đồng bộ lên GitHub thành công!' : '🔓 Đã MỞ KHÓA TRANG hoạt động bình thường trở lại!');
+  } else {
+    alert(lockState ? '🔒 Đã kích hoạt Khóa trang trên máy này (Lưu GitHub Token để khóa đồng bộ toàn mạng).' : '🔓 Đã mở khóa trang!');
   }
 }
 
@@ -3340,6 +3926,20 @@ async function publishNewNotice() {
   if (currentAttachedFiles.length > 0) {
     for (let i = 0; i < currentAttachedFiles.length; i++) {
       const f = currentAttachedFiles[i];
+      // Nếu đăng ở Chuyên mục 03 (Văn bản công khai) và có đính kèm Phụ lục Excel thống kê -> Tự động bóc tách số liệu nạp thẳng lên mục THÔNG TIN - THỐNG KÊ!
+      if (cat === '03' && /\.(xlsx|xls)$/i.test(f.name) && f.rawBase64) {
+        try {
+          const binStr = atob(f.rawBase64);
+          const bytes = new Uint8Array(binStr.length);
+          for (let bIdx = 0; bIdx < binStr.length; bIdx++) bytes[bIdx] = binStr.charCodeAt(bIdx);
+          const autoStats = parseSchoolStatsFromExcelBuffer(bytes.buffer);
+          if (autoStats) {
+            const mergedStats = { ...getSchoolStatsData(), ...autoStats };
+            localStorage.setItem('canhthuan_school_stats_v1', JSON.stringify(mergedStats));
+            renderSchoolStatsSection();
+          }
+        } catch (errStats) {}
+      }
       let fileUrl = f.dataUrl;
       if (token && f.rawBase64) {
         const repoFilePath = `${targetFolder}/${f.name}`;
@@ -3723,15 +4323,90 @@ async function deleteCustomPost(id) {
   renderTkbDropdown();
 }
 
-// RENDER FRONT NOTICES (TAB 2)
+// RENDER FRONT NOTICES (TAB 2 - CHỈ HIỂN THỊ BÀI ĐĂNG CHÍNH THỨC & HỖ TRỢ LỌC THEO 5 CHUYÊN MỤC, KHÔNG MỞ KHO GỐC)
+function filterAndShowNotices(catCode, evt) {
+  if (evt) evt.preventDefault();
+  openTabNav('tab-thongbao-content');
+  filterFrontNoticesByCat(catCode || 'ALL');
+}
+
+function filterFrontNoticesByCat(catCode) {
+  currentFrontFilterCat = catCode || 'ALL';
+  document.querySelectorAll('#frontCategoryFilterBar .cat-filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === currentFrontFilterCat);
+  });
+  renderFrontNotices();
+}
+
+function renderLichTuanTab() {
+  const box = document.getElementById('lichTuanDynamicBox');
+  if (!box) return;
+  const all = getAllPosts();
+  const lichPosts = all.filter(p => p.category === '01');
+  if (lichPosts.length === 0) {
+    box.innerHTML = '';
+    return;
+  }
+  let html = '';
+  lichPosts.slice(0, 5).forEach((item, idx) => {
+    const files = getPostFiles(item);
+    let filesHtml = '';
+    files.forEach(f => {
+      const fUrl = resolveMediaUrl(f.url);
+      const safeUrl = (f.url || '').replace(/'/g, "\\'");
+      const safeName = (f.name || '').replace(/'/g, "\\'");
+      const safeTitle = (item.title || '').replace(/'/g, "\\'");
+      filesHtml += `
+        <button type="button" onclick="openTkbFileInViewer('${safeUrl}', '${safeName}', '${safeTitle}')" style="background:#0284c7; color:white; border:none; padding:6px 12px; border-radius:5px; font-weight:700; font-size:12px; cursor:pointer;">👁️ Xem Trực Tiếp</button>
+        <a href="${fUrl}" download="${f.name}" target="_blank" rel="noopener" style="background:#16a34a; color:white; text-decoration:none; padding:6px 12px; border-radius:5px; font-weight:700; font-size:12px;">📥 Tải Tệp (${f.name})</a>
+      `;
+    });
+    html += `
+    <div style="background:${idx === 0 ? '#f0f9ff' : '#f8fafc'}; border:1px solid ${idx === 0 ? '#bae6fd' : '#e2e8f0'}; border-radius:8px; padding:12px 14px; margin-bottom:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+        <strong style="color:#0f3460; font-size:14.5px;">📋 ${idx === 0 ? '⭐ [MỚI NHẤT] ' : ''}${item.title}</strong>
+        <span style="font-size:12px; color:#64748b; font-weight:600;">📅 Ngày đăng: ${item.date}</span>
+      </div>
+      ${item.content ? `<p style="font-size:13.5px; color:#334155; line-height:1.6; margin-bottom:8px; white-space:pre-line;">${item.content}</p>` : ''}
+      ${filesHtml ? `<div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">${filesHtml}</div>` : ''}
+    </div>`;
+  });
+  box.innerHTML = html;
+}
+
+function openLatestLichTuanFile() {
+  const all = getAllPosts();
+  const lichPosts = all.filter(p => p.category === '01');
+  if (lichPosts.length > 0) {
+    const latest = lichPosts[0];
+    const files = getPostFiles(latest);
+    if (files.length > 0) {
+      openTkbFileInViewer(files[0].url, files[0].name, latest.title);
+      return;
+    }
+  }
+  alert('Hiện tại Ban Giám hiệu đang cập nhật tệp Lịch công tác tuần mới nhất. Quý Thầy Cô vui lòng xem bảng kế hoạch công tác trọng tâm bên dưới!');
+}
+
 function renderFrontNotices() {
-  const container = document.getElementById('tab-thongbao-content');
+  const container = document.getElementById('frontNoticesDynamicList');
   if (!container) return;
 
-  document.querySelectorAll('.dynamic-admin-post').forEach(el => el.remove());
-  const custom = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || '[]');
+  const all = getAllPosts();
+  const filtered = currentFrontFilterCat === 'ALL'
+    ? all
+    : all.filter(p => String(p.category) === String(currentFrontFilterCat));
 
-  custom.slice().reverse().forEach(item => {
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="padding:24px; text-align:center; color:#64748b; background:#f8fafc; border:1px dashed #cbd5e1; border-radius:8px; font-size:13.5px;">
+        Chưa có bài đăng nào trong chuyên mục này.
+      </div>`;
+    return;
+  }
+
+  let html = '';
+  filtered.forEach(item => {
     const files = getPostFiles(item);
     const mediaFiles = files.filter(f => isImageFile(f.name, f.url) || isVideoFile(f.name, f.url));
     const docFiles = files.filter(f => !isImageFile(f.name, f.url) && !isVideoFile(f.name, f.url));
@@ -3756,13 +4431,19 @@ function renderFrontNotices() {
       attachmentHtml = `<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;">`;
       docFiles.forEach(d => {
         const dUrl = resolveMediaUrl(d.url);
+        const safeUrl = (d.url || '').replace(/'/g, "\\'");
+        const safeName = (d.name || '').replace(/'/g, "\\'");
+        const safeTitle = (item.title || '').replace(/'/g, "\\'");
         attachmentHtml += `
         <div style="display:inline-flex; align-items:center; gap:10px; background:#f0fdf4; border:1px solid #bbf7d0; padding:8px 12px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
           <span style="font-size:18px;">📎</span>
           <div>
             <div style="font-weight:700; color:#15803d; font-size:13px;">${d.name}</div>
-            <small style="color:#64748b; font-size:11.5px;">${d.size || 'Văn bản gốc'}</small>
+            <small style="color:#64748b; font-size:11.5px;">${d.size || 'Tài liệu đính kèm'}</small>
           </div>
+          <button type="button" onclick="openTkbFileInViewer('${safeUrl}', '${safeName}', '${safeTitle}')" style="background:#0284c7; color:white; border:none; padding:5px 10px; border-radius:5px; font-weight:700; font-size:12px; cursor:pointer;">
+            👁️ Xem
+          </button>
           <a href="${dUrl}" download="${d.name}" target="_blank" rel="noopener" style="background:#16a34a; color:white; text-decoration:none; padding:5px 10px; border-radius:5px; font-weight:700; font-size:12px;">
             📥 Tải Về
           </a>
@@ -3771,22 +4452,24 @@ function renderFrontNotices() {
       attachmentHtml += `</div>`;
     }
 
-    const postHtml = `
+    html += `
     <div class="dynamic-admin-post" style="padding: 12px 0; border-bottom: 1px dashed var(--border-light); margin-bottom: 12px; animation: modalFadeIn 0.3s ease;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
         <h4 style="color:var(--primary-navy); font-size:15.5px; font-weight:700;">📢 ${item.title}</h4>
         <div style="display:flex; gap:6px; align-items:center;">
-          <small style="color:#64748b; font-size:12px;">${item.date}</small>
+          <small style="color:#64748b; font-size:12px;">📅 ${item.date}</small>
           <span style="font-size:12px; background:#fef3c7; color:#b45309; padding:2px 8px; border-radius:4px; font-weight:600;">${item.categoryName}</span>
+          <a href="https://www.facebook.com/thcsbtcanhthuan/" target="_blank" rel="noopener" style="font-size:11.5px; background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; padding:2px 8px; border-radius:4px; text-decoration:none; font-weight:700;" title="Bình luận & tương tác trên Fanpage Facebook Trường">💬 Bình luận FB ↗</a>
         </div>
       </div>
-      <p style="color:var(--text-muted); font-size:13.5px; line-height:1.6;">${item.content || 'Không có mô tả chi tiết.'}</p>
+      ${item.content ? `<p style="color:var(--text-muted); font-size:13.5px; line-height:1.6; white-space:pre-line;">${item.content}</p>` : ''}
       ${mediaHtml}
       ${attachmentHtml}
     </div>`;
-
-    container.insertAdjacentHTML('afterbegin', postHtml);
   });
+
+  container.innerHTML = html;
+  renderLichTuanTab();
 }
 
 // INITIALIZE ON LOAD
@@ -3943,8 +4626,11 @@ function updateHeaderImportantMarquee() {
 
 document.addEventListener('DOMContentLoaded', async function() {
   initLiveRealtimeClock();
+  renderSchoolStatsSection();
   // Tải trước dữ liệu chung data.json từ GitHub để mọi máy tính & điện thoại đều đồng bộ tin tức mới nhất
   await loadCloudDatabaseFromGitHub();
+  applySiteLockUI();
+  renderSchoolStatsSection();
   renderCentralShowcase();
   renderVerticalAutoScrollTicker();
   updateHeaderImportantMarquee();
@@ -4129,6 +4815,22 @@ async function openTkbFileInViewer(rawUrl, fileName, titleLabel) {
   }
 }
 </script>
+
+<!-- ================= MÀN HÌNH KHÓA TRANG KHẨN CẤP (EMERGENCY LOCKDOWN OVERLAY) ================= -->
+<div id="siteLockOverlay" class="site-lock-overlay">
+  <div class="site-lock-card">
+    <div style="font-size:48px; margin-bottom:12px;">🛡️</div>
+    <h2 style="font-size:22px; font-weight:800; color:#fde047; margin-bottom:10px; text-transform:uppercase;">THÔNG BÁO TẠM KHÓA CỔNG THÔNG TIN</h2>
+    <p style="font-size:15px; font-weight:700; color:#f8fafc; margin-bottom:12px;">TRƯỜNG THCS BÁN TRÚ CANH THUẬN</p>
+    <p id="siteLockDisplayMsg" style="font-size:14px; color:#cbd5e1; line-height:1.7; margin-bottom:22px; background:rgba(15,23,42,0.55); padding:14px 16px; border-radius:10px; border:1px solid rgba(255,255,255,0.1);">
+      Cổng thông tin điện tử nhà trường đang tạm khóa để bảo trì &amp; kiểm duyệt định kỳ. Quý Thầy Cô, Phụ huynh và Học sinh vui lòng quay lại sau!
+    </p>
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <a href="https://www.facebook.com/thcsbtcanhthuan/" target="_blank" rel="noopener" style="background:#1877f2; color:white; text-decoration:none; padding:10px 18px; border-radius:8px; font-size:13px; font-weight:700;">📘 Truy cập Fanpage Trường ↗</a>
+      <button type="button" onclick="openAdminModal()" style="background:rgba(255,255,255,0.12); color:#94a3b8; border:1px solid rgba(255,255,255,0.2); padding:10px 16px; border-radius:8px; font-size:12.5px; font-weight:600; cursor:pointer;">🔒 Quản Trị Viên Mở Khóa</button>
+    </div>
+  </div>
+</div>
 
 <!-- ================= MODAL XEM THỜI KHÓA BIỂU HIỆN HÀNH (CHUẨN NÉT NHƯ ẢNH) ================= -->
 <div id="tkbViewerModal" class="tkb-viewer-backdrop" onclick="closeTkbViewer(event)">
