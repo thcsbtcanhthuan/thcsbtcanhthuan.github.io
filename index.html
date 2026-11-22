@@ -1846,6 +1846,7 @@ html, body {
       <li><a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)">Thông Báo & Tin Tức</a></li>
     </ul>
     <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+      <button type="button" class="nav-tkb-btn" onclick="openSchoolWebUserGuide()" style="background:linear-gradient(135deg, #0f766e, #0d9488); border-color:#5eead4; box-shadow:0 3px 10px rgba(13,148,136,0.32);">📖 Hướng Dẫn Sử Dụng</button>
       <a href="https://www.facebook.com/thcsbtcanhthuan/" target="_blank" rel="noopener" class="nav-tkb-btn" style="background:linear-gradient(135deg, #1877f2, #1d4ed8); border-color:#60a5fa; text-decoration:none; box-shadow:0 3px 10px rgba(24,119,242,0.35);">📘 Fanpage Trường</a>
       <button type="button" class="nav-tkb-btn" onclick="openCurrentTkbViewer()">📅 Xem TKB Hiện Hành</button>
     </div>
@@ -5229,6 +5230,88 @@ async function openTkbFileInViewer(rawUrl, fileName, titleLabel) {
     </div>
   </div>
 </div>
+
+<!-- ================= MODAL HƯỚNG DẪN TRA CỨU & SỬ DỤNG CỔNG THÔNG TIN NHÀ TRƯỜNG ================= -->
+<div id="schoolWebUserGuideModal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.78); backdrop-filter:blur(6px); z-index:999999; align-items:center; justify-content:center; padding:16px;" onclick="if(event.target===this) closeSchoolWebUserGuide()">
+  <div style="background:#ffffff; border-radius:14px; max-width:860px; width:100%; max-height:90vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 25px 50px rgba(0,0,0,0.35); border:1px solid #cbd5e1;">
+    <div style="flex-shrink:0; background:linear-gradient(135deg, #0f172a 0%, #0f766e 100%); color:#ffffff; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:26px;">📖</span>
+        <div>
+          <h3 style="margin:0; font-size:16px; font-weight:800; letter-spacing:0.2px;">HƯỚNG DẪN TRA CỨU &amp; SỬ DỤNG CỔNG THÔNG TIN ĐIỆN TỬ NHÀ TRƯỜNG</h3>
+          <p style="margin:3px 0 0 0; font-size:12px; color:#99f6e4;">Dành cho Cán bộ, Giáo viên, Phụ huynh và Học sinh Trường PTDTBT THCS Canh Thuận</p>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button type="button" onclick="printSchoolWebUserGuide()" style="background:#ffffff; color:#0f766e; border:none; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:800; cursor:pointer;">🖨️ In Hướng Dẫn</button>
+        <button type="button" onclick="closeSchoolWebUserGuide()" style="background:rgba(255,255,255,0.16); color:#ffffff; border:none; font-size:20px; line-height:1; padding:4px 10px; border-radius:6px; cursor:pointer;">&times;</button>
+      </div>
+    </div>
+
+    <div id="schoolWebUserGuideBody" style="flex:1 1 auto; min-height:0; overflow-y:auto; padding:18px 22px; color:#1e293b; font-size:14px; line-height:1.68;">
+      <div style="background:#f0fdfa; border:1px solid #99f6e4; border-radius:10px; padding:12px 16px; margin-bottom:14px;">
+        <h4 style="margin:0 0 6px 0; color:#0f766e; font-size:14.5px;">🧭 1. Thanh Điều Hướng Nhanh (Phía trên cùng)</h4>
+        <ul style="margin:0 0 0 18px; padding:0;">
+          <li><strong>Trang Chủ:</strong> Quay về màn hình tổng quan của Cổng thông tin nhà trường.</li>
+          <li><strong>4 Phân Hệ Trọng Tâm:</strong> Di chuyển nhanh đến 4 khối chuyên mục chính (<em>Công khai TT 09/2024, Chuyên môn &amp; Đổi mới, Bán trú &amp; Đoàn thể, Tra cứu học tập</em>).</li>
+          <li><strong>Đoàn Thể &amp; Cộng Đồng:</strong> Xem hoạt động Chi bộ Đảng, Đoàn Thanh niên, Liên đội TNTP và nhịp sống bán trú.</li>
+          <li><strong>Lịch Công Tác Tuần / Thông Báo &amp; Tin Tức:</strong> Mở ngay bảng lịch công tác tuần của Ban Giám hiệu và danh sách văn bản mới nhất.</li>
+          <li><strong>📅 Xem TKB Hiện Hành:</strong> Bấm 1 chạm để mở nhanh Thời Khóa Biểu đang áp dụng của toàn trường (có thể chuyển sheet, phóng to/thu nhỏ, in trực tiếp hoặc tải file Excel gốc).</li>
+          <li><strong>📘 Fanpage Trường:</strong> Truy cập trực tiếp trang Facebook chính thức của nhà trường.</li>
+        </ul>
+      </div>
+
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px; margin-bottom:14px;">
+        <h4 style="margin:0 0 6px 0; color:#1e3a8a; font-size:14.5px;">📰 2. Theo dõi Tin Tức &amp; Sự Kiện Nổi Bật (Vùng Trung Tâm 3 Cột)</h4>
+        <ul style="margin:0 0 0 18px; padding:0;">
+          <li><strong>Dải chữ chạy <code>📌 TIN QUAN TRỌNG</code>:</strong> Hiển thị các thông báo khẩn, lịch trọng tâm trong tuần.</li>
+          <li><strong>Khung ảnh lớn bên trái:</strong> Xem chi tiết tin hoạt động đang chọn; bấm mũi tên <strong>❮</strong> / <strong>❯</strong> hoặc các chấm tròn bên dưới để chuyển bài.</li>
+          <li><strong>Cột giữa (<code>⚡ 10 TIN HOẠT ĐỘNG MỚI NHẤT</code>):</strong> Nhấp trực tiếp vào bất kỳ tiêu đề nào để đọc bài viết và xem hình ảnh hoạt động.</li>
+          <li><strong>Cột phải (<code>📌 10 TIN QUAN TRỌNG</code>):</strong> Tự động cuộn dọc từ dưới lên; <strong>rê chuột vào khung để tạm dừng đọc</strong>, hoặc bấm <strong>Xem tất cả ➔</strong> để mở toàn bộ kho thông báo.</li>
+        </ul>
+      </div>
+
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px; margin-bottom:14px;">
+        <h4 style="margin:0 0 6px 0; color:#1e3a8a; font-size:14.5px;">🏛️ 3. Khai thác 4 Phân Hệ Trọng Tâm</h4>
+        <ol style="margin:0 0 0 18px; padding:0;">
+          <li><strong>Quy Chế Công Khai (Thông tư 09/2024):</strong> Bấm <em>Xem Báo Cáo Công Khai ➔</em> để tra cứu báo cáo ba công khai năm học, cơ cấu tổ chức, đội ngũ, cơ sở vật chất và chính sách hỗ trợ học sinh bán trú.</li>
+          <li><strong>Chuyên Môn &amp; Đổi Mới Dạy Học:</strong> Bấm <em>Xem Chuyên Đề &amp; STEM ➔</em> để theo dõi chuyên đề đổi mới, hoạt động STEM/STEAM, bồi dưỡng học sinh giỏi và hội thi giáo viên dạy giỏi.</li>
+          <li><strong>Nhịp Sống Bán Trú &amp; Hoạt Động - Đảng - Đoàn Thể:</strong> Bấm <em>Góc Bán Trú ➔</em> để xem chế độ chăm sóc, dinh dưỡng bán trú, hoặc <em>Xem Hoạt Động ➔</em> để xem tin Chi bộ, Đoàn – Đội và bản sắc văn hóa Ba Na.</li>
+          <li><strong>Tra Cứu Học Tập &amp; Phụ Huynh:</strong> Tra cứu Thời khóa biểu các tuần, Lịch công tác tuần, Kế hoạch kiểm tra định kỳ và Cẩm nang phụ huynh.</li>
+        </ol>
+      </div>
+
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px;">
+        <h4 style="margin:0 0 6px 0; color:#1e3a8a; font-size:14.5px;">🗂️ 4. Tra Cứu Nhanh Theo Thẻ (Tab) Ở Phần Dưới Trang</h4>
+        <p style="margin:0;">Chuyển đổi linh hoạt giữa 3 thẻ: <strong>Lịch Công Tác Tuần</strong> • <strong>Thông Báo &amp; Tin Tức</strong> • <strong>Gương Sáng</strong>. Bấm trực tiếp vào tiêu đề văn bản/thông báo để đọc toàn văn hoặc tải tệp đính kèm về máy tính và điện thoại.</p>
+      </div>
+    </div>
+
+    <div style="flex-shrink:0; background:#f8fafc; border-top:1px solid #e2e8f0; padding:12px 20px; display:flex; justify-content:flex-end;">
+      <button type="button" onclick="closeSchoolWebUserGuide()" style="background:#0f766e; color:#ffffff; border:none; padding:8px 18px; border-radius:6px; font-size:13px; font-weight:800; cursor:pointer;">Đã hiểu • Đóng lại</button>
+    </div>
+  </div>
+</div>
+<script>
+function openSchoolWebUserGuide() {
+  var m = document.getElementById('schoolWebUserGuideModal');
+  if (m) m.style.display = 'flex';
+}
+function closeSchoolWebUserGuide() {
+  var m = document.getElementById('schoolWebUserGuideModal');
+  if (m) m.style.display = 'none';
+}
+function printSchoolWebUserGuide() {
+  var body = document.getElementById('schoolWebUserGuideBody');
+  if (!body) return;
+  var w = window.open('', '_blank', 'width=860,height=680');
+  if (!w) return;
+  w.document.write('<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><title>Hướng Dẫn Sử Dụng Cổng Thông Tin Trường</title><style>body{font-family:Arial,sans-serif;padding:24px;color:#0f172a;line-height:1.6;}h2{color:#0f766e;border-bottom:2px solid #0f766e;padding-bottom:6px;}</style></head><body><h2>📖 HƯỚNG DẪN SỬ DỤNG CỔNG THÔNG TIN ĐIỆN TỬ TRƯỜNG PTDTBT THCS CANH THUẬN</h2>' + body.innerHTML + '</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ w.print(); }, 250);
+}
+</script>
 
 </body>
 </html>
