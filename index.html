@@ -5729,30 +5729,103 @@ function printSchoolWebUserGuide() {
 </style>
 
 <script>
-// ================= MODULE CƠ CẤU TỔ CHỨC, ĐỘI NGŨ CBGVNV & HẠ TẦNG KHỐI CÔNG TRÌNH =================
+// ================= MODULE CƠ CẤU TỔ CHỨC, ĐỘI NGŨ CBGVNV & HẠ TẦNG KHỐI CÔNG TRÌNH (v2.0 CHUẨN HÓA) =================
+const ORG_DEPTS_KEY = 'canhthuan_org_depts_v1';
 const ORG_STAFF_KEY = 'canhthuan_org_staff_v1';
 const FACILITY_LIST_KEY = 'canhthuan_facility_list_v1';
 
+const DEFAULT_ORG_DEPTS = [
+  'Ban Giám hiệu',
+  'Tổ Khoa học Tự nhiên',
+  'Tổ Khoa học Xã hội',
+  'Tổ Văn phòng - Bán trú'
+];
+
+// 3.1 - 3.6: DANH SÁCH CHỌN CHUẨN CỐ ĐỊNH & ĐỒNG BỘ 1-1 GIỮA FORM THỦ CÔNG, EXCEL MẪU & HIỂN THỊ
+const GOV_ROLE_OPTIONS = [
+  'Hiệu trưởng/Giám đốc',
+  'P.Hiệu trưởng/P. Giám đốc',
+  'Tổ trưởng/Trưởng phòng',
+  'Tổ phó/Phó phòng',
+  'Giáo viên/Thành viên'
+];
+
+const PARTY_TYPE_OPTIONS = [
+  'Đảng viên',
+  'Đoàn viên',
+  'Chưa'
+];
+
+const PARTY_ROLE_OPTIONS = [
+  '',
+  'Bí thư',
+  'P. Bí thư',
+  'Ủy viên',
+  'Đảng viên/Đoàn viên'
+];
+
+// Toàn bộ môn học từ Tiểu học đến THPT + công tác đơn vị + dòng cuối "Khác" (hiện ô nhập tự do)
+const DUTY_SUBJECT_OPTIONS = [
+  'Toán',
+  'Ngữ văn',
+  'Tiếng Việt',
+  'Tiếng Anh',
+  'Khoa học tự nhiên',
+  'Vật lí',
+  'Hóa học',
+  'Sinh học',
+  'Lịch sử và Địa lí',
+  'Lịch sử',
+  'Địa lí',
+  'Đạo đức',
+  'Tự nhiên và Xã hội',
+  'Khoa học',
+  'Giáo dục công dân',
+  'GD Kinh tế & Pháp luật',
+  'Tin học',
+  'Công nghệ',
+  'Giáo dục thể chất',
+  'Nghệ thuật (Âm nhạc)',
+  'Nghệ thuật (Mỹ thuật)',
+  'Hoạt động trải nghiệm, HN',
+  'Giáo dục địa phương',
+  'Giáo dục QP&AN',
+  'Tổng phụ trách Đội',
+  'Văn thư - Lưu trữ',
+  'Kế toán - Tài vụ',
+  'Thiết bị - Thư viện',
+  'Y tế học đường',
+  'Phục vụ - Bán trú',
+  'Khác'
+];
+
+const TDCM_OPTIONS = ['Trên ĐH', 'ĐH', 'CĐ', 'Dưới CĐ', 'Khác'];
+const TDLLCT_OPTIONS = ['Cao cấp', 'TC', 'Sơ cấp', 'Khác'];
+
 const DEFAULT_ORG_STAFF = [
   {
-    name: 'Nguyễn Tá Quan', birthYear: '1978', govRole: 'Hiệu trưởng', dept: 'Ban Giám hiệu',
-    isParty: 'Có', partyRole: 'Bí thư Chi bộ', subject: 'Quản lý / Tin học', homeroom: '',
-    qual: 'Thạc sĩ', phone: '', address: 'Xã Vân Canh, Gia Lai'
+    name: 'Nguyễn Tá Quan', birthYear: '1978', dept: 'Ban Giám hiệu',
+    govRole: 'Hiệu trưởng/Giám đốc', partyType: 'Đảng viên', partyRole: 'Bí thư',
+    duty: 'Tin học', dutyCustom: '', otherDuty: 'Quản lý chung, Chủ tài khoản',
+    tdcm: 'Trên ĐH', tdllct: 'TC', phone: '', address: 'Xã Vân Canh, Gia Lai'
   },
   {
-    name: 'Tổ trưởng Tổ Khoa học Tự nhiên', birthYear: '1983', govRole: 'Tổ trưởng CM', dept: 'Tổ Khoa học Tự nhiên',
-    isParty: 'Có', partyRole: 'Chi ủy viên', subject: 'Toán - KHTN', homeroom: '9A1',
-    qual: 'Đại học', phone: '', address: 'Xã Vân Canh, Gia Lai'
+    name: 'Tổ trưởng Tổ Khoa học Tự nhiên', birthYear: '1983', dept: 'Tổ Khoa học Tự nhiên',
+    govRole: 'Tổ trưởng/Trưởng phòng', partyType: 'Đảng viên', partyRole: 'Ủy viên',
+    duty: 'Toán', dutyCustom: '', otherDuty: 'Chủ nhiệm 9A1',
+    tdcm: 'ĐH', tdllct: 'Sơ cấp', phone: '', address: 'Xã Vân Canh, Gia Lai'
   },
   {
-    name: 'Tổ trưởng Tổ Khoa học Xã hội', birthYear: '1984', govRole: 'Tổ trưởng CM', dept: 'Tổ Khoa học Xã hội',
-    isParty: 'Có', partyRole: 'Đảng viên', subject: 'Ngữ văn - LS&ĐL', homeroom: '8A1',
-    qual: 'Đại học', phone: '', address: 'Xã Vân Canh, Gia Lai'
+    name: 'Tổ trưởng Tổ Khoa học Xã hội', birthYear: '1984', dept: 'Tổ Khoa học Xã hội',
+    govRole: 'Tổ trưởng/Trưởng phòng', partyType: 'Đảng viên', partyRole: 'Đảng viên/Đoàn viên',
+    duty: 'Ngữ văn', dutyCustom: '', otherDuty: 'Chủ nhiệm 8A1',
+    tdcm: 'ĐH', tdllct: 'Sơ cấp', phone: '', address: 'Xã Vân Canh, Gia Lai'
   },
   {
-    name: 'Bộ phận Văn thư - Kế toán - Bán trú', birthYear: '1988', govRole: 'Nhân viên', dept: 'Tổ Văn phòng - Bán trú',
-    isParty: 'Không', partyRole: '', subject: 'Hành chính - Bán trú', homeroom: '',
-    qual: 'Đại học', phone: '', address: 'Xã Vân Canh, Gia Lai'
+    name: 'Bộ phận Văn thư - Kế toán - Bán trú', birthYear: '1988', dept: 'Tổ Văn phòng - Bán trú',
+    govRole: 'Giáo viên/Thành viên', partyType: 'Đoàn viên', partyRole: 'Đảng viên/Đoàn viên',
+    duty: 'Văn thư - Lưu trữ', dutyCustom: '', otherDuty: 'Quản lý hồ sơ bán trú',
+    tdcm: 'ĐH', tdllct: 'Sơ cấp', phone: '', address: 'Xã Vân Canh, Gia Lai'
   }
 ];
 
@@ -5783,12 +5856,46 @@ const DEFAULT_FACILITY_LIST = [
   }
 ];
 
+function _escOrg(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function getOrgDepartments() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(ORG_DEPTS_KEY) || 'null');
+    if (Array.isArray(raw) && raw.length) return raw.map(x => String(x || '').trim()).filter(Boolean);
+  } catch (_) {}
+  return DEFAULT_ORG_DEPTS.slice();
+}
+
+function normalizeStaffRecord(s) {
+  // Tương thích ngược dữ liệu cũ sang chuẩn 13 trường mới
+  const rawParty = s.partyType || ( /^(có|x|yes|đảng viên|1)$/i.test(String(s.isParty || '')) ? 'Đảng viên' : 'Chưa' );
+  const rawDuty = s.duty || s.subject || '';
+  const inDutyList = DUTY_SUBJECT_OPTIONS.includes(rawDuty);
+  return {
+    name: String(s.name || '').trim(),
+    birthYear: String(s.birthYear || '').trim(),
+    dept: String(s.dept || '').trim(),
+    govRole: String(s.govRole || 'Giáo viên/Thành viên').trim(),
+    partyType: PARTY_TYPE_OPTIONS.includes(rawParty) ? rawParty : 'Chưa',
+    partyRole: String(s.partyRole || '').trim(),
+    duty: inDutyList ? rawDuty : (rawDuty ? 'Khác' : 'Toán'),
+    dutyCustom: s.dutyCustom != null ? String(s.dutyCustom).trim() : (inDutyList ? '' : rawDuty),
+    otherDuty: String(s.otherDuty != null ? s.otherDuty : (s.homeroom || '')).trim(),
+    tdcm: String(s.tdcm || s.qual || 'ĐH').trim(),
+    tdllct: String(s.tdllct || 'Sơ cấp').trim(),
+    phone: String(s.phone || '').trim(),
+    address: String(s.address || '').trim()
+  };
+}
+
 function getOrgStaffList() {
   try {
     const raw = JSON.parse(localStorage.getItem(ORG_STAFF_KEY) || 'null');
-    if (Array.isArray(raw) && raw.length) return raw;
+    if (Array.isArray(raw) && raw.length) return raw.map(normalizeStaffRecord);
   } catch (_) {}
-  return DEFAULT_ORG_STAFF.slice();
+  return DEFAULT_ORG_STAFF.map(normalizeStaffRecord);
 }
 
 function getFacilityList() {
@@ -5799,8 +5906,50 @@ function getFacilityList() {
   return DEFAULT_FACILITY_LIST.slice();
 }
 
-function _escOrg(s) {
-  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+function getDisplayDuty(s) {
+  if (s.duty === 'Khác') return s.dutyCustom ? s.dutyCustom : 'Khác';
+  return s.duty || '';
+}
+
+// ===== THU GỌN / MỞ RỘNG KHU VỰC CÔNG KHAI NGOÀI TRANG CHỦ =====
+function toggleOrgInfraSection() {
+  const body = document.getElementById('orgInfraCollapsibleBody');
+  const btn = document.getElementById('btnToggleOrgInfraSection');
+  if (!body) return;
+  const isHidden = body.style.display === 'none';
+  body.style.display = isHidden ? 'block' : 'none';
+  if (btn) btn.textContent = isHidden ? '📁 Thu gọn ▴' : '📂 Mở xem chi tiết ▾';
+  if (isHidden) {
+    // Đảm bảo ô tìm kiếm luôn sạch không bị Chrome autofill điền bậy
+    const s1 = document.getElementById('orgStaffSearchInput');
+    const s2 = document.getElementById('orgInfraSearchInput');
+    if (s1 && s1.hasAttribute('readonly')) s1.value = '';
+    if (s2 && s2.hasAttribute('readonly')) s2.value = '';
+    renderPublicOrgDeptUI();
+    renderPublicOrgStaffTable();
+    renderPublicInfraTable();
+  }
+}
+
+function openOrgInfraSection() {
+  const body = document.getElementById('orgInfraCollapsibleBody');
+  const btn = document.getElementById('btnToggleOrgInfraSection');
+  if (body && body.style.display === 'none') {
+    body.style.display = 'block';
+    if (btn) btn.textContent = '📁 Thu gọn ▴';
+    renderPublicOrgDeptUI();
+    renderPublicOrgStaffTable();
+    renderPublicInfraTable();
+  }
+}
+
+function updateOrgInfraCollapsedSummary() {
+  const sum = document.getElementById('orgInfraCollapsedSummary');
+  if (!sum) return;
+  const depts = getOrgDepartments();
+  const staff = getOrgStaffList();
+  const facs = getFacilityList();
+  sum.textContent = `${depts.length} Tổ/Phòng ban • ${staff.length} CBGVNV • ${facs.length} Khối công trình`;
 }
 
 function switchOrgInfraTab(tab) {
@@ -5815,19 +5964,66 @@ function switchOrgInfraTab(tab) {
   if (bI) bI.classList.toggle('active', !isStaff);
 }
 
+function renderPublicOrgDeptUI() {
+  const depts = getOrgDepartments();
+  const staff = getOrgStaffList();
+  const strip = document.getElementById('publicOrgDeptStrip');
+  if (strip) {
+    strip.innerHTML = depts.map((d, i) => {
+      const cnt = staff.filter(x => x.dept === d).length;
+      const cls = i === 0 ? 'org-node-bgh' : 'org-node-dept';
+      return `<div class="org-node ${cls}" style="cursor:pointer;" onclick="filterPublicByDept('${_escOrg(d).replace(/'/g, "\\'")}')" title="Bấm để lọc nhanh nhân sự thuộc ${_escOrg(d)}">
+        <strong>🏛️ ${_escOrg(d)}</strong>
+        <small>${cnt} nhân sự</small>
+      </div>`;
+    }).join('<span class="org-arrow">•</span>');
+  }
+  const sel = document.getElementById('orgStaffDeptFilter');
+  if (sel) {
+    const prev = sel.value || 'ALL';
+    sel.innerHTML = '<option value="ALL">Tất cả Tổ / Phòng ban</option>' +
+      depts.map(d => `<option value="${_escOrg(d)}">${_escOrg(d)}</option>`).join('');
+    sel.value = depts.includes(prev) ? prev : 'ALL';
+  }
+}
+
+function filterPublicByDept(deptName) {
+  const sel = document.getElementById('orgStaffDeptFilter');
+  if (sel) sel.value = deptName;
+  renderPublicOrgStaffTable();
+}
+
+function resetPublicOrgStaffFilters() {
+  const s = document.getElementById('orgStaffSearchInput');
+  const d = document.getElementById('orgStaffDeptFilter');
+  const p = document.getElementById('orgStaffPartyFilter');
+  if (s) s.value = '';
+  if (d) d.value = 'ALL';
+  if (p) p.value = 'ALL';
+  renderPublicOrgStaffTable();
+}
+
+function resetPublicInfraFilters() {
+  const s = document.getElementById('orgInfraSearchInput');
+  const g = document.getElementById('orgInfraGroupFilter');
+  if (s) s.value = '';
+  if (g) g.value = 'ALL';
+  renderPublicInfraTable();
+}
+
 function renderPublicOrgStaffTable() {
   const tbody = document.getElementById('publicOrgStaffTbody');
   if (!tbody) return;
-  const q = (document.getElementById('orgStaffSearchInput')?.value || '').trim().toLowerCase();
+  const searchEl = document.getElementById('orgStaffSearchInput');
+  const q = (searchEl && !searchEl.hasAttribute('readonly') ? searchEl.value : '').trim().toLowerCase();
   const deptF = document.getElementById('orgStaffDeptFilter')?.value || 'ALL';
   const partyF = document.getElementById('orgStaffPartyFilter')?.value || 'ALL';
 
   const list = getOrgStaffList().filter(item => {
     if (deptF !== 'ALL' && (item.dept || '') !== deptF) return false;
-    const isP = /^(có|x|yes|đảng viên|1)$/i.test(String(item.isParty || '').trim());
-    if (partyF === 'YES' && !isP) return false;
+    if (partyF !== 'ALL' && (item.partyType || '') !== partyF) return false;
     if (q) {
-      const hay = `${item.name} ${item.govRole} ${item.dept} ${item.partyRole} ${item.subject} ${item.homeroom} ${item.address}`.toLowerCase();
+      const hay = `${item.name} ${item.dept} ${item.govRole} ${item.partyType} ${item.partyRole} ${getDisplayDuty(item)} ${item.otherDuty} ${item.tdcm} ${item.tdllct} ${item.address}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     return true;
@@ -5835,25 +6031,31 @@ function renderPublicOrgStaffTable() {
 
   const badge = document.getElementById('orgStaffCountBadge');
   if (badge) badge.textContent = `Hiển thị: ${list.length} CBGVNV`;
+  updateOrgInfraCollapsedSummary();
 
   if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:#64748b; padding:18px;">Chưa có nhân sự phù hợp bộ lọc. Quản trị viên có thể nhập từ Excel trong mục Quản trị.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="13" style="text-align:center; color:#64748b; padding:18px;">Chưa có nhân sự phù hợp bộ lọc. Bấm "↺ Hiện tất cả" để xem toàn bộ danh sách.</td></tr>';
     return;
   }
 
   tbody.innerHTML = list.map((s, idx) => {
-    const isP = /^(có|x|yes|đảng viên|1)$/i.test(String(s.isParty || '').trim());
+    const pBadge = s.partyType === 'Đảng viên'
+      ? '<span class="org-pill-yes">🚩 Đảng viên</span>'
+      : (s.partyType === 'Đoàn viên'
+        ? '<span style="display:inline-block;padding:2px 8px;border-radius:999px;background:#e0f2fe;color:#0369a1;font-weight:700;font-size:11px;">🔹 Đoàn viên</span>'
+        : '<span class="org-pill-no">Chưa</span>');
     return `<tr>
       <td style="text-align:center; font-weight:700; color:#64748b;">${idx + 1}</td>
       <td><strong style="color:#0f3460;">${_escOrg(s.name)}</strong></td>
       <td style="text-align:center;">${_escOrg(s.birthYear)}</td>
-      <td>${_escOrg(s.govRole)}</td>
       <td>${_escOrg(s.dept)}</td>
-      <td style="text-align:center;">${isP ? '<span class="org-pill-yes">🚩 Có</span>' : '<span class="org-pill-no">Chưa</span>'}</td>
-      <td>${_escOrg(s.partyRole)}</td>
-      <td>${_escOrg(s.subject)}</td>
-      <td style="text-align:center; font-weight:700; color:#0369a1;">${_escOrg(s.homeroom || '—')}</td>
-      <td style="text-align:center;">${_escOrg(s.qual)}</td>
+      <td>${_escOrg(s.govRole)}</td>
+      <td style="text-align:center;">${pBadge}</td>
+      <td>${_escOrg(s.partyRole || '—')}</td>
+      <td><strong style="color:#0f766e;">${_escOrg(getDisplayDuty(s))}</strong></td>
+      <td>${_escOrg(s.otherDuty || '—')}</td>
+      <td style="text-align:center;">${_escOrg(s.tdcm)}</td>
+      <td style="text-align:center;">${_escOrg(s.tdllct)}</td>
       <td>${_escOrg(s.phone || '—')}</td>
       <td>${_escOrg(s.address || '—')}</td>
     </tr>`;
@@ -5865,7 +6067,8 @@ function renderPublicInfraTable() {
   const kpiRow = document.getElementById('publicInfraKpiRow');
   if (!tbody) return;
   const all = getFacilityList();
-  const q = (document.getElementById('orgInfraSearchInput')?.value || '').trim().toLowerCase();
+  const searchEl = document.getElementById('orgInfraSearchInput');
+  const q = (searchEl && !searchEl.hasAttribute('readonly') ? searchEl.value : '').trim().toLowerCase();
   const grpF = document.getElementById('orgInfraGroupFilter')?.value || 'ALL';
 
   const totalArea = all.reduce((acc, x) => acc + (parseFloat(x.area) || 0), 0);
@@ -5891,6 +6094,7 @@ function renderPublicInfraTable() {
 
   const badge = document.getElementById('orgInfraCountBadge');
   if (badge) badge.textContent = `Hiển thị: ${list.length} công trình`;
+  updateOrgInfraCollapsedSummary();
 
   if (!list.length) {
     tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:#64748b; padding:18px;">Chưa có công trình phù hợp bộ lọc.</td></tr>';
@@ -5910,7 +6114,8 @@ function renderPublicInfraTable() {
   </tr>`).join('');
 }
 
-// ===== ADMIN: QUẢN TRỊ & XUẤT / NHẬP EXCEL CHO ĐỘI NGŨ + KHỐI CÔNG TRÌNH =====
+// ===== ADMIN: BƯỚC 1 KHAI BÁO TỔ/PHÒNG BAN -> BƯỚC 2 NHÂN SỰ (13 TRƯỜNG ĐỘNG) -> KHỐI CÔNG TRÌNH =====
+let _adminOrgDeptsDraft = [];
 let _adminOrgStaffDraft = [];
 let _adminFacilityDraft = [];
 
@@ -5922,11 +6127,55 @@ function toggleOrgInfraAdminPanel() {
   body.style.display = open ? 'block' : 'none';
   if (badge) badge.textContent = open ? 'Thu gọn bảng quản trị ▴' : 'Mở bảng quản trị ▾';
   if (open) {
+    _adminOrgDeptsDraft = getOrgDepartments().slice();
     _adminOrgStaffDraft = getOrgStaffList().map(x => ({ ...x }));
     _adminFacilityDraft = getFacilityList().map(x => ({ ...x }));
+    renderAdminOrgDeptChips();
     renderAdminOrgStaffRows();
     renderAdminFacilityRows();
   }
+}
+
+function renderAdminOrgDeptChips() {
+  const box = document.getElementById('adminOrgDeptChips');
+  const cnt = document.getElementById('adminOrgDeptCount');
+  if (cnt) cnt.textContent = String(_adminOrgDeptsDraft.length);
+  if (!box) return;
+  box.innerHTML = _adminOrgDeptsDraft.map((d, idx) => `
+    <span style="display:inline-flex; align-items:center; gap:6px; background:#ffffff; border:1px solid #4ade80; color:#166534; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:700;">
+      🏛️ ${_escOrg(d)}
+      <button type="button" onclick="removeOrgDepartment(${idx})" style="border:none; background:none; color:#dc2626; cursor:pointer; font-weight:800; padding:0;" title="Xóa tổ/phòng ban này">✕</button>
+    </span>
+  `).join('');
+}
+
+function addOrgDepartment() {
+  const inp = document.getElementById('newOrgDeptInput');
+  const val = (inp ? inp.value : '').trim();
+  if (!val) return alert('Vui lòng nhập tên Tổ / Phòng ban!');
+  if (_adminOrgDeptsDraft.includes(val)) return alert('Tổ / Phòng ban này đã có trong danh sách!');
+  _adminOrgDeptsDraft.push(val);
+  if (inp) inp.value = '';
+  renderAdminOrgDeptChips();
+  renderAdminOrgStaffRows();
+}
+
+function removeOrgDepartment(idx) {
+  if (_adminOrgDeptsDraft.length <= 1) return alert('Cần giữ lại ít nhất 1 Tổ / Phòng ban!');
+  _adminOrgDeptsDraft.splice(idx, 1);
+  renderAdminOrgDeptChips();
+  renderAdminOrgStaffRows();
+}
+
+function _buildSelectOptions(options, selectedVal) {
+  const arr = options.includes(selectedVal) || !selectedVal ? options : [selectedVal, ...options];
+  return arr.map(opt => `<option value="${_escOrg(opt)}" ${opt === selectedVal ? 'selected' : ''}>${_escOrg(opt || '-- Trống --')}</option>`).join('');
+}
+
+function onAdminDutyChange(idx, val) {
+  _adminOrgStaffDraft[idx].duty = val;
+  if (val !== 'Khác') _adminOrgStaffDraft[idx].dutyCustom = '';
+  renderAdminOrgStaffRows();
 }
 
 function renderAdminOrgStaffRows() {
@@ -5934,16 +6183,24 @@ function renderAdminOrgStaffRows() {
   const cnt = document.getElementById('adminOrgStaffCount');
   if (cnt) cnt.textContent = String(_adminOrgStaffDraft.length);
   if (!tbody) return;
+  const deptOpts = _adminOrgDeptsDraft.length ? _adminOrgDeptsDraft : DEFAULT_ORG_DEPTS;
+
   tbody.innerHTML = _adminOrgStaffDraft.map((s, i) => `<tr>
     <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.name)}" oninput="_adminOrgStaffDraft[${i}].name=this.value"></td>
     <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.birthYear)}" oninput="_adminOrgStaffDraft[${i}].birthYear=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.govRole)}" oninput="_adminOrgStaffDraft[${i}].govRole=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.dept)}" oninput="_adminOrgStaffDraft[${i}].dept=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.isParty)}" oninput="_adminOrgStaffDraft[${i}].isParty=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.partyRole)}" oninput="_adminOrgStaffDraft[${i}].partyRole=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.subject)}" oninput="_adminOrgStaffDraft[${i}].subject=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.homeroom)}" oninput="_adminOrgStaffDraft[${i}].homeroom=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.qual)}" oninput="_adminOrgStaffDraft[${i}].qual=this.value"></td>
+    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].dept=this.value">${_buildSelectOptions(deptOpts, s.dept || deptOpts[0])}</select></td>
+    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].govRole=this.value">${_buildSelectOptions(GOV_ROLE_OPTIONS, s.govRole)}</select></td>
+    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].partyType=this.value">${_buildSelectOptions(PARTY_TYPE_OPTIONS, s.partyType)}</select></td>
+    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].partyRole=this.value">${_buildSelectOptions(PARTY_ROLE_OPTIONS, s.partyRole)}</select></td>
+    <td style="padding:4px;">
+      <div style="display:flex; gap:4px; align-items:center;">
+        <select class="adm-cell-inp" style="flex:1;" onchange="onAdminDutyChange(${i}, this.value)">${_buildSelectOptions(DUTY_SUBJECT_OPTIONS, s.duty)}</select>
+        ${s.duty === 'Khác' ? `<input class="adm-cell-inp" style="flex:1; border-color:#f59e0b; background:#fffbeb;" placeholder="Nhập nhiệm vụ..." value="${_escOrg(s.dutyCustom)}" oninput="_adminOrgStaffDraft[${i}].dutyCustom=this.value">` : ''}
+      </div>
+    </td>
+    <td style="padding:4px;"><input class="adm-cell-inp" placeholder="VD: Chủ nhiệm 9A1..." value="${_escOrg(s.otherDuty)}" oninput="_adminOrgStaffDraft[${i}].otherDuty=this.value"></td>
+    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].tdcm=this.value">${_buildSelectOptions(TDCM_OPTIONS, s.tdcm)}</select></td>
+    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].tdllct=this.value">${_buildSelectOptions(TDLLCT_OPTIONS, s.tdllct)}</select></td>
     <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.phone)}" oninput="_adminOrgStaffDraft[${i}].phone=this.value"></td>
     <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.address)}" oninput="_adminOrgStaffDraft[${i}].address=this.value"></td>
     <td style="padding:4px; text-align:center;"><button type="button" onclick="_adminOrgStaffDraft.splice(${i},1);renderAdminOrgStaffRows();" style="border:none;background:none;color:#dc2626;cursor:pointer;font-weight:800;">✕</button></td>
@@ -5951,7 +6208,12 @@ function renderAdminOrgStaffRows() {
 }
 
 function addEmptyOrgStaffRow() {
-  _adminOrgStaffDraft.push({ name: '', birthYear: '', govRole: 'Giáo viên', dept: 'Tổ Khoa học Tự nhiên', isParty: 'Không', partyRole: '', subject: '', homeroom: '', qual: 'Đại học', phone: '', address: '' });
+  const firstDept = _adminOrgDeptsDraft[0] || DEFAULT_ORG_DEPTS[0];
+  _adminOrgStaffDraft.push({
+    name: '', birthYear: '', dept: firstDept, govRole: 'Giáo viên/Thành viên',
+    partyType: 'Chưa', partyRole: '', duty: 'Toán', dutyCustom: '',
+    otherDuty: '', tdcm: 'ĐH', tdllct: 'Sơ cấp', phone: '', address: ''
+  });
   renderAdminOrgStaffRows();
 }
 
@@ -5978,19 +6240,51 @@ function addEmptyFacilityRow() {
   renderAdminFacilityRows();
 }
 
+// XUẤT FILE MẪU EXCEL ĐỘI NGŨ (13 CỘT CHUẨN + SHEET 2 DANH MỤC CHỌN ĐỘNG)
 function downloadOrgStaffExcelTemplate() {
   if (typeof XLSX === 'undefined') { alert('Đang tải thư viện Excel, vui lòng thử lại sau 2 giây!'); return; }
-  const headers = ['TT', 'Họ và tên', 'Năm sinh', 'Chức vụ CQ', 'Tổ / Bộ phận', 'Đảng viên', 'Chức vụ Đảng', 'Môn giảng dạy', 'Chủ nhiệm', 'Trình độ CM', 'Số ĐT', 'Địa chỉ'];
-  const current = getOrgStaffList();
+  const depts = _adminOrgDeptsDraft.length ? _adminOrgDeptsDraft : getOrgDepartments();
+  const current = _adminOrgStaffDraft.length ? _adminOrgStaffDraft : getOrgStaffList();
+
+  const headers = [
+    'TT', 'Họ và tên', 'Năm sinh', 'Tổ / Phòng ban', 'Chức vụ CQ',
+    'Đảng/Đoàn', 'Chức vụ Đảng/Đoàn', 'Nhiệm vụ', 'Nhiệm vụ khác',
+    'TĐCM', 'TĐLLCT', 'Số ĐT', 'Địa chỉ'
+  ];
   const rows = [headers].concat(current.map((s, i) => [
-    i + 1, s.name || '', s.birthYear || '', s.govRole || '', s.dept || '', s.isParty || 'Không',
-    s.partyRole || '', s.subject || '', s.homeroom || '', s.qual || '', s.phone || '', s.address || ''
+    i + 1, s.name || '', s.birthYear || '', s.dept || '', s.govRole || '',
+    s.partyType || 'Chưa', s.partyRole || '', getDisplayDuty(s), s.otherDuty || '',
+    s.tdcm || '', s.tdllct || '', s.phone || '', s.address || ''
   ]));
-  const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{ wch: 5 }, { wch: 24 }, { wch: 10 }, { wch: 18 }, { wch: 22 }, { wch: 11 }, { wch: 16 }, { wch: 18 }, { wch: 11 }, { wch: 12 }, { wch: 14 }, { wch: 26 }];
+
+  const ws1 = XLSX.utils.aoa_to_sheet(rows);
+  ws1['!cols'] = [
+    { wch: 5 }, { wch: 24 }, { wch: 10 }, { wch: 22 }, { wch: 24 },
+    { wch: 12 }, { wch: 18 }, { wch: 22 }, { wch: 22 },
+    { wch: 11 }, { wch: 11 }, { wch: 14 }, { wch: 26 }
+  ];
+
+  // Sheet 2: DANH_MUC_CHON (đồng bộ động đúng Tổ/Phòng ban vừa khai báo + toàn bộ list 3.1 - 3.6)
+  const maxLen = Math.max(depts.length, GOV_ROLE_OPTIONS.length, PARTY_TYPE_OPTIONS.length, PARTY_ROLE_OPTIONS.length, DUTY_SUBJECT_OPTIONS.length, TDCM_OPTIONS.length, TDLLCT_OPTIONS.length);
+  const refRows = [['Tổ / Phòng ban (Động)', 'Chức vụ CQ', 'Đảng/Đoàn', 'Chức vụ Đảng/Đoàn', 'Nhiệm vụ (Môn học / Khác)', 'TĐCM', 'TĐLLCT']];
+  for (let r = 0; r < maxLen; r++) {
+    refRows.push([
+      depts[r] || '',
+      GOV_ROLE_OPTIONS[r] || '',
+      PARTY_TYPE_OPTIONS[r] || '',
+      PARTY_ROLE_OPTIONS.filter(Boolean)[r] || '',
+      DUTY_SUBJECT_OPTIONS[r] || '',
+      TDCM_OPTIONS[r] || '',
+      TDLLCT_OPTIONS[r] || ''
+    ]);
+  }
+  const ws2 = XLSX.utils.aoa_to_sheet(refRows);
+  ws2['!cols'] = [{ wch: 24 }, { wch: 24 }, { wch: 13 }, { wch: 20 }, { wch: 26 }, { wch: 12 }, { wch: 12 }];
+
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'DOI_NGU_CBGVNV');
-  XLSX.writeFile(wb, 'Mau_Nhap_Doi_Ngu_CBGVNV_THCS_Canh_Thuan.xlsx');
+  XLSX.utils.book_append_sheet(wb, ws1, 'DOI_NGU_CBGVNV');
+  XLSX.utils.book_append_sheet(wb, ws2, 'DANH_MUC_CHON');
+  XLSX.writeFile(wb, 'Mau_Nhap_Doi_Ngu_CBGVNV_13Cot.xlsx');
 }
 
 function importOrgStaffFromExcel(evt) {
@@ -6008,24 +6302,33 @@ function importOrgStaffFromExcel(evt) {
         const r = rows[i];
         const name = String(r[1] || '').trim();
         if (!name) continue;
+        const deptVal = String(r[3] || '').trim();
+        if (deptVal && !_adminOrgDeptsDraft.includes(deptVal)) {
+          _adminOrgDeptsDraft.push(deptVal);
+        }
+        const rawDuty = String(r[7] || '').trim();
+        const inDuty = DUTY_SUBJECT_OPTIONS.includes(rawDuty);
         parsed.push({
           name,
           birthYear: String(r[2] || '').trim(),
-          govRole: String(r[3] || '').trim(),
-          dept: String(r[4] || '').trim(),
-          isParty: String(r[5] || 'Không').trim(),
+          dept: deptVal || _adminOrgDeptsDraft[0] || DEFAULT_ORG_DEPTS[0],
+          govRole: String(r[4] || 'Giáo viên/Thành viên').trim(),
+          partyType: String(r[5] || 'Chưa').trim(),
           partyRole: String(r[6] || '').trim(),
-          subject: String(r[7] || '').trim(),
-          homeroom: String(r[8] || '').trim(),
-          qual: String(r[9] || '').trim(),
-          phone: String(r[10] || '').trim(),
-          address: String(r[11] || '').trim()
+          duty: inDuty ? rawDuty : (rawDuty ? 'Khác' : 'Toán'),
+          dutyCustom: inDuty ? '' : rawDuty,
+          otherDuty: String(r[8] || '').trim(),
+          tdcm: String(r[9] || 'ĐH').trim(),
+          tdllct: String(r[10] || 'Sơ cấp').trim(),
+          phone: String(r[11] || '').trim(),
+          address: String(r[12] || '').trim()
         });
       }
       if (!parsed.length) { alert('Không tìm thấy dữ liệu hợp lệ (kiểm tra cột B: Họ và tên)!'); return; }
       _adminOrgStaffDraft = parsed;
+      renderAdminOrgDeptChips();
       renderAdminOrgStaffRows();
-      alert(`✅ Đã đọc thành công ${parsed.length} CBGVNV từ Excel! Bấm "💾 LƯU & ĐỒNG BỘ" để xuất bản lên Website.`);
+      alert(`✅ Đã đọc thành công ${parsed.length} CBGVNV (13 trường chuẩn) từ Excel! Bấm "💾 LƯU & ĐỒNG BỘ" để xuất bản lên Website.`);
     } catch (err) {
       alert('Lỗi đọc file Excel: ' + err.message);
     }
@@ -6037,7 +6340,7 @@ function importOrgStaffFromExcel(evt) {
 function downloadFacilityExcelTemplate() {
   if (typeof XLSX === 'undefined') { alert('Đang tải thư viện Excel, vui lòng thử lại sau 2 giây!'); return; }
   const headers = ['TT', 'Tên khối công trình / Hạng mục', 'Nhóm công trình', 'Số phòng / Quy mô', 'Diện tích (m2)', 'Năm XD / Sửa', 'Kết cấu', 'Hiện trạng', 'Ghi chú / Thiết bị chính'];
-  const current = getFacilityList();
+  const current = _adminFacilityDraft.length ? _adminFacilityDraft : getFacilityList();
   const rows = [headers].concat(current.map((f, i) => [
     i + 1, f.name || '', f.group || '', f.scale || '', f.area || '', f.year || '', f.structure || '', f.status || '', f.note || ''
   ]));
@@ -6045,7 +6348,7 @@ function downloadFacilityExcelTemplate() {
   ws['!cols'] = [{ wch: 5 }, { wch: 32 }, { wch: 20 }, { wch: 16 }, { wch: 14 }, { wch: 12 }, { wch: 16 }, { wch: 18 }, { wch: 36 }];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'KHOI_CONG_TRINH');
-  XLSX.writeFile(wb, 'Mau_Nhap_Ha_Tang_Khoi_Cong_Trinh_THCS_Canh_Thuan.xlsx');
+  XLSX.writeFile(wb, 'Mau_Nhap_Ha_Tang_Khoi_Cong_Trinh.xlsx');
 }
 
 function importFacilityFromExcel(evt) {
@@ -6087,19 +6390,22 @@ function importFacilityFromExcel(evt) {
 }
 
 async function saveAndSyncOrgInfraData() {
-  const cleanStaff = _adminOrgStaffDraft.filter(x => String(x.name || '').trim());
+  const cleanDepts = _adminOrgDeptsDraft.map(x => String(x || '').trim()).filter(Boolean);
+  const cleanStaff = _adminOrgStaffDraft.filter(x => String(x.name || '').trim()).map(normalizeStaffRecord);
   const cleanFac = _adminFacilityDraft.filter(x => String(x.name || '').trim());
+  localStorage.setItem(ORG_DEPTS_KEY, JSON.stringify(cleanDepts.length ? cleanDepts : DEFAULT_ORG_DEPTS));
   localStorage.setItem(ORG_STAFF_KEY, JSON.stringify(cleanStaff));
   localStorage.setItem(FACILITY_LIST_KEY, JSON.stringify(cleanFac));
+  renderPublicOrgDeptUI();
   renderPublicOrgStaffTable();
   renderPublicInfraTable();
   let synced = false;
   if (typeof syncDatabaseToGitHub === 'function') {
-    synced = await syncDatabaseToGitHub('Cập nhật Đội ngũ CBGVNV & Hạ tầng khối công trình');
+    synced = await syncDatabaseToGitHub('Cập nhật Cơ cấu Tổ/Phòng ban, Đội ngũ CBGVNV & Hạ tầng');
   }
   alert(synced
-    ? `✅ Đã lưu và đồng bộ ${cleanStaff.length} CBGVNV & ${cleanFac.length} công trình lên Website Online!`
-    : `✅ Đã lưu ${cleanStaff.length} CBGVNV & ${cleanFac.length} công trình trên trình duyệt này! (Gắn GitHub Token trong Quản trị để đồng bộ toàn mạng).`);
+    ? `✅ Đã lưu và đồng bộ ${cleanDepts.length} Tổ/Phòng ban, ${cleanStaff.length} CBGVNV & ${cleanFac.length} công trình lên Website Online!`
+    : `✅ Đã lưu ${cleanDepts.length} Tổ/Phòng ban, ${cleanStaff.length} CBGVNV & ${cleanFac.length} công trình trên trình duyệt này!`);
 }
 
 function toggleAdminModalExpand() {
@@ -6111,6 +6417,8 @@ function toggleAdminModalExpand() {
 }
 
 window.addEventListener('DOMContentLoaded', function () {
+  updateOrgInfraCollapsedSummary();
+  renderPublicOrgDeptUI();
   renderPublicOrgStaffTable();
   renderPublicInfraTable();
 });
