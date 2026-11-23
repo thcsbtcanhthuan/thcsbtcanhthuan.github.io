@@ -20,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js" defer></script>
 <style>
 :root {
   --primary-dark: #0a192f;
@@ -6240,50 +6241,111 @@ function addEmptyFacilityRow() {
   renderAdminFacilityRows();
 }
 
-// XUẤT FILE MẪU EXCEL ĐỘI NGŨ (13 CỘT CHUẨN + SHEET 2 DANH MỤC CHỌN ĐỘNG)
-function downloadOrgStaffExcelTemplate() {
-  if (typeof XLSX === 'undefined') { alert('Đang tải thư viện Excel, vui lòng thử lại sau 2 giây!'); return; }
+// XUẤT FILE MẪU EXCEL ĐỘI NGŨ (13 CỘT CHUẨN + DROPDOWN DATA VALIDATION THẬT TRONG EXCEL + SHEET 2 DANH MỤC CHỌN ĐỘNG)
+async function downloadOrgStaffExcelTemplate() {
   const depts = _adminOrgDeptsDraft.length ? _adminOrgDeptsDraft : getOrgDepartments();
   const current = _adminOrgStaffDraft.length ? _adminOrgStaffDraft : getOrgStaffList();
+  const partyRolesClean = PARTY_ROLE_OPTIONS.filter(Boolean);
 
   const headers = [
     'TT', 'Họ và tên', 'Năm sinh', 'Tổ / Phòng ban', 'Chức vụ CQ',
     'Đảng/Đoàn', 'Chức vụ Đảng/Đoàn', 'Nhiệm vụ', 'Nhiệm vụ khác',
     'TĐCM', 'TĐLLCT', 'Số ĐT', 'Địa chỉ'
   ];
+
+  // Ưu tiên dùng ExcelJS để sinh file .xlsx có MŨI TÊN THẢ XUỐNG (Data Validation Dropdown) thật trong Microsoft Excel!
+  if (typeof ExcelJS !== 'undefined') {
+    const wb = new ExcelJS.Workbook();
+    const ws1 = wb.addWorksheet('DOI_NGU_CBGVNV', { views: [{ state: 'frozen', ySplit: 1 }] });
+    const ws2 = wb.addWorksheet('DANH_MUC_CHON');
+
+    // 1. Nạp Sheet 2: DANH_MUC_CHON (tham chiếu động cho các cột Dropdown)
+    const maxLen = Math.max(depts.length, GOV_ROLE_OPTIONS.length, PARTY_TYPE_OPTIONS.length, partyRolesClean.length, DUTY_SUBJECT_OPTIONS.length, TDCM_OPTIONS.length, TDLLCT_OPTIONS.length);
+    ws2.addRow(['Tổ / Phòng ban', 'Chức vụ CQ', 'Đảng/Đoàn', 'Chức vụ Đảng/Đoàn', 'Nhiệm vụ', 'TĐCM', 'TĐLLCT']);
+    ws2.getRow(1).font = { name: 'Times New Roman', size: 11, bold: true, color: { argb: 'FFFFFFFF' } };
+    ws2.getRow(1).eachCell(c => { c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF0F766E' } }; });
+    for (let r = 0; r < maxLen; r++) {
+      ws2.addRow([
+        depts[r] || '',
+        GOV_ROLE_OPTIONS[r] || '',
+        PARTY_TYPE_OPTIONS[r] || '',
+        partyRolesClean[r] || '',
+        DUTY_SUBJECT_OPTIONS[r] || '',
+        TDCM_OPTIONS[r] || '',
+        TDLLCT_OPTIONS[r] || ''
+      ]);
+    }
+    ws2.columns = [{ width: 25 }, { width: 25 }, { width: 14 }, { width: 20 }, { width: 26 }, { width: 12 }, { width: 12 }];
+
+    // 2. Nạp Sheet 1: DOI_NGU_CBGVNV (13 cột chuẩn)
+    ws1.addRow(headers);
+    const hdrRow = ws1.getRow(1);
+    hdrRow.height = 26;
+    hdrRow.eachCell(cell => {
+      cell.font = { name: 'Times New Roman', size: 11.5, bold: true, color: { argb: 'FFFFFFFF' } };
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1E3A8A' } };
+      cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+    });
+
+    current.forEach((s, i) => {
+      const row = ws1.addRow([
+        i + 1, s.name || '', s.birthYear || '', s.dept || '', s.govRole || '',
+        s.partyType || 'Chưa', s.partyRole || '', getDisplayDuty(s), s.otherDuty || '',
+        s.tdcm || '', s.tdllct || '', s.phone || '', s.address || ''
+      ]);
+      row.eachCell(cell => {
+        cell.font = { name: 'Times New Roman', size: 11.5 };
+        cell.border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
+      });
+    });
+
+    ws1.columns = [
+      { width: 6 }, { width: 25 }, { width: 11 }, { width: 24 }, { width: 25 },
+      { width: 13 }, { width: 20 }, { width: 24 }, { width: 24 },
+      { width: 11 }, { width: 11 }, { width: 15 }, { width: 26 }
+    ];
+
+    // 3. Gắn MŨI TÊN THẢ XUỐNG (Data Validation Dropdown) từ dòng 2 đến dòng 200 cho 7 cột chọn!
+    const deptEnd = Math.max(2, depts.length + 1);
+    const govEnd = GOV_ROLE_OPTIONS.length + 1;
+    const pTypeEnd = PARTY_TYPE_OPTIONS.length + 1;
+    const pRoleEnd = partyRolesClean.length + 1;
+    const dutyEnd = DUTY_SUBJECT_OPTIONS.length + 1;
+    const tdcmEnd = TDCM_OPTIONS.length + 1;
+    const llctEnd = TDLLCT_OPTIONS.length + 1;
+
+    for (let r = 2; r <= 200; r++) {
+      ws1.getCell(`D${r}`).dataValidation = { type: 'list', allowBlank: true, formulae: [`=DANH_MUC_CHON!$A$2:$A$${deptEnd}`] };
+      ws1.getCell(`E${r}`).dataValidation = { type: 'list', allowBlank: true, formulae: [`=DANH_MUC_CHON!$B$2:$B$${govEnd}`] };
+      ws1.getCell(`F${r}`).dataValidation = { type: 'list', allowBlank: true, formulae: [`=DANH_MUC_CHON!$C$2:$C$${pTypeEnd}`] };
+      ws1.getCell(`G${r}`).dataValidation = { type: 'list', allowBlank: true, formulae: [`=DANH_MUC_CHON!$D$2:$D$${pRoleEnd}`] };
+      // Cột H (Nhiệm vụ): cho phép chọn trong list môn học hoặc nhập tự do khi chọn Khác (errorStyle: information)
+      ws1.getCell(`H${r}`).dataValidation = { type: 'list', allowBlank: true, errorStyle: 'information', formulae: [`=DANH_MUC_CHON!$E$2:$E$${dutyEnd}`] };
+      ws1.getCell(`J${r}`).dataValidation = { type: 'list', allowBlank: true, formulae: [`=DANH_MUC_CHON!$F$2:$F$${tdcmEnd}`] };
+      ws1.getCell(`K${r}`).dataValidation = { type: 'list', allowBlank: true, formulae: [`=DANH_MUC_CHON!$G$2:$G$${llctEnd}`] };
+    }
+
+    const buf = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Mau_Nhap_Doi_Ngu_CBGVNV_13Cot_Dropdown.xlsx';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+    return;
+  }
+
+  // Fallback SheetJS nếu đang Offline hoàn toàn
+  if (typeof XLSX === 'undefined') { alert('Đang tải thư viện Excel, vui lòng thử lại sau 2 giây!'); return; }
   const rows = [headers].concat(current.map((s, i) => [
     i + 1, s.name || '', s.birthYear || '', s.dept || '', s.govRole || '',
     s.partyType || 'Chưa', s.partyRole || '', getDisplayDuty(s), s.otherDuty || '',
     s.tdcm || '', s.tdllct || '', s.phone || '', s.address || ''
   ]));
-
   const ws1 = XLSX.utils.aoa_to_sheet(rows);
-  ws1['!cols'] = [
-    { wch: 5 }, { wch: 24 }, { wch: 10 }, { wch: 22 }, { wch: 24 },
-    { wch: 12 }, { wch: 18 }, { wch: 22 }, { wch: 22 },
-    { wch: 11 }, { wch: 11 }, { wch: 14 }, { wch: 26 }
-  ];
-
-  // Sheet 2: DANH_MUC_CHON (đồng bộ động đúng Tổ/Phòng ban vừa khai báo + toàn bộ list 3.1 - 3.6)
-  const maxLen = Math.max(depts.length, GOV_ROLE_OPTIONS.length, PARTY_TYPE_OPTIONS.length, PARTY_ROLE_OPTIONS.length, DUTY_SUBJECT_OPTIONS.length, TDCM_OPTIONS.length, TDLLCT_OPTIONS.length);
-  const refRows = [['Tổ / Phòng ban (Động)', 'Chức vụ CQ', 'Đảng/Đoàn', 'Chức vụ Đảng/Đoàn', 'Nhiệm vụ (Môn học / Khác)', 'TĐCM', 'TĐLLCT']];
-  for (let r = 0; r < maxLen; r++) {
-    refRows.push([
-      depts[r] || '',
-      GOV_ROLE_OPTIONS[r] || '',
-      PARTY_TYPE_OPTIONS[r] || '',
-      PARTY_ROLE_OPTIONS.filter(Boolean)[r] || '',
-      DUTY_SUBJECT_OPTIONS[r] || '',
-      TDCM_OPTIONS[r] || '',
-      TDLLCT_OPTIONS[r] || ''
-    ]);
-  }
-  const ws2 = XLSX.utils.aoa_to_sheet(refRows);
-  ws2['!cols'] = [{ wch: 24 }, { wch: 24 }, { wch: 13 }, { wch: 20 }, { wch: 26 }, { wch: 12 }, { wch: 12 }];
-
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws1, 'DOI_NGU_CBGVNV');
-  XLSX.utils.book_append_sheet(wb, ws2, 'DANH_MUC_CHON');
   XLSX.writeFile(wb, 'Mau_Nhap_Doi_Ngu_CBGVNV_13Cot.xlsx');
 }
 
@@ -6337,15 +6399,59 @@ function importOrgStaffFromExcel(evt) {
   reader.readAsArrayBuffer(file);
 }
 
-function downloadFacilityExcelTemplate() {
-  if (typeof XLSX === 'undefined') { alert('Đang tải thư viện Excel, vui lòng thử lại sau 2 giây!'); return; }
+async function downloadFacilityExcelTemplate() {
   const headers = ['TT', 'Tên khối công trình / Hạng mục', 'Nhóm công trình', 'Số phòng / Quy mô', 'Diện tích (m2)', 'Năm XD / Sửa', 'Kết cấu', 'Hiện trạng', 'Ghi chú / Thiết bị chính'];
   const current = _adminFacilityDraft.length ? _adminFacilityDraft : getFacilityList();
+  const grpOpts = ['Học tập', 'Bộ môn - Chức năng', 'Khu Bán trú', 'Hành chính - Quản trị', 'Hạ tầng chung'];
+  const structOpts = ['Kiên cố', 'Bán kiên cố', 'Cấp 4', 'Bê tông / Cáp quang', 'Khác'];
+  const statusOpts = ['Tốt / Đạt chuẩn', 'Khá', 'Cần tu sửa', 'Đang nâng cấp'];
+
+  if (typeof ExcelJS !== 'undefined') {
+    const wb = new ExcelJS.Workbook();
+    const ws1 = wb.addWorksheet('KHOI_CONG_TRINH', { views: [{ state: 'frozen', ySplit: 1 }] });
+    const ws2 = wb.addWorksheet('DANH_MUC_CHON');
+    ws2.addRow(['Nhóm công trình', 'Kết cấu', 'Hiện trạng']);
+    const maxL = Math.max(grpOpts.length, structOpts.length, statusOpts.length);
+    for (let i = 0; i < maxL; i++) ws2.addRow([grpOpts[i] || '', structOpts[i] || '', statusOpts[i] || '']);
+
+    ws1.addRow(headers);
+    ws1.getRow(1).height = 26;
+    ws1.getRow(1).eachCell(c => {
+      c.font = { name: 'Times New Roman', size: 11.5, bold: true, color: { argb: 'FFFFFFFF' } };
+      c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF0F766E' } };
+      c.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+      c.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+    });
+    current.forEach((f, i) => {
+      const row = ws1.addRow([i + 1, f.name || '', f.group || '', f.scale || '', f.area || '', f.year || '', f.structure || '', f.status || '', f.note || '']);
+      row.eachCell(c => {
+        c.font = { name: 'Times New Roman', size: 11.5 };
+        c.border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
+      });
+    });
+    ws1.columns = [{ width: 6 }, { width: 34 }, { width: 22 }, { width: 18 }, { width: 14 }, { width: 13 }, { width: 18 }, { width: 18 }, { width: 38 }];
+
+    for (let r = 2; r <= 120; r++) {
+      ws1.getCell(`C${r}`).dataValidation = { type: 'list', allowBlank: true, formulae: [`=DANH_MUC_CHON!$A$2:$A$${grpOpts.length + 1}`] };
+      ws1.getCell(`G${r}`).dataValidation = { type: 'list', allowBlank: true, formulae: [`=DANH_MUC_CHON!$B$2:$B$${structOpts.length + 1}`] };
+      ws1.getCell(`H${r}`).dataValidation = { type: 'list', allowBlank: true, formulae: [`=DANH_MUC_CHON!$C$2:$C$${statusOpts.length + 1}`] };
+    }
+
+    const buf = await wb.xlsx.writeBuffer();
+    const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Mau_Nhap_Ha_Tang_Khoi_Cong_Trinh_Dropdown.xlsx';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+    return;
+  }
+
+  if (typeof XLSX === 'undefined') { alert('Đang tải thư viện Excel, vui lòng thử lại sau 2 giây!'); return; }
   const rows = [headers].concat(current.map((f, i) => [
     i + 1, f.name || '', f.group || '', f.scale || '', f.area || '', f.year || '', f.structure || '', f.status || '', f.note || ''
   ]));
   const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{ wch: 5 }, { wch: 32 }, { wch: 20 }, { wch: 16 }, { wch: 14 }, { wch: 12 }, { wch: 16 }, { wch: 18 }, { wch: 36 }];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'KHOI_CONG_TRINH');
   XLSX.writeFile(wb, 'Mau_Nhap_Ha_Tang_Khoi_Cong_Trinh.xlsx');
