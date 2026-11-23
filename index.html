@@ -176,25 +176,29 @@ body {
 .nav-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
 }
 .nav-links {
   display: flex;
   list-style: none;
-  gap: 4px;
+  gap: 2px;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 .nav-links li a {
   display: inline-block;
-  padding: 16px 18px;
-  font-size: 14.5px;
-  font-weight: 600;
+  padding: 15px 10px;
+  font-size: 13.2px;
+  font-weight: 700;
   color: var(--primary-navy);
   text-decoration: none;
   transition: all 0.2s ease;
   border-bottom: 3px solid transparent;
+  white-space: nowrap;
 }
 .nav-links li a:hover, .nav-links li a.active {
   color: var(--accent-red);
@@ -1679,14 +1683,14 @@ html, body {
   background: linear-gradient(135deg, #059669, #047857);
   color: #ffffff;
   border: 1px solid #34d399;
-  padding: 8px 16px;
+  padding: 7px 11px;
   border-radius: 7px;
-  font-size: 13.5px;
+  font-size: 12.5px;
   font-weight: 800;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   box-shadow: 0 3px 10px rgba(5, 150, 105, 0.35);
   transition: all 0.2s ease;
   white-space: nowrap;
@@ -1873,10 +1877,10 @@ html, body {
       <li><a href="#lich-tuan" onclick="openTabNav('tab-lich-content', event)">Lịch Công Tác Tuần</a></li>
       <li><a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)">Thông Báo & Tin Tức</a></li>
     </ul>
-    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-      <button type="button" class="nav-tkb-btn" onclick="openSchoolWebUserGuide()" style="background:linear-gradient(135deg, #0f766e, #0d9488); border-color:#5eead4; box-shadow:0 3px 10px rgba(13,148,136,0.32);">📖 Hướng Dẫn Sử Dụng</button>
+    <div style="display:flex; align-items:center; gap:6px; flex-wrap:nowrap; flex-shrink:0;">
       <a href="https://www.facebook.com/thcsbtcanhthuan/" target="_blank" rel="noopener" class="nav-tkb-btn" style="background:linear-gradient(135deg, #1877f2, #1d4ed8); border-color:#60a5fa; text-decoration:none; box-shadow:0 3px 10px rgba(24,119,242,0.35);">📘 Fanpage Trường</a>
       <button type="button" class="nav-tkb-btn" onclick="openCurrentTkbViewer()">📅 Xem TKB Hiện Hành</button>
+      <button type="button" class="nav-tkb-btn" onclick="openSchoolWebUserGuide()" style="background:linear-gradient(135deg, #0f766e, #0d9488); border-color:#5eead4; box-shadow:0 3px 10px rgba(13,148,136,0.32);">📖 Hướng Dẫn Sử Dụng</button>
     </div>
   </div>
 </nav>
