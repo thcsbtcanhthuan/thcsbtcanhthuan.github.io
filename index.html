@@ -239,14 +239,41 @@ body {
 .admin-modal-card {
   background: white;
   border-radius: var(--radius-lg);
-  max-width: 620px;
-  width: 92%;
-  padding: 30px;
+  max-width: 1180px;
+  width: 95vw;
+  padding: 24px 28px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
   position: relative;
   animation: modalFadeIn 0.25s ease-out;
-  max-height: 90vh;
+  max-height: 92vh;
   overflow-y: auto;
+  transition: max-width 0.22s ease, width 0.22s ease, max-height 0.22s ease;
+}
+.admin-modal-card.admin-expanded {
+  max-width: 99vw;
+  width: 99vw;
+  max-height: 97vh;
+  border-radius: 10px;
+}
+.admin-modal-expand {
+  position: absolute;
+  top: 18px;
+  right: 60px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  height: 34px;
+  padding: 0 11px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #1e3a8a;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.admin-modal-expand:hover {
+  background: #dbeafe;
 }
 @keyframes modalFadeIn {
   from { opacity: 0; transform: scale(0.95); }
@@ -1841,6 +1868,7 @@ html, body {
     <ul class="nav-links">
       <li><a href="#" class="active">Trang Chủ</a></li>
       <li><a href="#phan-he">4 Phân Hệ Trọng Tâm</a></li>
+      <li><a href="#co-cau-ha-tang">Cơ Cấu &amp; Hạ Tầng</a></li>
       <li><a href="#doan-the">Đoàn Thể & Cộng Đồng</a></li>
       <li><a href="#lich-tuan" onclick="openTabNav('tab-lich-content', event)">Lịch Công Tác Tuần</a></li>
       <li><a href="#lich-tuan" onclick="openTabNav('tab-thongbao-content', event)">Thông Báo & Tin Tức</a></li>
@@ -2089,6 +2117,120 @@ html, body {
 
   </div>
 
+  <!-- ================= KHU VỰC CƠ CẤU TỔ CHỨC, ĐỘI NGŨ NHÀ GIÁO & HẠ TẦNG TRƯỜNG LỚP ================= -->
+  <section class="org-infra-section" id="co-cau-ha-tang">
+    <div class="org-infra-header">
+      <div>
+        <div class="org-infra-title">🏛️ CƠ CẤU TỔ CHỨC, ĐỘI NGŨ NHÀ GIÁO &amp; HẠ TẦNG TRƯỜNG LỚP</div>
+        <div class="org-infra-sub">Công khai minh bạch cơ cấu bộ máy, danh sách CBGVNV và các khối công trình cơ sở vật chất nhà trường (Thông tư 09/2024/TT-BGDĐT)</div>
+      </div>
+      <div class="org-infra-tabs">
+        <button type="button" class="org-tab-btn active" id="btnTabOrgStaff" onclick="switchOrgInfraTab('staff')">👩‍🏫 Cơ Cấu &amp; Đội Ngũ CBGVNV</button>
+        <button type="button" class="org-tab-btn" id="btnTabOrgInfra" onclick="switchOrgInfraTab('infra')">🏫 Hạ Tầng &amp; Khối Công Trình</button>
+      </div>
+    </div>
+
+    <!-- TAB 1: CƠ CẤU TỔ CHỨC & ĐỘI NGŨ NHÀ GIÁO -->
+    <div id="panelOrgStaff" class="org-tab-panel">
+      <div class="org-chart-strip">
+        <div class="org-node org-node-party"><strong>🚩 Chi bộ Đảng</strong><small>Lãnh đạo toàn diện</small></div>
+        <span class="org-arrow">➔</span>
+        <div class="org-node org-node-bgh"><strong>🏛️ Ban Giám hiệu &amp; HĐ Trường</strong><small>Điều hành quản trị</small></div>
+        <span class="org-arrow">➔</span>
+        <div class="org-node org-node-dept"><strong>📚 2 Tổ Chuyên môn</strong><small>Tổ KHTN • Tổ KHXH</small></div>
+        <span class="org-arrow">•</span>
+        <div class="org-node org-node-dept"><strong>🗂️ Tổ Văn phòng – Bán trú</strong><small>Hành chính • Nuôi dưỡng</small></div>
+        <span class="org-arrow">•</span>
+        <div class="org-node org-node-union"><strong>🤝 Các Đoàn thể</strong><small>Công đoàn • Đoàn • Đội</small></div>
+      </div>
+
+      <div class="org-toolbar">
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <input type="text" id="orgStaffSearchInput" class="org-search-input" placeholder="🔍 Tìm theo họ tên, môn dạy, chức vụ, chủ nhiệm..." oninput="renderPublicOrgStaffTable()">
+          <select id="orgStaffDeptFilter" class="org-filter-select" onchange="renderPublicOrgStaffTable()">
+            <option value="ALL">Tất cả Tổ / Bộ phận</option>
+            <option value="Ban Giám hiệu">Ban Giám hiệu</option>
+            <option value="Tổ Khoa học Tự nhiên">Tổ Khoa học Tự nhiên</option>
+            <option value="Tổ Khoa học Xã hội">Tổ Khoa học Xã hội</option>
+            <option value="Tổ Văn phòng - Bán trú">Tổ Văn phòng - Bán trú</option>
+          </select>
+          <select id="orgStaffPartyFilter" class="org-filter-select" onchange="renderPublicOrgStaffTable()">
+            <option value="ALL">Tất cả (Đảng viên / Chưa)</option>
+            <option value="YES">🚩 Chỉ lọc Đảng viên</option>
+          </select>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <span id="orgStaffCountBadge" class="org-count-badge">Tổng: 0 CBGVNV</span>
+          <button type="button" onclick="downloadOrgStaffExcelTemplate()" class="org-excel-btn">📥 Tải mẫu Excel</button>
+        </div>
+      </div>
+
+      <div class="org-table-wrap">
+        <table class="org-data-table" id="publicOrgStaffTable">
+          <thead>
+            <tr>
+              <th style="width:42px; text-align:center;">TT</th>
+              <th style="min-width:165px;">Họ và tên</th>
+              <th style="width:76px; text-align:center;">Năm sinh</th>
+              <th style="min-width:120px;">Chức vụ CQ</th>
+              <th style="min-width:135px;">Tổ / Bộ phận</th>
+              <th style="width:86px; text-align:center;">Đảng viên</th>
+              <th style="min-width:120px;">Chức vụ Đảng</th>
+              <th style="min-width:125px;">Môn giảng dạy</th>
+              <th style="width:88px; text-align:center;">Chủ nhiệm</th>
+              <th style="width:95px; text-align:center;">Trình độ CM</th>
+              <th style="min-width:110px;">Số ĐT</th>
+              <th style="min-width:155px;">Địa chỉ</th>
+            </tr>
+          </thead>
+          <tbody id="publicOrgStaffTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2: HẠ TẦNG TRƯỜNG LỚP & CÁC KHỐI CÔNG TRÌNH -->
+    <div id="panelOrgInfra" class="org-tab-panel" style="display:none;">
+      <div class="infra-kpi-row" id="publicInfraKpiRow"></div>
+
+      <div class="org-toolbar">
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <input type="text" id="orgInfraSearchInput" class="org-search-input" placeholder="🔍 Tìm tên khối công trình, phòng chức năng, thiết bị..." oninput="renderPublicInfraTable()">
+          <select id="orgInfraGroupFilter" class="org-filter-select" onchange="renderPublicInfraTable()">
+            <option value="ALL">Tất cả Nhóm công trình</option>
+            <option value="Học tập">Phòng học chính khóa</option>
+            <option value="Bộ môn - Chức năng">Phòng Bộ môn - Chức năng</option>
+            <option value="Khu Bán trú">Khu Bán trú - Nhà ăn</option>
+            <option value="Hành chính - Quản trị">Hành chính - Quản trị</option>
+            <option value="Hạ tầng chung">Sân chơi - Hạ tầng chung</option>
+          </select>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <span id="orgInfraCountBadge" class="org-count-badge">Tổng: 0 công trình</span>
+          <button type="button" onclick="downloadFacilityExcelTemplate()" class="org-excel-btn">📥 Tải mẫu Excel</button>
+        </div>
+      </div>
+
+      <div class="org-table-wrap">
+        <table class="org-data-table" id="publicInfraTable">
+          <thead>
+            <tr>
+              <th style="width:42px; text-align:center;">TT</th>
+              <th style="min-width:200px;">Tên khối công trình / Hạng mục</th>
+              <th style="min-width:140px;">Nhóm công trình</th>
+              <th style="width:110px; text-align:center;">Số phòng / Quy mô</th>
+              <th style="width:105px; text-align:right;">Diện tích (m²)</th>
+              <th style="width:105px; text-align:center;">Năm XD / Sửa</th>
+              <th style="width:110px; text-align:center;">Kết cấu</th>
+              <th style="width:125px; text-align:center;">Hiện trạng</th>
+              <th style="min-width:185px;">Ghi chú / Thiết bị chính</th>
+            </tr>
+          </thead>
+          <tbody id="publicInfraTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= KHU VỰC THÔNG TIN - THỐNG KÊ (2 THANH NGANG SÁT TRÊN MỤC LIÊN KẾT WEB) ================= -->
   <section class="stats-master-section" id="ban-tru-info">
     <div class="stats-master-header">
@@ -2199,7 +2341,8 @@ html, body {
 
 <!-- ================= ADMIN MANAGEMENT MODAL ================= -->
 <div id="adminModal" class="admin-modal-backdrop" onclick="closeAdminModal(event)">
-  <div class="admin-modal-card" onclick="event.stopPropagation()">
+  <div id="adminModalCard" class="admin-modal-card" onclick="event.stopPropagation()">
+    <button type="button" id="btnToggleAdminExpand" class="admin-modal-expand" onclick="toggleAdminModalExpand()" title="Mở rộng toàn màn hình / Thu gọn">⛶ Toàn màn hình</button>
     <button class="admin-modal-close" onclick="closeAdminModalDirect()">✕</button>
     
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--border-light);">
@@ -2340,9 +2483,9 @@ html, body {
           <span style="font-size:13.5px; font-weight:800; color:#065f46; display:flex; align-items:center; gap:6px;">
             <span>📊</span> ĐIỀU CHỈNH THỦ CÔNG &amp; NẠP PHỤ LỤC "THÔNG TIN - THỐNG KÊ" (2 THANH NGANG):
           </span>
-          <span id="statsToggleBtnBadge" style="font-size:11px; padding:3px 9px; border-radius:4px; font-weight:800; background:#059669; color:#ffffff;">Đang mở bảng sửa ▴</span>
+          <span id="statsToggleBtnBadge" style="font-size:11px; padding:3px 9px; border-radius:4px; font-weight:800; background:#059669; color:#ffffff;">Mở bảng sửa ▾</span>
         </div>
-        <div id="statsConfigBody" style="display:block; margin-top:10px; padding-top:10px; border-top:1px dashed #6ee7b7;">
+        <div id="statsConfigBody" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed #6ee7b7;">
           <p style="font-size:12px; color:#065f46; margin-bottom:8px; line-height:1.5;">
             💡 <strong>Hai cách cập nhật linh hoạt:</strong> (1) <strong>Chỉnh sửa thủ công trực tiếp</strong> tại các ô bên dưới rồi bấm <em>💾 Lưu &amp; Đồng Bộ</em> (4 chỉ số trên thanh ngang xanh phía dưới sẽ tự động tính toán lại tỷ lệ % ngay lập tức, hoặc Thầy có thể tự gõ ghi đè); hoặc (2) Nạp từ <strong>Biểu mẫu Phụ lục Excel</strong> của <em>Chuyên mục 03 - Văn bản công khai</em>:
           </p>
@@ -2361,6 +2504,92 @@ html, body {
           <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span style="font-size:11px; color:#047857; font-weight:600;">* Khi sửa số CBGVNV / Lớp / Học sinh ở trên, 4 ô thanh ngang xanh tự động cập nhật đồng bộ!</span>
             <button type="button" onclick="saveSchoolStatsFromForm()" style="background:#0f3460; color:#fde047; border:none; padding:9px 18px; border-radius:6px; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 3px 8px rgba(15,52,96,0.25);">💾 LƯU &amp; ĐỒNG BỘ SỐ LIỆU THỐNG KÊ LÊN WEB</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1B. QUẢN TRỊ ĐỘI NGŨ CBGVNV & HẠ TẦNG KHỐI CÔNG TRÌNH (NHẬP / XUẤT EXCEL) -->
+      <div style="background:#eff6ff; border:1px solid #93c5fd; border-radius:8px; padding:14px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; cursor:pointer;" onclick="toggleOrgInfraAdminPanel()">
+          <span style="font-size:13.5px; font-weight:800; color:#1e3a8a; display:flex; align-items:center; gap:6px;">
+            <span>🏛️</span> QUẢN TRỊ ĐỘI NGŨ CBGVNV &amp; HẠ TẦNG KHỐI CÔNG TRÌNH (XUẤT / NHẬP EXCEL)
+          </span>
+          <span id="orgInfraAdminToggleBadge" style="font-size:11px; padding:3px 9px; border-radius:4px; font-weight:800; background:#1d4ed8; color:#ffffff;">Mở bảng quản trị ▾</span>
+        </div>
+
+        <div id="orgInfraAdminBody" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed #93c5fd;">
+          <!-- KHỐI 1: ĐỘI NGŨ CBGVNV -->
+          <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:12px; margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <strong style="color:#1e3a8a; font-size:13px;">👩‍🏫 A. Danh sách Đội ngũ CBGVNV (<span id="adminOrgStaffCount">0</span> người)</strong>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" onclick="downloadOrgStaffExcelTemplate()" style="background:#059669; color:#fff; border:none; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">📥 1. Tải File Mẫu Excel (.xlsx)</button>
+                <label style="background:#0284c7; color:#fff; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer; display:inline-block;">
+                  📂 2. Nhập Từ Excel (.xlsx)
+                  <input type="file" accept=".xlsx,.xls" onchange="importOrgStaffFromExcel(event)" style="display:none;">
+                </label>
+                <button type="button" onclick="addEmptyOrgStaffRow()" style="background:#4f46e5; color:#fff; border:none; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">➕ Thêm dòng</button>
+              </div>
+            </div>
+            <div style="overflow-x:auto; max-height:340px; border:1px solid #e2e8f0; border-radius:6px;">
+              <table style="width:100%; min-width:1120px; border-collapse:collapse; font-size:12px;">
+                <thead style="background:#f1f5f9; position:sticky; top:0; z-index:2;">
+                  <tr>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:155px;">Họ và tên</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:68px;">Năm sinh</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:115px;">Chức vụ CQ</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:140px;">Tổ / Bộ phận</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:74px;">Đảng viên</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:110px;">Chức vụ Đảng</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:120px;">Môn dạy</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:72px;">Chủ nhiệm</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:82px;">Trình độ</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:105px;">Số ĐT</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:150px;">Địa chỉ</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:40px;">Xóa</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrgStaffTbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- KHỐI 2: HẠ TẦNG KHỐI CÔNG TRÌNH -->
+          <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:12px; margin-bottom:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <strong style="color:#0f766e; font-size:13px;">🏫 B. Danh mục Các Khối Công Trình &amp; Hạ Tầng (<span id="adminFacilityCount">0</span> hạng mục)</strong>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" onclick="downloadFacilityExcelTemplate()" style="background:#059669; color:#fff; border:none; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">📥 1. Tải File Mẫu Excel (.xlsx)</button>
+                <label style="background:#0284c7; color:#fff; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer; display:inline-block;">
+                  📂 2. Nhập Từ Excel (.xlsx)
+                  <input type="file" accept=".xlsx,.xls" onchange="importFacilityFromExcel(event)" style="display:none;">
+                </label>
+                <button type="button" onclick="addEmptyFacilityRow()" style="background:#0d9488; color:#fff; border:none; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">➕ Thêm công trình</button>
+              </div>
+            </div>
+            <div style="overflow-x:auto; max-height:320px; border:1px solid #e2e8f0; border-radius:6px;">
+              <table style="width:100%; min-width:1040px; border-collapse:collapse; font-size:12px;">
+                <thead style="background:#f1f5f9; position:sticky; top:0; z-index:2;">
+                  <tr>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:200px;">Tên khối công trình / Hạng mục</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:140px;">Nhóm công trình</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:110px;">Số phòng / Quy mô</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:82px;">DT (m²)</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:80px;">Năm XD</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:105px;">Kết cấu</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:120px;">Hiện trạng</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:185px;">Ghi chú / Thiết bị</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:40px;">Xóa</th>
+                  </tr>
+                </thead>
+                <tbody id="adminFacilityTbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span style="font-size:11.5px; color:#1e40af; font-weight:600;">* Sau khi nhập Excel hoặc chỉnh sửa trực tiếp, bấm Lưu để cập nhật ngay lên Website &amp; đồng bộ GitHub!</span>
+            <button type="button" onclick="saveAndSyncOrgInfraData()" style="background:#1e3a8a; color:#fde047; border:none; padding:9px 18px; border-radius:6px; font-size:12.5px; font-weight:800; cursor:pointer; box-shadow:0 3px 8px rgba(30,58,138,0.28);">💾 LƯU &amp; ĐỒNG BỘ ĐỘI NGŨ + HẠ TẦNG LÊN WEB</button>
           </div>
         </div>
       </div>
@@ -3392,6 +3621,8 @@ async function syncDatabaseToGitHub(commitMsg) {
       siteLocked: localStorage.getItem('canhthuan_site_locked') === '1',
       siteLockMessage: localStorage.getItem('canhthuan_site_lock_msg') || '',
       schoolStats: getSchoolStatsData(),
+      orgStaffList: typeof getOrgStaffList === 'function' ? getOrgStaffList() : [],
+      facilityList: typeof getFacilityList === 'function' ? getFacilityList() : [],
       pinnedNoticeId: localStorage.getItem('canhthuan_pinned_notice_id') || '',
       hiddenDefaultIds: getHiddenDefaultIds(),
       posts: cleanPosts
@@ -3427,6 +3658,12 @@ async function loadCloudDatabaseFromGitHub() {
     }
     if (db.schoolStats && typeof db.schoolStats === 'object') {
       localStorage.setItem('canhthuan_school_stats_v1', JSON.stringify(db.schoolStats));
+    }
+    if (Array.isArray(db.orgStaffList) && db.orgStaffList.length) {
+      localStorage.setItem('canhthuan_org_staff_v1', JSON.stringify(db.orgStaffList));
+    }
+    if (Array.isArray(db.facilityList) && db.facilityList.length) {
+      localStorage.setItem('canhthuan_facility_list_v1', JSON.stringify(db.facilityList));
     }
     return true;
   } catch (e) {
@@ -5311,6 +5548,568 @@ function printSchoolWebUserGuide() {
   w.focus();
   setTimeout(function(){ w.print(); }, 250);
 }
+</script>
+
+<style>
+  .org-infra-section {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin: 26px 0;
+    box-shadow: 0 6px 22px rgba(15, 52, 96, 0.07);
+  }
+  .org-infra-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 16px;
+  }
+  .org-infra-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0f3460;
+    letter-spacing: 0.3px;
+  }
+  .org-infra-sub {
+    font-size: 12.5px;
+    color: #475569;
+    margin-top: 3px;
+  }
+  .org-infra-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .org-tab-btn {
+    padding: 8px 15px;
+    border-radius: 9px;
+    border: 1.5px solid #cbd5e1;
+    background: #f8fafc;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .org-tab-btn.active {
+    background: linear-gradient(135deg, #0f3460, #1d4ed8);
+    color: #ffffff;
+    border-color: #1d4ed8;
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.28);
+  }
+  .org-chart-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: linear-gradient(135deg, #f8fafc, #eff6ff);
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
+  }
+  .org-node {
+    padding: 7px 12px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    text-align: center;
+    line-height: 1.3;
+    min-width: 145px;
+  }
+  .org-node strong { display: block; font-size: 12.5px; color: #0f172a; }
+  .org-node small { display: block; font-size: 11px; color: #64748b; }
+  .org-node-party { border-color: #fca5a5; background: #fef2f2; }
+  .org-node-bgh { border-color: #93c5fd; background: #eff6ff; }
+  .org-node-dept { border-color: #6ee7b7; background: #ecfdf5; }
+  .org-node-union { border-color: #fcd34d; background: #fffbeb; }
+  .org-arrow { color: #64748b; font-weight: 800; font-size: 14px; }
+  .org-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .org-search-input, .org-filter-select {
+    padding: 7px 11px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-family: inherit;
+    background: #ffffff;
+    color: #0f172a;
+  }
+  .org-search-input { min-width: 250px; }
+  .org-count-badge {
+    background: #eff6ff;
+    color: #1e3a8a;
+    border: 1px solid #bfdbfe;
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .org-excel-btn {
+    background: #059669;
+    color: #ffffff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .org-excel-btn:hover { background: #047857; }
+  .org-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+  }
+  .org-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  .org-data-table thead th {
+    background: #0f3460;
+    color: #ffffff;
+    padding: 9px 10px;
+    text-align: left;
+    font-weight: 700;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.12);
+  }
+  .org-data-table tbody td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    border-right: 1px solid #f1f5f9;
+    color: #1e293b;
+    vertical-align: middle;
+  }
+  .org-data-table tbody tr:nth-child(even) { background: #f8fafc; }
+  .org-data-table tbody tr:hover { background: #eff6ff; }
+  .org-pill-yes {
+    display: inline-block; padding: 2px 8px; border-radius: 999px;
+    background: #fee2e2; color: #b91c1c; font-weight: 800; font-size: 11px;
+  }
+  .org-pill-no {
+    display: inline-block; padding: 2px 8px; border-radius: 999px;
+    background: #f1f5f9; color: #64748b; font-weight: 600; font-size: 11px;
+  }
+  .infra-kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .infra-kpi-card {
+    background: linear-gradient(135deg, #f0fdfa, #ecfeff);
+    border: 1px solid #99f6e4;
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+  .infra-kpi-card strong { display: block; font-size: 18px; color: #0f766e; }
+  .infra-kpi-card span { font-size: 12px; color: #334155; font-weight: 600; }
+  .adm-cell-inp {
+    width: 100%; padding: 4px 6px; border: 1px solid #cbd5e1; border-radius: 4px;
+    font-size: 11.5px; box-sizing: border-box;
+  }
+</style>
+
+<script>
+// ================= MODULE CƠ CẤU TỔ CHỨC, ĐỘI NGŨ CBGVNV & HẠ TẦNG KHỐI CÔNG TRÌNH =================
+const ORG_STAFF_KEY = 'canhthuan_org_staff_v1';
+const FACILITY_LIST_KEY = 'canhthuan_facility_list_v1';
+
+const DEFAULT_ORG_STAFF = [
+  {
+    name: 'Nguyễn Tá Quan', birthYear: '1978', govRole: 'Hiệu trưởng', dept: 'Ban Giám hiệu',
+    isParty: 'Có', partyRole: 'Bí thư Chi bộ', subject: 'Quản lý / Tin học', homeroom: '',
+    qual: 'Thạc sĩ', phone: '', address: 'Xã Vân Canh, Gia Lai'
+  },
+  {
+    name: 'Tổ trưởng Tổ Khoa học Tự nhiên', birthYear: '1983', govRole: 'Tổ trưởng CM', dept: 'Tổ Khoa học Tự nhiên',
+    isParty: 'Có', partyRole: 'Chi ủy viên', subject: 'Toán - KHTN', homeroom: '9A1',
+    qual: 'Đại học', phone: '', address: 'Xã Vân Canh, Gia Lai'
+  },
+  {
+    name: 'Tổ trưởng Tổ Khoa học Xã hội', birthYear: '1984', govRole: 'Tổ trưởng CM', dept: 'Tổ Khoa học Xã hội',
+    isParty: 'Có', partyRole: 'Đảng viên', subject: 'Ngữ văn - LS&ĐL', homeroom: '8A1',
+    qual: 'Đại học', phone: '', address: 'Xã Vân Canh, Gia Lai'
+  },
+  {
+    name: 'Bộ phận Văn thư - Kế toán - Bán trú', birthYear: '1988', govRole: 'Nhân viên', dept: 'Tổ Văn phòng - Bán trú',
+    isParty: 'Không', partyRole: '', subject: 'Hành chính - Bán trú', homeroom: '',
+    qual: 'Đại học', phone: '', address: 'Xã Vân Canh, Gia Lai'
+  }
+];
+
+const DEFAULT_FACILITY_LIST = [
+  {
+    name: 'Dãy phòng học chính khóa (2 tầng)', group: 'Học tập', scale: '09 phòng học', area: 486,
+    year: '2021', structure: 'Kiên cố', status: 'Tốt / Đạt chuẩn', note: 'Đủ bàn ghế 2 chỗ, bảng chống lóa, Tivi/máy chiếu'
+  },
+  {
+    name: 'Khu Phòng Bộ môn & Thư viện', group: 'Bộ môn - Chức năng', scale: '04 phòng', area: 240,
+    year: '2022', structure: 'Kiên cố', status: 'Tốt / Đạt chuẩn', note: 'Tin học (25 máy), KHTN, Tiếng Anh, Thư viện chuẩn'
+  },
+  {
+    name: 'Khu Nhà ở Học sinh Bán trú', group: 'Khu Bán trú', scale: '12 phòng ở', area: 420,
+    year: '2021', structure: 'Kiên cố', status: 'Tốt / Đạt chuẩn', note: 'Phục vụ 123 HS bán trú (giường tầng, tủ cá nhân, quạt)'
+  },
+  {
+    name: 'Nhà ăn & Bếp ăn một chiều Bán trú', group: 'Khu Bán trú', scale: '01 khu (150 chỗ)', area: 180,
+    year: '2022', structure: 'Kiên cố', status: 'Tốt / Đạt chuẩn', note: 'Đạt chuẩn VSATTP, tủ cơm công nghiệp, nước lọc RO'
+  },
+  {
+    name: 'Khối Hiệu bộ & Phòng làm việc Tổ CM', group: 'Hành chính - Quản trị', scale: '05 phòng', area: 195,
+    year: '2020', structure: 'Kiên cố', status: 'Tốt / Đạt chuẩn', note: 'Phòng BGH, Văn thư, Kế toán, Hội đồng, Y tế học đường'
+  },
+  {
+    name: 'Sân trường, Sân thể thao & Hệ thống mạng', group: 'Hạ tầng chung', scale: 'Toàn khuôn viên', area: 3500,
+    year: '2023', structure: 'Bê tông / Cáp quang', status: 'Tốt / Đạt chuẩn', note: 'Sân chào cờ, sân bóng chuyền, Wifi phủ sóng toàn trường'
+  }
+];
+
+function getOrgStaffList() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(ORG_STAFF_KEY) || 'null');
+    if (Array.isArray(raw) && raw.length) return raw;
+  } catch (_) {}
+  return DEFAULT_ORG_STAFF.slice();
+}
+
+function getFacilityList() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(FACILITY_LIST_KEY) || 'null');
+    if (Array.isArray(raw) && raw.length) return raw;
+  } catch (_) {}
+  return DEFAULT_FACILITY_LIST.slice();
+}
+
+function _escOrg(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function switchOrgInfraTab(tab) {
+  const isStaff = tab === 'staff';
+  const pS = document.getElementById('panelOrgStaff');
+  const pI = document.getElementById('panelOrgInfra');
+  const bS = document.getElementById('btnTabOrgStaff');
+  const bI = document.getElementById('btnTabOrgInfra');
+  if (pS) pS.style.display = isStaff ? 'block' : 'none';
+  if (pI) pI.style.display = isStaff ? 'none' : 'block';
+  if (bS) bS.classList.toggle('active', isStaff);
+  if (bI) bI.classList.toggle('active', !isStaff);
+}
+
+function renderPublicOrgStaffTable() {
+  const tbody = document.getElementById('publicOrgStaffTbody');
+  if (!tbody) return;
+  const q = (document.getElementById('orgStaffSearchInput')?.value || '').trim().toLowerCase();
+  const deptF = document.getElementById('orgStaffDeptFilter')?.value || 'ALL';
+  const partyF = document.getElementById('orgStaffPartyFilter')?.value || 'ALL';
+
+  const list = getOrgStaffList().filter(item => {
+    if (deptF !== 'ALL' && (item.dept || '') !== deptF) return false;
+    const isP = /^(có|x|yes|đảng viên|1)$/i.test(String(item.isParty || '').trim());
+    if (partyF === 'YES' && !isP) return false;
+    if (q) {
+      const hay = `${item.name} ${item.govRole} ${item.dept} ${item.partyRole} ${item.subject} ${item.homeroom} ${item.address}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  const badge = document.getElementById('orgStaffCountBadge');
+  if (badge) badge.textContent = `Hiển thị: ${list.length} CBGVNV`;
+
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:#64748b; padding:18px;">Chưa có nhân sự phù hợp bộ lọc. Quản trị viên có thể nhập từ Excel trong mục Quản trị.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map((s, idx) => {
+    const isP = /^(có|x|yes|đảng viên|1)$/i.test(String(s.isParty || '').trim());
+    return `<tr>
+      <td style="text-align:center; font-weight:700; color:#64748b;">${idx + 1}</td>
+      <td><strong style="color:#0f3460;">${_escOrg(s.name)}</strong></td>
+      <td style="text-align:center;">${_escOrg(s.birthYear)}</td>
+      <td>${_escOrg(s.govRole)}</td>
+      <td>${_escOrg(s.dept)}</td>
+      <td style="text-align:center;">${isP ? '<span class="org-pill-yes">🚩 Có</span>' : '<span class="org-pill-no">Chưa</span>'}</td>
+      <td>${_escOrg(s.partyRole)}</td>
+      <td>${_escOrg(s.subject)}</td>
+      <td style="text-align:center; font-weight:700; color:#0369a1;">${_escOrg(s.homeroom || '—')}</td>
+      <td style="text-align:center;">${_escOrg(s.qual)}</td>
+      <td>${_escOrg(s.phone || '—')}</td>
+      <td>${_escOrg(s.address || '—')}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPublicInfraTable() {
+  const tbody = document.getElementById('publicInfraTbody');
+  const kpiRow = document.getElementById('publicInfraKpiRow');
+  if (!tbody) return;
+  const all = getFacilityList();
+  const q = (document.getElementById('orgInfraSearchInput')?.value || '').trim().toLowerCase();
+  const grpF = document.getElementById('orgInfraGroupFilter')?.value || 'ALL';
+
+  const totalArea = all.reduce((acc, x) => acc + (parseFloat(x.area) || 0), 0);
+  const goodCount = all.filter(x => /tốt|chuẩn/i.test(String(x.status || ''))).length;
+  const btCount = all.filter(x => /bán trú/i.test(String(x.group || '') + ' ' + String(x.name || ''))).length;
+  if (kpiRow) {
+    kpiRow.innerHTML = `
+      <div class="infra-kpi-card"><strong>${all.length} Khối</strong><span>Tổng hạng mục công trình</span></div>
+      <div class="infra-kpi-card"><strong>${totalArea.toLocaleString('vi-VN')} m²</strong><span>Tổng diện tích sử dụng</span></div>
+      <div class="infra-kpi-card"><strong>${goodCount}/${all.length} Đạt chuẩn</strong><span>Hiện trạng kiên cố / tốt</span></div>
+      <div class="infra-kpi-card"><strong>${btCount} Khu Bán trú</strong><span>Phục vụ nội trú &amp; ăn ở tập trung</span></div>
+    `;
+  }
+
+  const list = all.filter(item => {
+    if (grpF !== 'ALL' && (item.group || '') !== grpF) return false;
+    if (q) {
+      const hay = `${item.name} ${item.group} ${item.scale} ${item.structure} ${item.status} ${item.note}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  const badge = document.getElementById('orgInfraCountBadge');
+  if (badge) badge.textContent = `Hiển thị: ${list.length} công trình`;
+
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:#64748b; padding:18px;">Chưa có công trình phù hợp bộ lọc.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map((f, idx) => `<tr>
+    <td style="text-align:center; font-weight:700; color:#64748b;">${idx + 1}</td>
+    <td><strong style="color:#0f3460;">${_escOrg(f.name)}</strong></td>
+    <td>${_escOrg(f.group)}</td>
+    <td style="text-align:center; font-weight:700;">${_escOrg(f.scale)}</td>
+    <td style="text-align:right; font-weight:700; color:#0f766e;">${f.area ? Number(f.area).toLocaleString('vi-VN') : '—'}</td>
+    <td style="text-align:center;">${_escOrg(f.year)}</td>
+    <td style="text-align:center;">${_escOrg(f.structure)}</td>
+    <td style="text-align:center;"><span style="background:#dcfce7; color:#166534; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700;">${_escOrg(f.status)}</span></td>
+    <td>${_escOrg(f.note)}</td>
+  </tr>`).join('');
+}
+
+// ===== ADMIN: QUẢN TRỊ & XUẤT / NHẬP EXCEL CHO ĐỘI NGŨ + KHỐI CÔNG TRÌNH =====
+let _adminOrgStaffDraft = [];
+let _adminFacilityDraft = [];
+
+function toggleOrgInfraAdminPanel() {
+  const body = document.getElementById('orgInfraAdminBody');
+  const badge = document.getElementById('orgInfraAdminToggleBadge');
+  if (!body) return;
+  const open = body.style.display === 'none';
+  body.style.display = open ? 'block' : 'none';
+  if (badge) badge.textContent = open ? 'Thu gọn bảng quản trị ▴' : 'Mở bảng quản trị ▾';
+  if (open) {
+    _adminOrgStaffDraft = getOrgStaffList().map(x => ({ ...x }));
+    _adminFacilityDraft = getFacilityList().map(x => ({ ...x }));
+    renderAdminOrgStaffRows();
+    renderAdminFacilityRows();
+  }
+}
+
+function renderAdminOrgStaffRows() {
+  const tbody = document.getElementById('adminOrgStaffTbody');
+  const cnt = document.getElementById('adminOrgStaffCount');
+  if (cnt) cnt.textContent = String(_adminOrgStaffDraft.length);
+  if (!tbody) return;
+  tbody.innerHTML = _adminOrgStaffDraft.map((s, i) => `<tr>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.name)}" oninput="_adminOrgStaffDraft[${i}].name=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.birthYear)}" oninput="_adminOrgStaffDraft[${i}].birthYear=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.govRole)}" oninput="_adminOrgStaffDraft[${i}].govRole=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.dept)}" oninput="_adminOrgStaffDraft[${i}].dept=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.isParty)}" oninput="_adminOrgStaffDraft[${i}].isParty=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.partyRole)}" oninput="_adminOrgStaffDraft[${i}].partyRole=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.subject)}" oninput="_adminOrgStaffDraft[${i}].subject=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.homeroom)}" oninput="_adminOrgStaffDraft[${i}].homeroom=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.qual)}" oninput="_adminOrgStaffDraft[${i}].qual=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.phone)}" oninput="_adminOrgStaffDraft[${i}].phone=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.address)}" oninput="_adminOrgStaffDraft[${i}].address=this.value"></td>
+    <td style="padding:4px; text-align:center;"><button type="button" onclick="_adminOrgStaffDraft.splice(${i},1);renderAdminOrgStaffRows();" style="border:none;background:none;color:#dc2626;cursor:pointer;font-weight:800;">✕</button></td>
+  </tr>`).join('');
+}
+
+function addEmptyOrgStaffRow() {
+  _adminOrgStaffDraft.push({ name: '', birthYear: '', govRole: 'Giáo viên', dept: 'Tổ Khoa học Tự nhiên', isParty: 'Không', partyRole: '', subject: '', homeroom: '', qual: 'Đại học', phone: '', address: '' });
+  renderAdminOrgStaffRows();
+}
+
+function renderAdminFacilityRows() {
+  const tbody = document.getElementById('adminFacilityTbody');
+  const cnt = document.getElementById('adminFacilityCount');
+  if (cnt) cnt.textContent = String(_adminFacilityDraft.length);
+  if (!tbody) return;
+  tbody.innerHTML = _adminFacilityDraft.map((f, i) => `<tr>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.name)}" oninput="_adminFacilityDraft[${i}].name=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.group)}" oninput="_adminFacilityDraft[${i}].group=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.scale)}" oninput="_adminFacilityDraft[${i}].scale=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.area)}" oninput="_adminFacilityDraft[${i}].area=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.year)}" oninput="_adminFacilityDraft[${i}].year=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.structure)}" oninput="_adminFacilityDraft[${i}].structure=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.status)}" oninput="_adminFacilityDraft[${i}].status=this.value"></td>
+    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.note)}" oninput="_adminFacilityDraft[${i}].note=this.value"></td>
+    <td style="padding:4px; text-align:center;"><button type="button" onclick="_adminFacilityDraft.splice(${i},1);renderAdminFacilityRows();" style="border:none;background:none;color:#dc2626;cursor:pointer;font-weight:800;">✕</button></td>
+  </tr>`).join('');
+}
+
+function addEmptyFacilityRow() {
+  _adminFacilityDraft.push({ name: '', group: 'Học tập', scale: '', area: '', year: '2026', structure: 'Kiên cố', status: 'Tốt / Đạt chuẩn', note: '' });
+  renderAdminFacilityRows();
+}
+
+function downloadOrgStaffExcelTemplate() {
+  if (typeof XLSX === 'undefined') { alert('Đang tải thư viện Excel, vui lòng thử lại sau 2 giây!'); return; }
+  const headers = ['TT', 'Họ và tên', 'Năm sinh', 'Chức vụ CQ', 'Tổ / Bộ phận', 'Đảng viên', 'Chức vụ Đảng', 'Môn giảng dạy', 'Chủ nhiệm', 'Trình độ CM', 'Số ĐT', 'Địa chỉ'];
+  const current = getOrgStaffList();
+  const rows = [headers].concat(current.map((s, i) => [
+    i + 1, s.name || '', s.birthYear || '', s.govRole || '', s.dept || '', s.isParty || 'Không',
+    s.partyRole || '', s.subject || '', s.homeroom || '', s.qual || '', s.phone || '', s.address || ''
+  ]));
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [{ wch: 5 }, { wch: 24 }, { wch: 10 }, { wch: 18 }, { wch: 22 }, { wch: 11 }, { wch: 16 }, { wch: 18 }, { wch: 11 }, { wch: 12 }, { wch: 14 }, { wch: 26 }];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'DOI_NGU_CBGVNV');
+  XLSX.writeFile(wb, 'Mau_Nhap_Doi_Ngu_CBGVNV_THCS_Canh_Thuan.xlsx');
+}
+
+function importOrgStaffFromExcel(evt) {
+  const file = evt.target.files && evt.target.files[0];
+  if (!file) return;
+  if (typeof XLSX === 'undefined') { alert('Chưa sẵn sàng thư viện Excel!'); return; }
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+      const parsed = [];
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        const name = String(r[1] || '').trim();
+        if (!name) continue;
+        parsed.push({
+          name,
+          birthYear: String(r[2] || '').trim(),
+          govRole: String(r[3] || '').trim(),
+          dept: String(r[4] || '').trim(),
+          isParty: String(r[5] || 'Không').trim(),
+          partyRole: String(r[6] || '').trim(),
+          subject: String(r[7] || '').trim(),
+          homeroom: String(r[8] || '').trim(),
+          qual: String(r[9] || '').trim(),
+          phone: String(r[10] || '').trim(),
+          address: String(r[11] || '').trim()
+        });
+      }
+      if (!parsed.length) { alert('Không tìm thấy dữ liệu hợp lệ (kiểm tra cột B: Họ và tên)!'); return; }
+      _adminOrgStaffDraft = parsed;
+      renderAdminOrgStaffRows();
+      alert(`✅ Đã đọc thành công ${parsed.length} CBGVNV từ Excel! Bấm "💾 LƯU & ĐỒNG BỘ" để xuất bản lên Website.`);
+    } catch (err) {
+      alert('Lỗi đọc file Excel: ' + err.message);
+    }
+    evt.target.value = '';
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function downloadFacilityExcelTemplate() {
+  if (typeof XLSX === 'undefined') { alert('Đang tải thư viện Excel, vui lòng thử lại sau 2 giây!'); return; }
+  const headers = ['TT', 'Tên khối công trình / Hạng mục', 'Nhóm công trình', 'Số phòng / Quy mô', 'Diện tích (m2)', 'Năm XD / Sửa', 'Kết cấu', 'Hiện trạng', 'Ghi chú / Thiết bị chính'];
+  const current = getFacilityList();
+  const rows = [headers].concat(current.map((f, i) => [
+    i + 1, f.name || '', f.group || '', f.scale || '', f.area || '', f.year || '', f.structure || '', f.status || '', f.note || ''
+  ]));
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [{ wch: 5 }, { wch: 32 }, { wch: 20 }, { wch: 16 }, { wch: 14 }, { wch: 12 }, { wch: 16 }, { wch: 18 }, { wch: 36 }];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'KHOI_CONG_TRINH');
+  XLSX.writeFile(wb, 'Mau_Nhap_Ha_Tang_Khoi_Cong_Trinh_THCS_Canh_Thuan.xlsx');
+}
+
+function importFacilityFromExcel(evt) {
+  const file = evt.target.files && evt.target.files[0];
+  if (!file) return;
+  if (typeof XLSX === 'undefined') { alert('Chưa sẵn sàng thư viện Excel!'); return; }
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+      const parsed = [];
+      for (let i = 1; i < rows.length; i++) {
+        const r = rows[i];
+        const name = String(r[1] || '').trim();
+        if (!name) continue;
+        parsed.push({
+          name,
+          group: String(r[2] || '').trim(),
+          scale: String(r[3] || '').trim(),
+          area: String(r[4] || '').trim(),
+          year: String(r[5] || '').trim(),
+          structure: String(r[6] || '').trim(),
+          status: String(r[7] || '').trim(),
+          note: String(r[8] || '').trim()
+        });
+      }
+      if (!parsed.length) { alert('Không tìm thấy dữ liệu hợp lệ (kiểm tra cột B: Tên khối công trình)!'); return; }
+      _adminFacilityDraft = parsed;
+      renderAdminFacilityRows();
+      alert(`✅ Đã đọc thành công ${parsed.length} khối công trình từ Excel! Bấm "💾 LƯU & ĐỒNG BỘ" để xuất bản lên Website.`);
+    } catch (err) {
+      alert('Lỗi đọc file Excel: ' + err.message);
+    }
+    evt.target.value = '';
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+async function saveAndSyncOrgInfraData() {
+  const cleanStaff = _adminOrgStaffDraft.filter(x => String(x.name || '').trim());
+  const cleanFac = _adminFacilityDraft.filter(x => String(x.name || '').trim());
+  localStorage.setItem(ORG_STAFF_KEY, JSON.stringify(cleanStaff));
+  localStorage.setItem(FACILITY_LIST_KEY, JSON.stringify(cleanFac));
+  renderPublicOrgStaffTable();
+  renderPublicInfraTable();
+  let synced = false;
+  if (typeof syncDatabaseToGitHub === 'function') {
+    synced = await syncDatabaseToGitHub('Cập nhật Đội ngũ CBGVNV & Hạ tầng khối công trình');
+  }
+  alert(synced
+    ? `✅ Đã lưu và đồng bộ ${cleanStaff.length} CBGVNV & ${cleanFac.length} công trình lên Website Online!`
+    : `✅ Đã lưu ${cleanStaff.length} CBGVNV & ${cleanFac.length} công trình trên trình duyệt này! (Gắn GitHub Token trong Quản trị để đồng bộ toàn mạng).`);
+}
+
+function toggleAdminModalExpand() {
+  const card = document.getElementById('adminModalCard');
+  const btn = document.getElementById('btnToggleAdminExpand');
+  if (!card) return;
+  const expanded = card.classList.toggle('admin-expanded');
+  if (btn) btn.textContent = expanded ? '🗗 Thu gọn' : '⛶ Toàn màn hình';
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  renderPublicOrgStaffTable();
+  renderPublicInfraTable();
+});
 </script>
 
 </body>
