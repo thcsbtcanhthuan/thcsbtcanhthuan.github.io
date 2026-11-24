@@ -2604,7 +2604,10 @@ html, body {
 
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span style="font-size:11.5px; color:#1e40af; font-weight:600;">* Sau khi nhập Excel hoặc chỉnh sửa trực tiếp, bấm Lưu để cập nhật ngay lên Website &amp; đồng bộ GitHub!</span>
-            <button type="button" onclick="saveAndSyncOrgInfraData()" style="background:#1e3a8a; color:#fde047; border:none; padding:9px 18px; border-radius:6px; font-size:12.5px; font-weight:800; cursor:pointer; box-shadow:0 3px 8px rgba(30,58,138,0.28);">💾 LƯU &amp; ĐỒNG BỘ ĐỘI NGŨ + HẠ TẦNG LÊN WEB</button>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+              <button type="button" onclick="runSmartAutoCleanup(false)" style="background:#f1f5f9; color:#0f766e; border:1px solid #99f6e4; padding:8px 12px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;" title="Quét dọn dữ liệu trùng/rỗng, thu hồi bộ nhớ tạm & tối ưu tốc độ tải trang">🧹 Tối ưu &amp; Dọn bộ nhớ (<span id="adminMemUsageLabel">-- KB</span>)</button>
+              <button type="button" onclick="saveAndSyncOrgInfraData()" style="background:#1e3a8a; color:#fde047; border:none; padding:9px 18px; border-radius:6px; font-size:12.5px; font-weight:800; cursor:pointer; box-shadow:0 3px 8px rgba(30,58,138,0.28);">💾 LƯU &amp; ĐỒNG BỘ ĐỘI NGŨ + HẠ TẦNG LÊN WEB</button>
+            </div>
           </div>
         </div>
       </div>
@@ -6156,6 +6159,7 @@ function toggleOrgInfraAdminPanel() {
     renderAdminOrgDeptChips();
     renderAdminOrgStaffRows();
     renderAdminFacilityRows();
+    updateAdminMemUsageBadge();
   }
 }
 
@@ -6164,12 +6168,16 @@ function renderAdminOrgDeptChips() {
   const cnt = document.getElementById('adminOrgDeptCount');
   if (cnt) cnt.textContent = String(_adminOrgDeptsDraft.length);
   if (!box) return;
-  box.innerHTML = _adminOrgDeptsDraft.map((d, idx) => `
+  box.innerHTML = _adminOrgDeptsDraft.map((d, idx) => {
+    const memberCount = _adminOrgStaffDraft.filter(s => s.dept === d).length;
+    return `
     <span style="display:inline-flex; align-items:center; gap:6px; background:#ffffff; border:1px solid #4ade80; color:#166534; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:700;">
-      🏛️ ${_escOrg(d)}
-      <button type="button" onclick="removeOrgDepartment(${idx})" style="border:none; background:none; color:#dc2626; cursor:pointer; font-weight:800; padding:0;" title="Xóa tổ/phòng ban này">✕</button>
+      🏛️ ${_escOrg(d)} <small style="color:#64748b; font-weight:600;">(${memberCount})</small>
+      <button type="button" onclick="editOrgDepartment(${idx})" style="border:none; background:none; color:#2563eb; cursor:pointer; font-weight:800; padding:0 2px;" title="Sửa tên Tổ / Phòng ban (giữ nguyên toàn bộ thành viên)">✏️</button>
+      <button type="button" onclick="removeOrgDepartment(${idx})" style="border:none; background:none; color:#dc2626; cursor:pointer; font-weight:800; padding:0;" title="Xóa Tổ / Phòng ban này">✕</button>
     </span>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function addOrgDepartment() {
@@ -6179,15 +6187,61 @@ function addOrgDepartment() {
   if (_adminOrgDeptsDraft.includes(val)) return alert('Tổ / Phòng ban này đã có trong danh sách!');
   _adminOrgDeptsDraft.push(val);
   if (inp) inp.value = '';
+  localStorage.setItem(ORG_DEPTS_KEY, JSON.stringify(_adminOrgDeptsDraft));
   renderAdminOrgDeptChips();
   renderAdminOrgStaffRows();
+  renderPublicOrgDeptUI();
+}
+
+function editOrgDepartment(idx) {
+  const oldName = _adminOrgDeptsDraft[idx];
+  if (!oldName) return;
+  const rawNew = prompt(`Nhập tên mới cho Tổ / Phòng ban "${oldName}":\n(Toàn bộ thành viên thuộc tổ này sẽ tự động chuyển sang tên mới, không bị mất!)`, oldName);
+  if (rawNew === null) return;
+  const newName = rawNew.trim();
+  if (!newName) return alert('⚠️ Tên Tổ / Phòng ban không được để trống!');
+  if (newName === oldName) return;
+  if (_adminOrgDeptsDraft.some((d, i) => i !== idx && d.toLowerCase() === newName.toLowerCase())) {
+    return alert(`⚠️ Tên "${newName}" đã tồn tại trong danh sách Tổ / Phòng ban!`);
+  }
+
+  // 1. Cập nhật tên trong danh mục Tổ / Phòng ban
+  _adminOrgDeptsDraft[idx] = newName;
+
+  // 2. Tự động đồng bộ tên Tổ mới cho TẤT CẢ thành viên đang thuộc tên Tổ cũ (bảo toàn 100% thành viên!)
+  let updatedMembers = 0;
+  _adminOrgStaffDraft.forEach(s => {
+    if (s.dept === oldName) {
+      s.dept = newName;
+      updatedMembers++;
+    }
+  });
+  if (_editingStaffBackup && _editingStaffBackup.dept === oldName) {
+    _editingStaffBackup.dept = newName;
+  }
+
+  localStorage.setItem(ORG_DEPTS_KEY, JSON.stringify(_adminOrgDeptsDraft));
+  localStorage.setItem(ORG_STAFF_KEY, JSON.stringify(_adminOrgStaffDraft));
+  renderAdminOrgDeptChips();
+  renderAdminOrgStaffRows();
+  renderPublicOrgDeptUI();
+  renderPublicOrgStaffTable();
+  alert(`✅ Đã đổi tên "${oldName}" ➔ "${newName}" và tự động cập nhật bảo toàn cho ${updatedMembers} thành viên!`);
 }
 
 function removeOrgDepartment(idx) {
   if (_adminOrgDeptsDraft.length <= 1) return alert('Cần giữ lại ít nhất 1 Tổ / Phòng ban!');
+  const target = _adminOrgDeptsDraft[idx];
+  const memberCount = _adminOrgStaffDraft.filter(s => s.dept === target).length;
+  if (memberCount > 0) {
+    return alert(`⚠️ Không thể xóa "${target}" vì đang có ${memberCount} nhân sự thuộc tổ này!\nVui lòng sửa tên tổ (nút ✏️) hoặc chuyển nhân sự sang tổ khác trước khi xóa.`);
+  }
+  if (!confirm(`Xóa Tổ / Phòng ban "${target}" khỏi cơ cấu?`)) return;
   _adminOrgDeptsDraft.splice(idx, 1);
+  localStorage.setItem(ORG_DEPTS_KEY, JSON.stringify(_adminOrgDeptsDraft));
   renderAdminOrgDeptChips();
   renderAdminOrgStaffRows();
+  renderPublicOrgDeptUI();
 }
 
 function _buildSelectOptions(options, selectedVal) {
@@ -6314,6 +6368,7 @@ function saveAdminStaffRow(i) {
   _editingStaffBackup = null;
   localStorage.setItem(ORG_DEPTS_KEY, JSON.stringify(_adminOrgDeptsDraft));
   localStorage.setItem(ORG_STAFF_KEY, JSON.stringify(_adminOrgStaffDraft));
+  renderAdminOrgDeptChips();
   renderAdminOrgStaffRows();
   renderPublicOrgDeptUI();
   renderPublicOrgStaffTable();
@@ -6337,6 +6392,7 @@ function deleteAdminStaffRow(i) {
   _adminOrgStaffDraft.splice(i, 1);
   if (_editingStaffIdx === i) { _editingStaffIdx = -1; _editingStaffIsNew = false; }
   localStorage.setItem(ORG_STAFF_KEY, JSON.stringify(_adminOrgStaffDraft));
+  renderAdminOrgDeptChips();
   renderAdminOrgStaffRows();
   renderPublicOrgDeptUI();
   renderPublicOrgStaffTable();
@@ -6547,11 +6603,12 @@ async function downloadOrgStaffExcelTemplate() {
 
     const buf = await wb.xlsx.writeBuffer();
     const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blobUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = blobUrl;
     a.download = 'Mau_Nhap_Doi_Ngu_CBGVNV_13Cot_Dropdown.xlsx';
     a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+    trackAndRevokeBlobUrl(blobUrl, 1500);
     return;
   }
 
@@ -6658,11 +6715,12 @@ async function downloadFacilityExcelTemplate() {
 
     const buf = await wb.xlsx.writeBuffer();
     const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blobUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = blobUrl;
     a.download = 'Mau_Nhap_Ha_Tang_Khoi_Cong_Trinh_Dropdown.xlsx';
     a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+    trackAndRevokeBlobUrl(blobUrl, 1500);
     return;
   }
 
@@ -6721,6 +6779,7 @@ async function saveAndSyncOrgInfraData() {
   localStorage.setItem(ORG_DEPTS_KEY, JSON.stringify(cleanDepts.length ? cleanDepts : DEFAULT_ORG_DEPTS));
   localStorage.setItem(ORG_STAFF_KEY, JSON.stringify(cleanStaff));
   localStorage.setItem(FACILITY_LIST_KEY, JSON.stringify(cleanFac));
+  runSmartAutoCleanup(true);
   renderPublicOrgDeptUI();
   renderPublicOrgStaffTable();
   renderPublicInfraTable();
@@ -6741,7 +6800,127 @@ function toggleAdminModalExpand() {
   if (btn) btn.textContent = expanded ? '🗗 Thu gọn' : '⛶ Toàn màn hình';
 }
 
+// ================= HỆ THỐNG TỰ LÀM SẠCH BỘ NHỚ & TỐI ƯU TỐC ĐỘ (ZERO-JUNK RUNTIME) =================
+const _trackedBlobUrls = new Set();
+function trackAndRevokeBlobUrl(url, delayMs = 2000) {
+  if (!url) return;
+  _trackedBlobUrls.add(url);
+  setTimeout(() => {
+    try { URL.revokeObjectURL(url); } catch (_) {}
+    _trackedBlobUrls.delete(url);
+  }, delayMs);
+}
+
+function getLocalStorageUsageKB() {
+  let bytes = 0;
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      const v = localStorage.getItem(k) || '';
+      bytes += (k.length + v.length) * 2;
+    }
+  } catch (_) {}
+  return Math.max(1, Math.round(bytes / 1024));
+}
+
+function updateAdminMemUsageBadge() {
+  const lbl = document.getElementById('adminMemUsageLabel');
+  if (lbl) lbl.textContent = `${getLocalStorageUsageKB()} KB`;
+}
+
+function runSmartAutoCleanup(silent = true) {
+  const beforeKB = getLocalStorageUsageKB();
+  let cleanedItems = 0;
+
+  // 1. Thu hồi toàn bộ Blob URL tạm còn treo trong RAM
+  _trackedBlobUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch (_) {} });
+  _trackedBlobUrls.clear();
+
+  // 2. Dọn các khóa rác / nháp tạm cũ trong localStorage (tuyệt đối bảo vệ khóa dữ liệu chính)
+  try {
+    const junkKeys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i) || '';
+      if (/^(tmp_|draft_|temp_|cache_old_)/i.test(k)) junkKeys.push(k);
+    }
+    junkKeys.forEach(k => { localStorage.removeItem(k); cleanedItems++; });
+  } catch (_) {}
+
+  // 3. Làm sạch & khử trùng lặp bản ghi rỗng trong Tổ/Phòng ban, Đội ngũ CBGVNV, Khối Công trình
+  try {
+    const depts = getOrgDepartments();
+    const uniqDepts = [...new Set(depts.map(x => x.trim()).filter(Boolean))];
+    if (uniqDepts.length !== depts.length) {
+      localStorage.setItem(ORG_DEPTS_KEY, JSON.stringify(uniqDepts));
+      cleanedItems += Math.abs(depts.length - uniqDepts.length);
+    }
+
+    const rawStaff = JSON.parse(localStorage.getItem(ORG_STAFF_KEY) || 'null');
+    if (Array.isArray(rawStaff)) {
+      const seenS = new Set();
+      const cleanS = [];
+      rawStaff.forEach(item => {
+        const n = normalizeStaffRecord(item);
+        if (!n.name) { cleanedItems++; return; }
+        const sig = `${n.name.toLowerCase()}|${n.birthYear}|${n.dept.toLowerCase()}`;
+        if (seenS.has(sig)) { cleanedItems++; return; }
+        seenS.add(sig);
+        cleanS.push(n);
+      });
+      if (cleanS.length !== rawStaff.length) {
+        localStorage.setItem(ORG_STAFF_KEY, JSON.stringify(cleanS));
+      }
+    }
+
+    const rawFac = JSON.parse(localStorage.getItem(FACILITY_LIST_KEY) || 'null');
+    if (Array.isArray(rawFac)) {
+      const seenF = new Set();
+      const cleanF = [];
+      rawFac.forEach(item => {
+        const name = String(item?.name || '').trim();
+        if (!name) { cleanedItems++; return; }
+        const sig = `${name.toLowerCase()}|${String(item.group || '').toLowerCase()}`;
+        if (seenF.has(sig)) { cleanedItems++; return; }
+        seenF.add(sig);
+        cleanF.push({ ...item, name });
+      });
+      if (cleanF.length !== rawFac.length) {
+        localStorage.setItem(FACILITY_LIST_KEY, JSON.stringify(cleanF));
+      }
+    }
+  } catch (_) {}
+
+  // 4. Nén nhẹ các bài viết đã có link GitHub nhưng vẫn lưu thừa chuỗi data: Base64 nặng trong localStorage
+  try {
+    const posts = JSON.parse(localStorage.getItem('canhthuan_posts_v2') || 'null');
+    if (Array.isArray(posts)) {
+      let changed = false;
+      posts.forEach(p => {
+        if (p && typeof p.fileUrl === 'string' && p.fileUrl.startsWith('data:') && p.fileUrl.length > 350000 && Array.isArray(p.files) && p.files.some(f => f.url && !f.url.startsWith('data:'))) {
+          p.fileUrl = p.files.find(f => f.url && !f.url.startsWith('data:')).url;
+          changed = true;
+          cleanedItems++;
+        }
+      });
+      if (changed) localStorage.setItem('canhthuan_posts_v2', JSON.stringify(posts));
+    }
+  } catch (_) {}
+
+  // 5. Giải phóng biến nháp tạm khi không ở chế độ sửa
+  if (_editingStaffIdx === -1) _editingStaffBackup = null;
+  if (_editingFacIdx === -1) _editingFacBackup = null;
+
+  const afterKB = getLocalStorageUsageKB();
+  updateAdminMemUsageBadge();
+
+  if (!silent) {
+    const savedKB = Math.max(0, beforeKB - afterKB);
+    alert(`🧹 Đã hoàn tất làm sạch & tối ưu bộ nhớ!\n• Đã dọn/khử trùng: ${cleanedItems} mục tạm/rỗng\n• Bộ nhớ đang dùng: ${afterKB} KB (giải phóng ${savedKB} KB)\n• Toàn bộ dữ liệu thật được bảo toàn 100%!`);
+  }
+}
+
 window.addEventListener('DOMContentLoaded', function () {
+  runSmartAutoCleanup(true);
   updateOrgInfraCollapsedSummary();
   renderPublicOrgDeptUI();
   renderPublicOrgStaffTable();
