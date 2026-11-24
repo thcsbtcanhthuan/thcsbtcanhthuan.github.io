@@ -2124,114 +2124,110 @@ html, body {
 
   <!-- ================= KHU VỰC CƠ CẤU TỔ CHỨC, ĐỘI NGŨ NHÀ GIÁO & HẠ TẦNG TRƯỜNG LỚP ================= -->
   <section class="org-infra-section" id="co-cau-ha-tang">
-    <div class="org-infra-header">
+    <div class="org-infra-header" style="cursor:pointer; margin-bottom:0; border-bottom:none; padding-bottom:0;" onclick="toggleOrgInfraSection()">
       <div>
         <div class="org-infra-title">🏛️ CƠ CẤU TỔ CHỨC, ĐỘI NGŨ NHÀ GIÁO &amp; HẠ TẦNG TRƯỜNG LỚP</div>
-        <div class="org-infra-sub">Công khai minh bạch cơ cấu bộ máy, danh sách CBGVNV và các khối công trình cơ sở vật chất nhà trường (Thông tư 09/2024/TT-BGDĐT)</div>
+        <div class="org-infra-sub">Công khai minh bạch cơ cấu tổ chức, danh sách CBGVNV và các khối công trình cơ sở vật chất (Thông tư 09/2024/TT-BGDĐT)</div>
       </div>
-      <div class="org-infra-tabs">
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <span id="orgInfraCollapsedSummary" style="font-size:12px; color:#1e40af; font-weight:700; background:#eff6ff; padding:5px 11px; border-radius:999px; border:1px solid #bfdbfe;">Bấm để xem chi tiết</span>
+        <button type="button" id="btnToggleOrgInfraSection" class="org-tab-btn active" style="padding:7px 14px;" onclick="event.stopPropagation(); toggleOrgInfraSection();">📂 Mở xem chi tiết ▾</button>
+      </div>
+    </div>
+
+    <!-- NỘI DUNG CHI TIẾT (MẶC ĐỊNH THU GỌN — MỞ KHI BẤM) -->
+    <div id="orgInfraCollapsibleBody" style="display:none; margin-top:16px; padding-top:14px; border-top:2px solid #e2e8f0;">
+      <div class="org-infra-tabs" style="margin-bottom:14px;">
         <button type="button" class="org-tab-btn active" id="btnTabOrgStaff" onclick="switchOrgInfraTab('staff')">👩‍🏫 Cơ Cấu &amp; Đội Ngũ CBGVNV</button>
         <button type="button" class="org-tab-btn" id="btnTabOrgInfra" onclick="switchOrgInfraTab('infra')">🏫 Hạ Tầng &amp; Khối Công Trình</button>
       </div>
-    </div>
 
-    <!-- TAB 1: CƠ CẤU TỔ CHỨC & ĐỘI NGŨ NHÀ GIÁO -->
-    <div id="panelOrgStaff" class="org-tab-panel">
-      <div class="org-chart-strip">
-        <div class="org-node org-node-party"><strong>🚩 Chi bộ Đảng</strong><small>Lãnh đạo toàn diện</small></div>
-        <span class="org-arrow">➔</span>
-        <div class="org-node org-node-bgh"><strong>🏛️ Ban Giám hiệu &amp; HĐ Trường</strong><small>Điều hành quản trị</small></div>
-        <span class="org-arrow">➔</span>
-        <div class="org-node org-node-dept"><strong>📚 2 Tổ Chuyên môn</strong><small>Tổ KHTN • Tổ KHXH</small></div>
-        <span class="org-arrow">•</span>
-        <div class="org-node org-node-dept"><strong>🗂️ Tổ Văn phòng – Bán trú</strong><small>Hành chính • Nuôi dưỡng</small></div>
-        <span class="org-arrow">•</span>
-        <div class="org-node org-node-union"><strong>🤝 Các Đoàn thể</strong><small>Công đoàn • Đoàn • Đội</small></div>
-      </div>
+      <!-- TAB 1: CƠ CẤU TỔ CHỨC & ĐỘI NGŨ NHÀ GIÁO -->
+      <div id="panelOrgStaff" class="org-tab-panel">
+        <div class="org-chart-strip" id="publicOrgDeptStrip"></div>
 
-      <div class="org-toolbar">
-        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-          <input type="text" id="orgStaffSearchInput" class="org-search-input" placeholder="🔍 Tìm theo họ tên, môn dạy, chức vụ, chủ nhiệm..." oninput="renderPublicOrgStaffTable()">
-          <select id="orgStaffDeptFilter" class="org-filter-select" onchange="renderPublicOrgStaffTable()">
-            <option value="ALL">Tất cả Tổ / Bộ phận</option>
-            <option value="Ban Giám hiệu">Ban Giám hiệu</option>
-            <option value="Tổ Khoa học Tự nhiên">Tổ Khoa học Tự nhiên</option>
-            <option value="Tổ Khoa học Xã hội">Tổ Khoa học Xã hội</option>
-            <option value="Tổ Văn phòng - Bán trú">Tổ Văn phòng - Bán trú</option>
-          </select>
-          <select id="orgStaffPartyFilter" class="org-filter-select" onchange="renderPublicOrgStaffTable()">
-            <option value="ALL">Tất cả (Đảng viên / Chưa)</option>
-            <option value="YES">🚩 Chỉ lọc Đảng viên</option>
-          </select>
+        <div class="org-toolbar">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <input type="search" id="orgStaffSearchInput" name="ql_staff_search_nofill" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly')" class="org-search-input" placeholder="🔍 Tìm theo họ tên, nhiệm vụ, chức vụ..." oninput="renderPublicOrgStaffTable()">
+            <select id="orgStaffDeptFilter" class="org-filter-select" onchange="renderPublicOrgStaffTable()">
+              <option value="ALL">Tất cả Tổ / Phòng ban</option>
+            </select>
+            <select id="orgStaffPartyFilter" class="org-filter-select" onchange="renderPublicOrgStaffTable()">
+              <option value="ALL">Tất cả (Đảng / Đoàn)</option>
+              <option value="Đảng viên">🚩 Chỉ lọc Đảng viên</option>
+              <option value="Đoàn viên">🔹 Chỉ lọc Đoàn viên</option>
+            </select>
+            <button type="button" onclick="resetPublicOrgStaffFilters()" class="org-tab-btn" style="padding:6px 10px; font-size:12px;">↺ Hiện tất cả</button>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <span id="orgStaffCountBadge" class="org-count-badge">Tổng: 0 CBGVNV</span>
+          </div>
         </div>
-        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <span id="orgStaffCountBadge" class="org-count-badge">Tổng: 0 CBGVNV</span>
-          <button type="button" onclick="downloadOrgStaffExcelTemplate()" class="org-excel-btn">📥 Tải mẫu Excel</button>
-        </div>
-      </div>
 
-      <div class="org-table-wrap">
-        <table class="org-data-table" id="publicOrgStaffTable">
-          <thead>
-            <tr>
-              <th style="width:42px; text-align:center;">TT</th>
-              <th style="min-width:165px;">Họ và tên</th>
-              <th style="width:76px; text-align:center;">Năm sinh</th>
-              <th style="min-width:120px;">Chức vụ CQ</th>
-              <th style="min-width:135px;">Tổ / Bộ phận</th>
-              <th style="width:86px; text-align:center;">Đảng viên</th>
-              <th style="min-width:120px;">Chức vụ Đảng</th>
-              <th style="min-width:125px;">Môn giảng dạy</th>
-              <th style="width:88px; text-align:center;">Chủ nhiệm</th>
-              <th style="width:95px; text-align:center;">Trình độ CM</th>
-              <th style="min-width:110px;">Số ĐT</th>
-              <th style="min-width:155px;">Địa chỉ</th>
-            </tr>
-          </thead>
-          <tbody id="publicOrgStaffTbody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 2: HẠ TẦNG TRƯỜNG LỚP & CÁC KHỐI CÔNG TRÌNH -->
-    <div id="panelOrgInfra" class="org-tab-panel" style="display:none;">
-      <div class="infra-kpi-row" id="publicInfraKpiRow"></div>
-
-      <div class="org-toolbar">
-        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-          <input type="text" id="orgInfraSearchInput" class="org-search-input" placeholder="🔍 Tìm tên khối công trình, phòng chức năng, thiết bị..." oninput="renderPublicInfraTable()">
-          <select id="orgInfraGroupFilter" class="org-filter-select" onchange="renderPublicInfraTable()">
-            <option value="ALL">Tất cả Nhóm công trình</option>
-            <option value="Học tập">Phòng học chính khóa</option>
-            <option value="Bộ môn - Chức năng">Phòng Bộ môn - Chức năng</option>
-            <option value="Khu Bán trú">Khu Bán trú - Nhà ăn</option>
-            <option value="Hành chính - Quản trị">Hành chính - Quản trị</option>
-            <option value="Hạ tầng chung">Sân chơi - Hạ tầng chung</option>
-          </select>
-        </div>
-        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <span id="orgInfraCountBadge" class="org-count-badge">Tổng: 0 công trình</span>
-          <button type="button" onclick="downloadFacilityExcelTemplate()" class="org-excel-btn">📥 Tải mẫu Excel</button>
+        <div class="org-table-wrap">
+          <table class="org-data-table" id="publicOrgStaffTable">
+            <thead>
+              <tr>
+                <th style="width:42px; text-align:center;">TT</th>
+                <th style="min-width:165px;">Họ và tên</th>
+                <th style="width:74px; text-align:center;">Năm sinh</th>
+                <th style="min-width:145px;">Tổ / Phòng ban</th>
+                <th style="min-width:155px;">Chức vụ CQ</th>
+                <th style="width:94px; text-align:center;">Đảng/Đoàn</th>
+                <th style="min-width:130px;">Chức vụ Đảng/Đoàn</th>
+                <th style="min-width:140px;">Nhiệm vụ</th>
+                <th style="min-width:125px;">Nhiệm vụ khác</th>
+                <th style="width:82px; text-align:center;">TĐCM</th>
+                <th style="width:82px; text-align:center;">TĐLLCT</th>
+                <th style="min-width:108px;">Số ĐT</th>
+                <th style="min-width:150px;">Địa chỉ</th>
+              </tr>
+            </thead>
+            <tbody id="publicOrgStaffTbody"></tbody>
+          </table>
         </div>
       </div>
 
-      <div class="org-table-wrap">
-        <table class="org-data-table" id="publicInfraTable">
-          <thead>
-            <tr>
-              <th style="width:42px; text-align:center;">TT</th>
-              <th style="min-width:200px;">Tên khối công trình / Hạng mục</th>
-              <th style="min-width:140px;">Nhóm công trình</th>
-              <th style="width:110px; text-align:center;">Số phòng / Quy mô</th>
-              <th style="width:105px; text-align:right;">Diện tích (m²)</th>
-              <th style="width:105px; text-align:center;">Năm XD / Sửa</th>
-              <th style="width:110px; text-align:center;">Kết cấu</th>
-              <th style="width:125px; text-align:center;">Hiện trạng</th>
-              <th style="min-width:185px;">Ghi chú / Thiết bị chính</th>
-            </tr>
-          </thead>
-          <tbody id="publicInfraTbody"></tbody>
-        </table>
+      <!-- TAB 2: HẠ TẦNG TRƯỜNG LỚP & CÁC KHỐI CÔNG TRÌNH -->
+      <div id="panelOrgInfra" class="org-tab-panel" style="display:none;">
+        <div class="infra-kpi-row" id="publicInfraKpiRow"></div>
+
+        <div class="org-toolbar">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <input type="search" id="orgInfraSearchInput" name="ql_infra_search_nofill" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" readonly onfocus="this.removeAttribute('readonly')" class="org-search-input" placeholder="🔍 Tìm tên khối công trình, phòng chức năng, thiết bị..." oninput="renderPublicInfraTable()">
+            <select id="orgInfraGroupFilter" class="org-filter-select" onchange="renderPublicInfraTable()">
+              <option value="ALL">Tất cả Nhóm công trình</option>
+              <option value="Học tập">Phòng học chính khóa</option>
+              <option value="Bộ môn - Chức năng">Phòng Bộ môn - Chức năng</option>
+              <option value="Khu Bán trú">Khu Bán trú - Nhà ăn</option>
+              <option value="Hành chính - Quản trị">Hành chính - Quản trị</option>
+              <option value="Hạ tầng chung">Sân chơi - Hạ tầng chung</option>
+            </select>
+            <button type="button" onclick="resetPublicInfraFilters()" class="org-tab-btn" style="padding:6px 10px; font-size:12px;">↺ Hiện tất cả</button>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <span id="orgInfraCountBadge" class="org-count-badge">Tổng: 0 công trình</span>
+          </div>
+        </div>
+
+        <div class="org-table-wrap">
+          <table class="org-data-table" id="publicInfraTable">
+            <thead>
+              <tr>
+                <th style="width:42px; text-align:center;">TT</th>
+                <th style="min-width:200px;">Tên khối công trình / Hạng mục</th>
+                <th style="min-width:140px;">Nhóm công trình</th>
+                <th style="width:110px; text-align:center;">Số phòng / Quy mô</th>
+                <th style="width:105px; text-align:right;">Diện tích (m²)</th>
+                <th style="width:105px; text-align:center;">Năm XD / Sửa</th>
+                <th style="width:110px; text-align:center;">Kết cấu</th>
+                <th style="width:125px; text-align:center;">Hiện trạng</th>
+                <th style="min-width:185px;">Ghi chú / Thiết bị chính</th>
+              </tr>
+            </thead>
+            <tbody id="publicInfraTbody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
@@ -2523,32 +2519,46 @@ html, body {
         </div>
 
         <div id="orgInfraAdminBody" style="display:none; margin-top:12px; padding-top:12px; border-top:1px dashed #93c5fd;">
-          <!-- KHỐI 1: ĐỘI NGŨ CBGVNV -->
+          <!-- BƯỚC 1: KHAI BÁO CƠ CẤU TỔ - PHÒNG BAN TRƯỚC -->
+          <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:8px; padding:12px; margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+              <strong style="color:#166534; font-size:13px;">🏢 BƯỚC 1. Khai báo Cơ cấu Tổ / Phòng ban (<span id="adminOrgDeptCount">0</span> đơn vị)</strong>
+              <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                <input type="text" id="newOrgDeptInput" placeholder="Nhập tên Tổ / Phòng ban mới (vd: Tổ Toán - Tin)..." style="padding:5px 10px; border:1px solid #86efac; border-radius:5px; font-size:12px; min-width:250px;" onkeypress="if(event.key==='Enter') addOrgDepartment()">
+                <button type="button" onclick="addOrgDepartment()" style="background:#16a34a; color:#fff; border:none; padding:6px 12px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">➕ Thêm Tổ / Phòng ban</button>
+              </div>
+            </div>
+            <div id="adminOrgDeptChips" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+            <div style="font-size:11px; color:#15803d; margin-top:6px;">* Khai báo Tổ / Phòng ban trước — danh sách này tự động đưa vào ô chọn của từng Nhân sự và vào Dropdown cột Tổ / Phòng ban trong File Mẫu Excel!</div>
+          </div>
+
+          <!-- BƯỚC 2: DANH SÁCH ĐỘI NGŨ CBGVNV (13 CỘT CHUẨN KHỚP 1-1 VỚI FILE MẪU EXCEL & HIỂN THỊ) -->
           <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:12px; margin-bottom:12px;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-              <strong style="color:#1e3a8a; font-size:13px;">👩‍🏫 A. Danh sách Đội ngũ CBGVNV (<span id="adminOrgStaffCount">0</span> người)</strong>
+              <strong style="color:#1e3a8a; font-size:13px;">👩‍🏫 BƯỚC 2. Danh sách Đội ngũ CBGVNV thuộc Tổ / Phòng ban (<span id="adminOrgStaffCount">0</span> người)</strong>
               <div style="display:flex; gap:6px; flex-wrap:wrap;">
                 <button type="button" onclick="downloadOrgStaffExcelTemplate()" style="background:#059669; color:#fff; border:none; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">📥 1. Tải File Mẫu Excel (.xlsx)</button>
                 <label style="background:#0284c7; color:#fff; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer; display:inline-block;">
                   📂 2. Nhập Từ Excel (.xlsx)
                   <input type="file" accept=".xlsx,.xls" onchange="importOrgStaffFromExcel(event)" style="display:none;">
                 </label>
-                <button type="button" onclick="addEmptyOrgStaffRow()" style="background:#4f46e5; color:#fff; border:none; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">➕ Thêm dòng</button>
+                <button type="button" onclick="addEmptyOrgStaffRow()" style="background:#4f46e5; color:#fff; border:none; padding:6px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">➕ Thêm nhân sự</button>
               </div>
             </div>
-            <div style="overflow-x:auto; max-height:340px; border:1px solid #e2e8f0; border-radius:6px;">
-              <table style="width:100%; min-width:1120px; border-collapse:collapse; font-size:12px;">
+            <div style="overflow-x:auto; max-height:360px; border:1px solid #e2e8f0; border-radius:6px;">
+              <table id="adminOrgStaffTable" style="width:100%; min-width:1460px; border-collapse:collapse; font-size:12px;">
                 <thead style="background:#f1f5f9; position:sticky; top:0; z-index:2;">
                   <tr>
                     <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:155px;">Họ và tên</th>
                     <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:68px;">Năm sinh</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:115px;">Chức vụ CQ</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:140px;">Tổ / Bộ phận</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:74px;">Đảng viên</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:110px;">Chức vụ Đảng</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:120px;">Môn dạy</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:72px;">Chủ nhiệm</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:82px;">Trình độ</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:155px;">Tổ / Phòng ban</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:165px;">Chức vụ CQ</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:100px;">Đảng/Đoàn</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:135px;">Chức vụ Đảng/Đoàn</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:210px;">Nhiệm vụ</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:135px;">Nhiệm vụ khác</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:92px;">TĐCM</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:92px;">TĐLLCT</th>
                     <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:105px;">Số ĐT</th>
                     <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:150px;">Địa chỉ</th>
                     <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:40px;">Xóa</th>
