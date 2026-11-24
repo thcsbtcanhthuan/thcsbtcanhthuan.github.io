@@ -2561,7 +2561,7 @@ html, body {
                     <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:92px;">TĐLLCT</th>
                     <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:105px;">Số ĐT</th>
                     <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:150px;">Địa chỉ</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:40px;">Xóa</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:128px; text-align:center;">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody id="adminOrgStaffTbody"></tbody>
@@ -2583,18 +2583,18 @@ html, body {
               </div>
             </div>
             <div style="overflow-x:auto; max-height:320px; border:1px solid #e2e8f0; border-radius:6px;">
-              <table style="width:100%; min-width:1040px; border-collapse:collapse; font-size:12px;">
+              <table id="adminFacilityTable" style="width:100%; min-width:1120px; border-collapse:collapse; font-size:12px;">
                 <thead style="background:#f1f5f9; position:sticky; top:0; z-index:2;">
                   <tr>
                     <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:200px;">Tên khối công trình / Hạng mục</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:140px;">Nhóm công trình</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:110px;">Số phòng / Quy mô</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:82px;">DT (m²)</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:80px;">Năm XD</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:105px;">Kết cấu</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:120px;">Hiện trạng</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:185px;">Ghi chú / Thiết bị</th>
-                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:40px;">Xóa</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:145px;">Nhóm công trình</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:115px;">Số phòng / Quy mô</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:86px;">DT (m²)</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; width:82px;">Năm XD</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:115px;">Kết cấu</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:125px;">Hiện trạng</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:175px;">Ghi chú / Thiết bị</th>
+                    <th style="padding:7px 6px; border-bottom:1px solid #cbd5e1; min-width:128px; text-align:center;">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody id="adminFacilityTbody"></tbody>
@@ -6125,10 +6125,20 @@ function renderPublicInfraTable() {
   </tr>`).join('');
 }
 
-// ===== ADMIN: BƯỚC 1 KHAI BÁO TỔ/PHÒNG BAN -> BƯỚC 2 NHÂN SỰ (13 TRƯỜNG ĐỘNG) -> KHỐI CÔNG TRÌNH =====
+// ===== ADMIN: BƯỚC 1 KHAI BÁO TỔ/PHÒNG BAN -> BƯỚC 2 NHÂN SỰ (THÊM/SỬA/LƯU/XÓA CÓ BẮT LỖI) -> HẠ TẦNG =====
 let _adminOrgDeptsDraft = [];
 let _adminOrgStaffDraft = [];
 let _adminFacilityDraft = [];
+let _editingStaffIdx = -1;
+let _editingStaffIsNew = false;
+let _editingStaffBackup = null;
+let _editingFacIdx = -1;
+let _editingFacIsNew = false;
+let _editingFacBackup = null;
+
+const FAC_GROUP_OPTIONS = ['Học tập', 'Bộ môn - Chức năng', 'Khu Bán trú', 'Hành chính - Quản trị', 'Hạ tầng chung'];
+const FAC_STRUCT_OPTIONS = ['Kiên cố', 'Bán kiên cố', 'Cấp 4', 'Bê tông / Cáp quang', 'Khác'];
+const FAC_STATUS_OPTIONS = ['Tốt / Đạt chuẩn', 'Khá', 'Cần tu sửa', 'Đang nâng cấp'];
 
 function toggleOrgInfraAdminPanel() {
   const body = document.getElementById('orgInfraAdminBody');
@@ -6141,6 +6151,8 @@ function toggleOrgInfraAdminPanel() {
     _adminOrgDeptsDraft = getOrgDepartments().slice();
     _adminOrgStaffDraft = getOrgStaffList().map(x => ({ ...x }));
     _adminFacilityDraft = getFacilityList().map(x => ({ ...x }));
+    _editingStaffIdx = -1; _editingStaffIsNew = false; _editingStaffBackup = null;
+    _editingFacIdx = -1; _editingFacIsNew = false; _editingFacBackup = null;
     renderAdminOrgDeptChips();
     renderAdminOrgStaffRows();
     renderAdminFacilityRows();
@@ -6196,36 +6208,138 @@ function renderAdminOrgStaffRows() {
   if (!tbody) return;
   const deptOpts = _adminOrgDeptsDraft.length ? _adminOrgDeptsDraft : DEFAULT_ORG_DEPTS;
 
-  tbody.innerHTML = _adminOrgStaffDraft.map((s, i) => `<tr>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.name)}" oninput="_adminOrgStaffDraft[${i}].name=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.birthYear)}" oninput="_adminOrgStaffDraft[${i}].birthYear=this.value"></td>
-    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].dept=this.value">${_buildSelectOptions(deptOpts, s.dept || deptOpts[0])}</select></td>
-    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].govRole=this.value">${_buildSelectOptions(GOV_ROLE_OPTIONS, s.govRole)}</select></td>
-    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].partyType=this.value">${_buildSelectOptions(PARTY_TYPE_OPTIONS, s.partyType)}</select></td>
-    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].partyRole=this.value">${_buildSelectOptions(PARTY_ROLE_OPTIONS, s.partyRole)}</select></td>
-    <td style="padding:4px;">
-      <div style="display:flex; gap:4px; align-items:center;">
-        <select class="adm-cell-inp" style="flex:1;" onchange="onAdminDutyChange(${i}, this.value)">${_buildSelectOptions(DUTY_SUBJECT_OPTIONS, s.duty)}</select>
-        ${s.duty === 'Khác' ? `<input class="adm-cell-inp" style="flex:1; border-color:#f59e0b; background:#fffbeb;" placeholder="Nhập nhiệm vụ..." value="${_escOrg(s.dutyCustom)}" oninput="_adminOrgStaffDraft[${i}].dutyCustom=this.value">` : ''}
-      </div>
-    </td>
-    <td style="padding:4px;"><input class="adm-cell-inp" placeholder="VD: Chủ nhiệm 9A1..." value="${_escOrg(s.otherDuty)}" oninput="_adminOrgStaffDraft[${i}].otherDuty=this.value"></td>
-    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].tdcm=this.value">${_buildSelectOptions(TDCM_OPTIONS, s.tdcm)}</select></td>
-    <td style="padding:4px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].tdllct=this.value">${_buildSelectOptions(TDLLCT_OPTIONS, s.tdllct)}</select></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.phone)}" oninput="_adminOrgStaffDraft[${i}].phone=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(s.address)}" oninput="_adminOrgStaffDraft[${i}].address=this.value"></td>
-    <td style="padding:4px; text-align:center;"><button type="button" onclick="_adminOrgStaffDraft.splice(${i},1);renderAdminOrgStaffRows();" style="border:none;background:none;color:#dc2626;cursor:pointer;font-weight:800;">✕</button></td>
-  </tr>`).join('');
+  if (!_adminOrgStaffDraft.length) {
+    tbody.innerHTML = '<tr><td colspan="13" style="text-align:center; padding:14px; color:#64748b;">Chưa có nhân sự nào. Bấm "➕ Thêm nhân sự" hoặc "📂 2. Nhập Từ Excel".</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = _adminOrgStaffDraft.map((s, i) => {
+    const isEditing = (_editingStaffIdx === i);
+    if (isEditing) {
+      return `<tr style="background:#eff6ff; outline:2px solid #3b82f6;">
+        <td style="padding:5px;"><input id="editStaffName_${i}" class="adm-cell-inp" placeholder="Họ và tên (*)" value="${_escOrg(s.name)}" oninput="_adminOrgStaffDraft[${i}].name=this.value"></td>
+        <td style="padding:5px;"><input id="editStaffYear_${i}" class="adm-cell-inp" placeholder="VD: 1985 (*)" maxlength="4" value="${_escOrg(s.birthYear)}" oninput="_adminOrgStaffDraft[${i}].birthYear=this.value"></td>
+        <td style="padding:5px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].dept=this.value">${_buildSelectOptions(deptOpts, s.dept || deptOpts[0])}</select></td>
+        <td style="padding:5px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].govRole=this.value">${_buildSelectOptions(GOV_ROLE_OPTIONS, s.govRole)}</select></td>
+        <td style="padding:5px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].partyType=this.value">${_buildSelectOptions(PARTY_TYPE_OPTIONS, s.partyType)}</select></td>
+        <td style="padding:5px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].partyRole=this.value">${_buildSelectOptions(PARTY_ROLE_OPTIONS, s.partyRole)}</select></td>
+        <td style="padding:5px;">
+          <div style="display:flex; gap:4px; align-items:center;">
+            <select class="adm-cell-inp" style="flex:1;" onchange="onAdminDutyChange(${i}, this.value)">${_buildSelectOptions(DUTY_SUBJECT_OPTIONS, s.duty)}</select>
+            ${s.duty === 'Khác' ? `<input id="editStaffDutyCustom_${i}" class="adm-cell-inp" style="flex:1; border-color:#f59e0b; background:#fffbeb;" placeholder="Nhập nhiệm vụ (*)..." value="${_escOrg(s.dutyCustom)}" oninput="_adminOrgStaffDraft[${i}].dutyCustom=this.value">` : ''}
+          </div>
+        </td>
+        <td style="padding:5px;"><input class="adm-cell-inp" placeholder="VD: Chủ nhiệm 9A1..." value="${_escOrg(s.otherDuty)}" oninput="_adminOrgStaffDraft[${i}].otherDuty=this.value"></td>
+        <td style="padding:5px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].tdcm=this.value">${_buildSelectOptions(TDCM_OPTIONS, s.tdcm)}</select></td>
+        <td style="padding:5px;"><select class="adm-cell-inp" onchange="_adminOrgStaffDraft[${i}].tdllct=this.value">${_buildSelectOptions(TDLLCT_OPTIONS, s.tdllct)}</select></td>
+        <td style="padding:5px;"><input class="adm-cell-inp" placeholder="Số ĐT..." value="${_escOrg(s.phone)}" oninput="_adminOrgStaffDraft[${i}].phone=this.value"></td>
+        <td style="padding:5px;"><input class="adm-cell-inp" placeholder="Địa chỉ..." value="${_escOrg(s.address)}" oninput="_adminOrgStaffDraft[${i}].address=this.value"></td>
+        <td style="padding:5px; text-align:center; white-space:nowrap;">
+          <button type="button" onclick="saveAdminStaffRow(${i})" style="background:#059669; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-size:11.5px; font-weight:700; cursor:pointer; margin-right:3px;">💾 Lưu</button>
+          <button type="button" onclick="cancelAdminStaffRow(${i})" style="background:#e2e8f0; color:#334155; border:none; padding:4px 7px; border-radius:4px; font-size:11.5px; font-weight:700; cursor:pointer;">✕</button>
+        </td>
+      </tr>`;
+    }
+    return `<tr style="border-bottom:1px solid #e2e8f0;">
+      <td style="padding:6px 7px;"><strong style="color:#0f3460;">${_escOrg(s.name)}</strong></td>
+      <td style="padding:6px 7px; text-align:center;">${_escOrg(s.birthYear)}</td>
+      <td style="padding:6px 7px;">${_escOrg(s.dept)}</td>
+      <td style="padding:6px 7px;">${_escOrg(s.govRole)}</td>
+      <td style="padding:6px 7px; text-align:center;">${_escOrg(s.partyType)}</td>
+      <td style="padding:6px 7px;">${_escOrg(s.partyRole || '—')}</td>
+      <td style="padding:6px 7px; color:#0f766e; font-weight:600;">${_escOrg(getDisplayDuty(s))}</td>
+      <td style="padding:6px 7px;">${_escOrg(s.otherDuty || '—')}</td>
+      <td style="padding:6px 7px; text-align:center;">${_escOrg(s.tdcm)}</td>
+      <td style="padding:6px 7px; text-align:center;">${_escOrg(s.tdllct)}</td>
+      <td style="padding:6px 7px;">${_escOrg(s.phone || '—')}</td>
+      <td style="padding:6px 7px;">${_escOrg(s.address || '—')}</td>
+      <td style="padding:6px 7px; text-align:center; white-space:nowrap;">
+        <button type="button" onclick="editAdminStaffRow(${i})" style="background:#eff6ff; color:#1d4ed8; border:1px solid #93c5fd; padding:3px 8px; border-radius:4px; font-size:11.5px; font-weight:700; cursor:pointer; margin-right:3px;">✏️ Sửa</button>
+        <button type="button" onclick="deleteAdminStaffRow(${i})" style="background:#fef2f2; color:#dc2626; border:1px solid #fca5a5; padding:3px 7px; border-radius:4px; font-size:11.5px; font-weight:700; cursor:pointer;">🗑️ Xóa</button>
+      </td>
+    </tr>`;
+  }).join('');
 }
 
 function addEmptyOrgStaffRow() {
+  if (_editingStaffIdx !== -1) {
+    alert('Vui lòng bấm "💾 Lưu" hoặc "✕ Hủy" dòng nhân sự đang nhập dở trước khi thêm dòng mới!');
+    return;
+  }
   const firstDept = _adminOrgDeptsDraft[0] || DEFAULT_ORG_DEPTS[0];
-  _adminOrgStaffDraft.push({
+  _adminOrgStaffDraft.unshift({
     name: '', birthYear: '', dept: firstDept, govRole: 'Giáo viên/Thành viên',
     partyType: 'Chưa', partyRole: '', duty: 'Toán', dutyCustom: '',
     otherDuty: '', tdcm: 'ĐH', tdllct: 'Sơ cấp', phone: '', address: ''
   });
+  _editingStaffIdx = 0;
+  _editingStaffIsNew = true;
+  _editingStaffBackup = null;
   renderAdminOrgStaffRows();
+  setTimeout(() => document.getElementById('editStaffName_0')?.focus(), 50);
+}
+
+function editAdminStaffRow(i) {
+  if (_editingStaffIdx !== -1 && _editingStaffIdx !== i) {
+    alert('Vui lòng bấm "💾 Lưu" hoặc "✕ Hủy" dòng nhân sự đang sửa hiện tại trước!');
+    return;
+  }
+  _editingStaffBackup = { ..._adminOrgStaffDraft[i] };
+  _editingStaffIdx = i;
+  _editingStaffIsNew = false;
+  renderAdminOrgStaffRows();
+  setTimeout(() => document.getElementById(`editStaffName_${i}`)?.focus(), 50);
+}
+
+function saveAdminStaffRow(i) {
+  const s = _adminOrgStaffDraft[i];
+  const errs = [];
+  if (!String(s.name || '').trim()) errs.push('• Họ và tên');
+  const yr = String(s.birthYear || '').trim();
+  if (!/^(19|20)\d{2}$/.test(yr)) errs.push('• Năm sinh (4 chữ số hợp lệ, VD: 1985)');
+  if (!String(s.dept || '').trim()) errs.push('• Tổ / Phòng ban');
+  if (!String(s.govRole || '').trim()) errs.push('• Chức vụ CQ');
+  if (!String(s.duty || '').trim()) errs.push('• Nhiệm vụ');
+  if (s.duty === 'Khác' && !String(s.dutyCustom || '').trim()) errs.push('• Nhiệm vụ cụ thể (do chọn Khác)');
+  if (!String(s.tdcm || '').trim()) errs.push('• TĐCM');
+  if (!String(s.tdllct || '').trim()) errs.push('• TĐLLCT');
+
+  if (errs.length) {
+    alert('⚠️ Không thể lưu! Vui lòng nhập đầy đủ các trường bắt buộc sau:\n\n' + errs.join('\n'));
+    return;
+  }
+  _adminOrgStaffDraft[i] = normalizeStaffRecord(s);
+  _editingStaffIdx = -1;
+  _editingStaffIsNew = false;
+  _editingStaffBackup = null;
+  localStorage.setItem(ORG_DEPTS_KEY, JSON.stringify(_adminOrgDeptsDraft));
+  localStorage.setItem(ORG_STAFF_KEY, JSON.stringify(_adminOrgStaffDraft));
+  renderAdminOrgStaffRows();
+  renderPublicOrgDeptUI();
+  renderPublicOrgStaffTable();
+}
+
+function cancelAdminStaffRow(i) {
+  if (_editingStaffIsNew) {
+    _adminOrgStaffDraft.splice(i, 1);
+  } else if (_editingStaffBackup) {
+    _adminOrgStaffDraft[i] = _editingStaffBackup;
+  }
+  _editingStaffIdx = -1;
+  _editingStaffIsNew = false;
+  _editingStaffBackup = null;
+  renderAdminOrgStaffRows();
+}
+
+function deleteAdminStaffRow(i) {
+  const s = _adminOrgStaffDraft[i];
+  if (!confirm(`Xóa nhân sự "${s?.name || ''}" khỏi danh sách?`)) return;
+  _adminOrgStaffDraft.splice(i, 1);
+  if (_editingStaffIdx === i) { _editingStaffIdx = -1; _editingStaffIsNew = false; }
+  localStorage.setItem(ORG_STAFF_KEY, JSON.stringify(_adminOrgStaffDraft));
+  renderAdminOrgStaffRows();
+  renderPublicOrgDeptUI();
+  renderPublicOrgStaffTable();
 }
 
 function renderAdminFacilityRows() {
@@ -6233,22 +6347,117 @@ function renderAdminFacilityRows() {
   const cnt = document.getElementById('adminFacilityCount');
   if (cnt) cnt.textContent = String(_adminFacilityDraft.length);
   if (!tbody) return;
-  tbody.innerHTML = _adminFacilityDraft.map((f, i) => `<tr>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.name)}" oninput="_adminFacilityDraft[${i}].name=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.group)}" oninput="_adminFacilityDraft[${i}].group=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.scale)}" oninput="_adminFacilityDraft[${i}].scale=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.area)}" oninput="_adminFacilityDraft[${i}].area=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.year)}" oninput="_adminFacilityDraft[${i}].year=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.structure)}" oninput="_adminFacilityDraft[${i}].structure=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.status)}" oninput="_adminFacilityDraft[${i}].status=this.value"></td>
-    <td style="padding:4px;"><input class="adm-cell-inp" value="${_escOrg(f.note)}" oninput="_adminFacilityDraft[${i}].note=this.value"></td>
-    <td style="padding:4px; text-align:center;"><button type="button" onclick="_adminFacilityDraft.splice(${i},1);renderAdminFacilityRows();" style="border:none;background:none;color:#dc2626;cursor:pointer;font-weight:800;">✕</button></td>
-  </tr>`).join('');
+
+  if (!_adminFacilityDraft.length) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:14px; color:#64748b;">Chưa có công trình nào. Bấm "➕ Thêm công trình" hoặc "📂 2. Nhập Từ Excel".</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = _adminFacilityDraft.map((f, i) => {
+    const isEditing = (_editingFacIdx === i);
+    if (isEditing) {
+      return `<tr style="background:#f0fdfa; outline:2px solid #0d9488;">
+        <td style="padding:5px;"><input id="editFacName_${i}" class="adm-cell-inp" placeholder="Tên khối công trình (*)" value="${_escOrg(f.name)}" oninput="_adminFacilityDraft[${i}].name=this.value"></td>
+        <td style="padding:5px;"><select class="adm-cell-inp" onchange="_adminFacilityDraft[${i}].group=this.value">${_buildSelectOptions(FAC_GROUP_OPTIONS, f.group)}</select></td>
+        <td style="padding:5px;"><input class="adm-cell-inp" placeholder="VD: 09 phòng (*)" value="${_escOrg(f.scale)}" oninput="_adminFacilityDraft[${i}].scale=this.value"></td>
+        <td style="padding:5px;"><input class="adm-cell-inp" type="number" min="0" placeholder="m² (*)" value="${_escOrg(f.area)}" oninput="_adminFacilityDraft[${i}].area=this.value"></td>
+        <td style="padding:5px;"><input class="adm-cell-inp" placeholder="VD: 2022" maxlength="4" value="${_escOrg(f.year)}" oninput="_adminFacilityDraft[${i}].year=this.value"></td>
+        <td style="padding:5px;"><select class="adm-cell-inp" onchange="_adminFacilityDraft[${i}].structure=this.value">${_buildSelectOptions(FAC_STRUCT_OPTIONS, f.structure)}</select></td>
+        <td style="padding:5px;"><select class="adm-cell-inp" onchange="_adminFacilityDraft[${i}].status=this.value">${_buildSelectOptions(FAC_STATUS_OPTIONS, f.status)}</select></td>
+        <td style="padding:5px;"><input class="adm-cell-inp" placeholder="Ghi chú / Thiết bị chính..." value="${_escOrg(f.note)}" oninput="_adminFacilityDraft[${i}].note=this.value"></td>
+        <td style="padding:5px; text-align:center; white-space:nowrap;">
+          <button type="button" onclick="saveAdminFacilityRow(${i})" style="background:#059669; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-size:11.5px; font-weight:700; cursor:pointer; margin-right:3px;">💾 Lưu</button>
+          <button type="button" onclick="cancelAdminFacilityRow(${i})" style="background:#e2e8f0; color:#334155; border:none; padding:4px 7px; border-radius:4px; font-size:11.5px; font-weight:700; cursor:pointer;">✕</button>
+        </td>
+      </tr>`;
+    }
+    return `<tr style="border-bottom:1px solid #e2e8f0;">
+      <td style="padding:6px 7px;"><strong style="color:#0f3460;">${_escOrg(f.name)}</strong></td>
+      <td style="padding:6px 7px;">${_escOrg(f.group)}</td>
+      <td style="padding:6px 7px; text-align:center; font-weight:600;">${_escOrg(f.scale)}</td>
+      <td style="padding:6px 7px; text-align:right; color:#0f766e; font-weight:700;">${f.area ? Number(f.area).toLocaleString('vi-VN') : '—'}</td>
+      <td style="padding:6px 7px; text-align:center;">${_escOrg(f.year || '—')}</td>
+      <td style="padding:6px 7px; text-align:center;">${_escOrg(f.structure)}</td>
+      <td style="padding:6px 7px; text-align:center;">${_escOrg(f.status)}</td>
+      <td style="padding:6px 7px;">${_escOrg(f.note || '—')}</td>
+      <td style="padding:6px 7px; text-align:center; white-space:nowrap;">
+        <button type="button" onclick="editAdminFacilityRow(${i})" style="background:#eff6ff; color:#1d4ed8; border:1px solid #93c5fd; padding:3px 8px; border-radius:4px; font-size:11.5px; font-weight:700; cursor:pointer; margin-right:3px;">✏️ Sửa</button>
+        <button type="button" onclick="deleteAdminFacilityRow(${i})" style="background:#fef2f2; color:#dc2626; border:1px solid #fca5a5; padding:3px 7px; border-radius:4px; font-size:11.5px; font-weight:700; cursor:pointer;">🗑️ Xóa</button>
+      </td>
+    </tr>`;
+  }).join('');
 }
 
 function addEmptyFacilityRow() {
-  _adminFacilityDraft.push({ name: '', group: 'Học tập', scale: '', area: '', year: '2026', structure: 'Kiên cố', status: 'Tốt / Đạt chuẩn', note: '' });
+  if (_editingFacIdx !== -1) {
+    alert('Vui lòng bấm "💾 Lưu" hoặc "✕ Hủy" dòng công trình đang nhập dở trước khi thêm mới!');
+    return;
+  }
+  _adminFacilityDraft.unshift({ name: '', group: 'Học tập', scale: '', area: '', year: '2026', structure: 'Kiên cố', status: 'Tốt / Đạt chuẩn', note: '' });
+  _editingFacIdx = 0;
+  _editingFacIsNew = true;
+  _editingFacBackup = null;
   renderAdminFacilityRows();
+  setTimeout(() => document.getElementById('editFacName_0')?.focus(), 50);
+}
+
+function editAdminFacilityRow(i) {
+  if (_editingFacIdx !== -1 && _editingFacIdx !== i) {
+    alert('Vui lòng bấm "💾 Lưu" hoặc "✕ Hủy" dòng công trình đang sửa hiện tại trước!');
+    return;
+  }
+  _editingFacBackup = { ..._adminFacilityDraft[i] };
+  _editingFacIdx = i;
+  _editingFacIsNew = false;
+  renderAdminFacilityRows();
+  setTimeout(() => document.getElementById(`editFacName_${i}`)?.focus(), 50);
+}
+
+function saveAdminFacilityRow(i) {
+  const f = _adminFacilityDraft[i];
+  const errs = [];
+  if (!String(f.name || '').trim()) errs.push('• Tên khối công trình / Hạng mục');
+  if (!String(f.group || '').trim()) errs.push('• Nhóm công trình');
+  if (!String(f.scale || '').trim()) errs.push('• Số phòng / Quy mô');
+  if (!(parseFloat(f.area) > 0)) errs.push('• Diện tích (m²) phải lớn hơn 0');
+  if (!String(f.structure || '').trim()) errs.push('• Kết cấu');
+  if (!String(f.status || '').trim()) errs.push('• Hiện trạng');
+
+  if (errs.length) {
+    alert('⚠️ Không thể lưu! Vui lòng nhập đầy đủ các trường bắt buộc sau:\n\n' + errs.join('\n'));
+    return;
+  }
+  f.name = String(f.name).trim();
+  f.scale = String(f.scale).trim();
+  f.area = Number(f.area);
+  _editingFacIdx = -1;
+  _editingFacIsNew = false;
+  _editingFacBackup = null;
+  localStorage.setItem(FACILITY_LIST_KEY, JSON.stringify(_adminFacilityDraft));
+  renderAdminFacilityRows();
+  renderPublicInfraTable();
+}
+
+function cancelAdminFacilityRow(i) {
+  if (_editingFacIsNew) {
+    _adminFacilityDraft.splice(i, 1);
+  } else if (_editingFacBackup) {
+    _adminFacilityDraft[i] = _editingFacBackup;
+  }
+  _editingFacIdx = -1;
+  _editingFacIsNew = false;
+  _editingFacBackup = null;
+  renderAdminFacilityRows();
+}
+
+function deleteAdminFacilityRow(i) {
+  const f = _adminFacilityDraft[i];
+  if (!confirm(`Xóa khối công trình "${f?.name || ''}" khỏi danh sách?`)) return;
+  _adminFacilityDraft.splice(i, 1);
+  if (_editingFacIdx === i) { _editingFacIdx = -1; _editingFacIsNew = false; }
+  localStorage.setItem(FACILITY_LIST_KEY, JSON.stringify(_adminFacilityDraft));
+  renderAdminFacilityRows();
+  renderPublicInfraTable();
 }
 
 // XUẤT FILE MẪU EXCEL ĐỘI NGŨ (13 CỘT CHUẨN + DROPDOWN DATA VALIDATION THẬT TRONG EXCEL + SHEET 2 DANH MỤC CHỌN ĐỘNG)
