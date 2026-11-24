@@ -2795,6 +2795,7 @@ html, body {
         </div>
         <div style="margin-bottom:10px;">
           <textarea id="postContent" onpaste="handleSmartImagePaste(event, 'admin')" placeholder="Nội dung tóm tắt chi tiết bài viết (hỗ trợ bấm Ctrl + V để dán ảnh trực tiếp từ Facebook/Zalo)..." rows="3" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;"></textarea>
+          <div id="adminPastedImagesPreview" style="display:none; margin-top:6px; padding:8px; background:#f0fdf4; border:1px solid #86efac; border-radius:7px; flex-wrap:wrap; gap:8px; align-items:center;"></div>
         </div>
 
         <!-- FILE ATTACHMENT BOX (MULTI-FILE UPLOAD + SMART LIMITS) -->
@@ -3679,6 +3680,8 @@ function renderSelectedFilesList() {
   if (currentAttachedFiles.length === 0) {
     listEl.innerHTML = '';
     if (clearBtn) clearBtn.style.display = 'none';
+    const pStrip = document.getElementById('adminPastedImagesPreview');
+    if (pStrip) { pStrip.style.display = 'none'; pStrip.innerHTML = ''; }
     return;
   }
 
@@ -7337,15 +7340,17 @@ async function handleSmartImagePaste(evt, mode) {
             alert(`🖼️ Đã dán & nén ảnh thành công (${compressed.size}) từ Clipboard!`);
           } else if (mode === 'admin') {
             if (typeof currentAttachedFiles !== 'undefined' && Array.isArray(currentAttachedFiles)) {
+              const approxBytes = Math.round((compressed.rawBase64.length * 3) / 4);
               currentAttachedFiles.push({
                 name: compressed.name,
                 size: compressed.size,
+                sizeBytes: approxBytes,
                 dataUrl: compressed.dataUrl,
                 rawBase64: compressed.rawBase64,
                 isImage: true
               });
               if (typeof renderSelectedFilesList === 'function') renderSelectedFilesList();
-              alert(`🖼️ Đã dán & đính kèm ảnh (${compressed.size}) vào danh sách tệp bên dưới! (Có thể dán tiếp nhiều ảnh)`);
+              renderAdminPastedImagesStrip();
             }
           }
         } catch (err) {
@@ -7354,6 +7359,28 @@ async function handleSmartImagePaste(evt, mode) {
       }
     }
   }
+}
+
+function renderAdminPastedImagesStrip() {
+  const box = document.getElementById('adminPastedImagesPreview');
+  if (!box) return;
+  const imgs = (typeof currentAttachedFiles !== 'undefined' && Array.isArray(currentAttachedFiles))
+    ? currentAttachedFiles.map((f, idx) => ({ f, idx })).filter(x => x.f && x.f.dataUrl && String(x.f.dataUrl).startsWith('data:image/'))
+    : [];
+  if (!imgs.length) {
+    box.style.display = 'none';
+    box.innerHTML = '';
+    return;
+  }
+  box.style.display = 'flex';
+  box.innerHTML = `<div style="width:100%; font-size:11.5px; font-weight:800; color:#15803d;">🖼️ Ảnh vừa dán (${imgs.length} ảnh — sẽ tự đăng kèm bài viết):</div>` +
+    imgs.map(({ f, idx }) => `
+      <div style="position:relative; display:inline-flex; flex-direction:column; align-items:center; background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:3px;">
+        <img src="${f.dataUrl}" alt="" style="width:82px; height:60px; object-fit:cover; border-radius:4px;">
+        <small style="font-size:10px; color:#475569; max-width:82px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${_webEsc(f.size || '')}</small>
+        <button type="button" onclick="removeSelectedFile(${idx}); renderAdminPastedImagesStrip();" style="position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%; border:none; background:#dc2626; color:#fff; font-size:11px; font-weight:800; cursor:pointer; line-height:1;">✕</button>
+      </div>
+    `).join('');
 }
 
 // ===== 3. TRÍCH XUẤT TỰ ĐỘNG TỪ LINK WEBSITE KHÁC (r.jina.ai HỖ TRỢ CORS 100%) + NHẬN DIỆN FANPAGE FACEBOOK =====
