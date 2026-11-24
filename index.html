@@ -2794,7 +2794,7 @@ html, body {
           </div>
         </div>
         <div style="margin-bottom:10px;">
-          <textarea id="postContent" placeholder="Nội dung tóm tắt chi tiết bài viết..." rows="3" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;"></textarea>
+          <textarea id="postContent" onpaste="handleSmartImagePaste(event, 'admin')" placeholder="Nội dung tóm tắt chi tiết bài viết (hỗ trợ bấm Ctrl + V để dán ảnh trực tiếp từ Facebook/Zalo)..." rows="3" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;"></textarea>
         </div>
 
         <!-- FILE ATTACHMENT BOX (MULTI-FILE UPLOAD + SMART LIMITS) -->
@@ -7318,7 +7318,7 @@ function clearEditorImage() {
   _showEditorImagePreview();
 }
 
-// Hỗ trợ Ctrl + V dán ảnh trực tiếp từ Facebook / Zalo / Chụp màn hình vào khung nội dung!
+// Hỗ trợ Ctrl + V dán ảnh trực tiếp từ Facebook / Zalo / Chụp màn hình vào khung nội dung (Cả Hiệu trưởng lẫn CTV)!
 async function handleSmartImagePaste(evt, mode) {
   const items = evt.clipboardData && evt.clipboardData.items;
   if (!items) return;
@@ -7329,12 +7329,28 @@ async function handleSmartImagePaste(evt, mode) {
         evt.preventDefault();
         try {
           const compressed = await compressImageToDataUrl(blob);
+          const uniqueName = `anh_dan_${Date.now()}.jpg`;
+          compressed.name = uniqueName;
           if (mode === 'editor') {
             _editorAttachedImage = compressed;
             _showEditorImagePreview();
             alert(`🖼️ Đã dán & nén ảnh thành công (${compressed.size}) từ Clipboard!`);
+          } else if (mode === 'admin') {
+            if (typeof currentAttachedFiles !== 'undefined' && Array.isArray(currentAttachedFiles)) {
+              currentAttachedFiles.push({
+                name: compressed.name,
+                size: compressed.size,
+                dataUrl: compressed.dataUrl,
+                rawBase64: compressed.rawBase64,
+                isImage: true
+              });
+              if (typeof renderSelectedFilesList === 'function') renderSelectedFilesList();
+              alert(`🖼️ Đã dán & đính kèm ảnh (${compressed.size}) vào danh sách tệp bên dưới! (Có thể dán tiếp nhiều ảnh)`);
+            }
           }
-        } catch (_) {}
+        } catch (err) {
+          alert('⚠️ Không đọc được ảnh dán từ Clipboard: ' + err.message);
+        }
       }
     }
   }
@@ -7466,6 +7482,9 @@ async function saveAdminDraftToPendingQueue() {
   const sourceUrl = (document.getElementById('admImportUrl')?.value || '').trim();
   if (!title || !content) return alert('⚠️ Vui lòng nhập (hoặc trích xuất) Tiêu đề và Nội dung trước khi lưu vào Hộp Chờ Duyệt!');
 
+  const firstImg = (typeof currentAttachedFiles !== 'undefined' && Array.isArray(currentAttachedFiles))
+    ? currentAttachedFiles.find(f => f && f.dataUrl && String(f.dataUrl).startsWith('data:image/'))
+    : null;
   const pid = 'pnd_' + Date.now();
   const payload = {
     id: pid,
@@ -7482,14 +7501,15 @@ async function saveAdminDraftToPendingQueue() {
     authorRole: 'Ban Giám hiệu',
     createdAt: _nowVnStr(),
     reviewNote: '',
-    imageName: '',
-    imageDataUrl: ''
+    imageName: firstImg ? firstImg.name : '',
+    imageDataUrl: firstImg ? firstImg.dataUrl : ''
   };
   const ok = await _webFsPatch('web_pending_posts', pid, payload);
   if (ok) {
     document.getElementById('postTitle').value = '';
     document.getElementById('postContent').value = '';
     document.getElementById('admImportUrl').value = '';
+    if (typeof clearSelectedFile === 'function') clearSelectedFile();
     await loadPendingPostsFromFirebase();
     alert('📥 Đã đưa bài vào Hộp Chờ Phê Duyệt! Khi nào cần đăng, Thầy chỉ cần bấm 1 nút Duyệt là lên cả Web + Fanpage.');
   } else {
