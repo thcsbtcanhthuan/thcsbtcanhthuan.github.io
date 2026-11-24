@@ -2390,8 +2390,123 @@ html, body {
       </div>
     </div>
 
+    <!-- ================= BÀN LÀM VIỆC BAN BIÊN TẬP / CỘNG TÁC VIÊN (CHỈ GỬI BÀI CHỜ HIỆU TRƯỞNG DUYỆT) ================= -->
+    <div id="editorPortalSection" style="display:none; max-height:78vh; overflow-y:auto; padding-right:6px;">
+      <div style="background:linear-gradient(135deg,#0f3460,#1d4ed8); color:#fff; border-radius:10px; padding:12px 16px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div>
+          <div style="font-size:14.5px; font-weight:800;">✍️ BÀN LÀM VIỆC THÀNH VIÊN BAN BIÊN TẬP (CỘNG TÁC VIÊN)</div>
+          <div id="editorWelcomeText" style="font-size:12px; color:#bae6fd; margin-top:2px;">Đang đăng nhập: Thành viên Ban Biên tập • Mọi bài gửi sẽ chuyển vào Hộp Chờ Hiệu trưởng phê duyệt</div>
+        </div>
+        <button type="button" onclick="logoutEditorPortal()" style="background:rgba(255,255,255,0.18); color:#fff; border:1px solid rgba(255,255,255,0.35); padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">🚪 Đăng xuất</button>
+      </div>
+
+      <!-- LẤY BÀI NHANH TỪ LINK WEB KHÁC HOẶC DÁN TỪ FANPAGE -->
+      <div style="background:#f0f9ff; border:1px solid #7dd3fc; border-radius:8px; padding:12px 14px; margin-bottom:12px;">
+        <div style="font-size:12.5px; font-weight:800; color:#0369a1; margin-bottom:7px;">🌐 LẤY BÀI NHANH TỪ WEBSITE KHÁC HOẶC FANPAGE FACEBOOK</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
+          <input type="url" id="edImportUrl" placeholder="Dán đường link bài báo (Bộ GD, Sở GD, Báo...) hoặc link bài viết Fanpage Facebook..." style="flex:1; min-width:240px; padding:8px 10px; border:1px solid #93c5fd; border-radius:6px; font-size:12.5px;">
+          <button type="button" id="btnEdFetchWeb" onclick="extractExternalArticleToForm('editor')" style="background:#0284c7; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-size:12.5px; font-weight:700; cursor:pointer;">⚡ Lấy nội dung tự động</button>
+        </div>
+        <div style="font-size:11.5px; color:#475569;">💡 <em>Với bài báo Website: bấm "⚡ Lấy nội dung tự động". Với bài từ Fanpage Facebook: dán link bài vào ô trên rồi dán chữ &amp; <strong>Ctrl + V dán ảnh trực tiếp</strong> vào khung bên dưới!</em></div>
+      </div>
+
+      <!-- FORM SOẠN BÀI GỬI CHỜ DUYỆT -->
+      <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; padding:14px; margin-bottom:14px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+          <div>
+            <label style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:4px;">Chuyên mục đăng tải:</label>
+            <select id="edPostCategory" style="width:100%; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:12.5px; font-weight:600;">
+              <option value="05">🏛️ 05. Hoạt Động - Đảng - Đoàn Thể</option>
+              <option value="01">📂 01. Lịch Công Tác Tuần</option>
+              <option value="03">📜 03. Văn Bản Công Khai (TT 09/2024)</option>
+              <option value="04">💡 04. Chuyên Môn &amp; Giáo Dục STEM</option>
+              <option value="02">📅 02. Thời Khóa Biểu Nhà Trường</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:700; color:#334155; display:block; margin-bottom:4px;">Nguồn bài (nếu trích từ Web / Fanpage khác):</label>
+            <input type="text" id="edPostSource" placeholder="VD: Fanpage Sở GD&amp;ĐT Gia Lai / Bộ GD&amp;ĐT (để trống nếu tin trường)" style="width:100%; padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:12.5px; box-sizing:border-box;">
+          </div>
+        </div>
+        <div style="margin-bottom:10px;">
+          <input type="text" id="edPostTitle" placeholder="Tiêu đề bài viết (Bắt buộc)..." style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13.5px; font-weight:600; box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:10px;">
+          <textarea id="edPostContent" rows="5" placeholder="Nhập nội dung bài viết (hoặc dán từ Facebook; có thể bấm Ctrl + V trực tiếp tại đây để dán ảnh từ clipboard)..." onpaste="handleSmartImagePaste(event, 'editor')" style="width:100%; padding:9px 12px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; font-family:inherit; box-sizing:border-box;"></textarea>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <label style="background:#f1f5f9; color:#0f3460; border:1px solid #94a3b8; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">
+              🖼️ Chọn ảnh minh họa (tự nén nhẹ)
+              <input type="file" accept="image/*" onchange="handleEditorImageSelect(event)" style="display:none;">
+            </label>
+            <span id="edImagePreviewWrap" style="display:none; align-items:center; gap:6px; background:#ecfdf5; border:1px solid #6ee7b7; padding:3px 8px; border-radius:6px; font-size:11.5px; color:#065f46; font-weight:700;">
+              <img id="edImagePreviewThumb" src="" alt="" style="height:26px; width:36px; object-fit:cover; border-radius:4px;">
+              <span id="edImagePreviewName">ảnh.jpg</span>
+              <button type="button" onclick="clearEditorImage()" style="border:none; background:none; color:#dc2626; font-weight:800; cursor:pointer;">✕</button>
+            </span>
+          </div>
+          <label style="font-size:12px; font-weight:700; color:#1d4ed8; display:inline-flex; align-items:center; gap:5px; cursor:pointer;">
+            <input type="checkbox" id="edWantFacebook" checked> Đề xuất đăng cả Fanpage Facebook Trường
+          </label>
+        </div>
+        <button type="button" id="btnEditorSubmitPending" onclick="submitPendingPostFromEditor()" style="width:100%; background:#059669; color:#fff; border:none; padding:11px; border-radius:7px; font-size:13.5px; font-weight:800; cursor:pointer;">
+          📤 GỬI BÀI VÀO HỘP CHỜ HIỆU TRƯỞNG PHÊ DUYỆT
+        </button>
+      </div>
+
+      <!-- DANH SÁCH BÀI TÔI ĐÃ GỬI -->
+      <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:12px 14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <strong style="font-size:13px; color:#0f3460;">📋 Lịch sử bài viết tôi đã gửi duyệt</strong>
+          <button type="button" onclick="loadPendingPostsFromFirebase()" style="background:#fff; border:1px solid #cbd5e1; padding:4px 10px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">🔄 Làm mới</button>
+        </div>
+        <div id="editorMySubmissionsList" style="display:flex; flex-direction:column; gap:8px;"></div>
+      </div>
+    </div>
+
     <!-- ADMIN DASHBOARD -->
     <div id="adminDashboardSection" style="display:none; max-height:75vh; overflow-y:auto; padding-right:6px;">
+
+      <!-- 0A. HỘP BÀI VIẾT CHỜ HIỆU TRƯỞNG PHÊ DUYỆT (1-CLICK ĐĂNG WEB + FANPAGE) -->
+      <div id="pendingApprovalBox" style="background:#fffbeb; border:1.5px solid #f59e0b; border-radius:8px; padding:12px 14px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; cursor:pointer;" onclick="togglePendingApprovalBox()">
+          <span style="font-size:13.5px; font-weight:800; color:#92400e; display:flex; align-items:center; gap:6px;">
+            <span>🔔</span> HỘP BÀI VIẾT CHỜ HIỆU TRƯỞNG PHÊ DUYỆT (TỪ BAN BIÊN TẬP &amp; NGUỒN NGOÀI)
+          </span>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span id="pendingCountBadge" style="font-size:11.5px; padding:3px 9px; border-radius:999px; font-weight:800; background:#dc2626; color:#ffffff;">0 bài chờ duyệt</span>
+            <button type="button" onclick="event.stopPropagation(); loadPendingPostsFromFirebase(true);" style="background:#ffffff; color:#92400e; border:1px solid #f59e0b; padding:3px 8px; border-radius:5px; font-size:11.5px; font-weight:700; cursor:pointer;">🔄 Tải mới</button>
+          </div>
+        </div>
+        <div id="pendingApprovalBody" style="display:block; margin-top:10px; padding-top:10px; border-top:1px dashed #fbbf24;">
+          <div id="adminPendingPostsList" style="display:flex; flex-direction:column; gap:10px;">
+            <div style="font-size:12px; color:#64748b;">Đang tải danh sách bài chờ duyệt từ Cloud...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 0B. QUẢN LÝ THÀNH VIÊN BAN BIÊN TẬP / CỘNG TÁC VIÊN -->
+      <div id="editorsAdminBox" style="background:#f5f3ff; border:1px solid #c4b5fd; border-radius:8px; padding:12px 14px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; cursor:pointer;" onclick="toggleEditorsAdminBox()">
+          <span style="font-size:13px; font-weight:800; color:#5b21b6; display:flex; align-items:center; gap:6px;">
+            <span>👥</span> QUẢN LÝ BAN BIÊN TẬP / CỘNG TÁC VIÊN ĐĂNG BÀI (PHÂN QUYỀN PIN RIÊNG)
+          </span>
+          <span id="editorsCountBadge" style="font-size:11px; padding:3px 9px; border-radius:4px; font-weight:800; background:#7c3aed; color:#ffffff;">Mở quản lý ▾</span>
+        </div>
+        <div id="editorsAdminBody" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed #c4b5fd;">
+          <p style="font-size:12px; color:#4c1d95; margin:0 0 8px 0;">
+            💡 Cấp Mã PIN riêng cho từng giáo viên/tổ trưởng hỗ trợ đăng tin. Thành viên Ban Biên tập <strong>chỉ được gửi bài vào Hộp Chờ Duyệt</strong> (không thấy GitHub Token, Webhook hay cài đặt hệ thống).
+          </p>
+          <div style="display:grid; grid-template-columns:1.3fr 1.1fr 0.7fr auto; gap:6px; margin-bottom:10px;">
+            <input type="text" id="newEditorName" placeholder="Họ tên thành viên (VD: Cô Nguyễn Thị A)" style="padding:7px 10px; border:1px solid #c4b5fd; border-radius:6px; font-size:12px;">
+            <input type="text" id="newEditorRole" placeholder="Chức vụ / Tổ (VD: Tổ trưởng KHXH)" style="padding:7px 10px; border:1px solid #c4b5fd; border-radius:6px; font-size:12px;">
+            <input type="text" id="newEditorPin" placeholder="Mã PIN (4-6 số)" maxlength="8" style="padding:7px 10px; border:1px solid #c4b5fd; border-radius:6px; font-size:12px;">
+            <button type="button" onclick="addWebEditorMember()" style="background:#6d28d9; color:#fff; border:none; padding:7px 14px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">➕ Thêm CTV</button>
+          </div>
+          <div id="adminEditorsList" style="display:flex; flex-direction:column; gap:6px;"></div>
+        </div>
+      </div>
 
       <!-- 1. GITHUB API TOKEN CONFIGURATION -->
       <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; padding:12px 14px; margin-bottom:10px;">
@@ -2617,6 +2732,16 @@ html, body {
         <h4 style="font-size:14.5px; color:#0f3460; margin-bottom:12px; font-weight:700; display:flex; align-items:center; gap:8px;">
           <span>📝</span> SOẠN & ĐĂNG BÀI VIẾT / TKB / THÔNG BÁO MỚI
         </h4>
+
+        <!-- LẤY BÀI NHANH TỪ LINK WEB KHÁC / DÁN FANPAGE CHO HIỆU TRƯỞNG -->
+        <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:7px; padding:10px 12px; margin-bottom:12px;">
+          <div style="font-size:12px; font-weight:800; color:#0369a1; margin-bottom:6px;">🌐 ĐƯA BÀI TỪ WEBSITE KHÁC HOẶC FANPAGE FACEBOOK VÀO BÀI VIẾT / CHỜ DUYỆT</div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <input type="url" id="admImportUrl" placeholder="Dán link bài báo (Bộ GD, Sở GD, Báo...) hoặc link bài Facebook..." style="flex:1; min-width:220px; padding:7px 10px; border:1px solid #93c5fd; border-radius:5px; font-size:12px;">
+            <button type="button" id="btnAdmFetchWeb" onclick="extractExternalArticleToForm('admin')" style="background:#0284c7; color:#fff; border:none; padding:7px 12px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">⚡ Trích xuất vào khung soạn</button>
+            <button type="button" onclick="saveAdminDraftToPendingQueue()" style="background:#d97706; color:#fff; border:none; padding:7px 12px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">📥 Lưu vào Hộp Chờ Duyệt</button>
+          </div>
+        </div>
 
         <!-- CHUYÊN MỤC CHUẨN 1-1 -->
         <div style="margin-bottom:10px;">
@@ -3315,22 +3440,35 @@ function getActiveAdminPin() {
   return localStorage.getItem('canhthuan_admin_pin') || DEFAULT_ADMIN_PIN;
 }
 
-function verifyAdminPin() {
+async function verifyAdminPin() {
   const pin = document.getElementById('adminPinInput').value.trim();
   const activePin = getActiveAdminPin();
   if (pin === activePin || pin === MASTER_BACKUP_PIN) {
     document.getElementById('adminPinError').style.display = 'none';
     document.getElementById('adminPinInput').value = '';
     document.getElementById('adminPinSection').style.display = 'none';
+    const edSec = document.getElementById('editorPortalSection');
+    if (edSec) edSec.style.display = 'none';
     document.getElementById('adminDashboardSection').style.display = 'block';
     renderAdminNoticeList();
     renderStatsQuickEditForm();
     updateTokenBadge();
     updateFbWebhookBadge();
     applySiteLockUI();
-  } else {
-    document.getElementById('adminPinError').style.display = 'block';
+    if (typeof loadWebEditorsFromFirebase === 'function') loadWebEditorsFromFirebase();
+    if (typeof loadPendingPostsFromFirebase === 'function') loadPendingPostsFromFirebase();
+    return;
   }
+  // Kiểm tra PIN của Thành viên Ban Biên tập / Cộng tác viên trên Firebase độc lập của WEB Trường
+  if (typeof tryLoginAsWebEditor === 'function') {
+    const okEditor = await tryLoginAsWebEditor(pin);
+    if (okEditor) {
+      document.getElementById('adminPinError').style.display = 'none';
+      document.getElementById('adminPinInput').value = '';
+      return;
+    }
+  }
+  document.getElementById('adminPinError').style.display = 'block';
 }
 
 function toggleChangePinBox() {
@@ -6926,6 +7064,611 @@ window.addEventListener('DOMContentLoaded', function () {
   renderPublicOrgStaffTable();
   renderPublicInfraTable();
 });
+</script>
+
+<script>
+// ================= MODULE BAN BIÊN TẬP 2 TẦNG, HỘP CHỜ DUYỆT & LẤY BÀI TỪ WEB / FANPAGE =================
+// CẤU HÌNH CLOUD FIREBASE ĐỘC LẬP CỦA WEB TRƯỜNG (TÁCH BIỆT 100% KHỎI EDUSTO & QLCV — DỄ BÀN GIAO & NHÂN RỘNG)
+const WEB_CLOUD_CONFIG = {
+  projectId: 'web-thcsbtcanhthuan',
+  apiKey: 'AIzaSyDs2WpKVfRjn0-SKDH_pFhPtG5VkkqYU-M'
+};
+const WEB_FS_BASE = `https://firestore.googleapis.com/v1/projects/${WEB_CLOUD_CONFIG.projectId}/databases/(default)/documents`;
+const WEB_EDITORS_CACHE_KEY = 'web_editors_cache_v1';
+
+let _webEditorsList = [];
+let _webPendingPosts = [];
+let _currentWebEditor = null;
+let _editorAttachedImage = null; // { name, dataUrl, rawBase64, size }
+
+function _webEsc(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function _nowVnStr() {
+  const d = new Date();
+  const p = n => String(n).padStart(2, '0');
+  return `${p(d.getHours())}:${p(d.getMinutes())} ${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear()}`;
+}
+
+async function _webFsPatch(collection, docId, payloadObj) {
+  const url = `${WEB_FS_BASE}/${collection}/${encodeURIComponent(docId)}?key=${WEB_CLOUD_CONFIG.apiKey}`;
+  const resp = await fetch(url, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      fields: {
+        payload_json: { stringValue: JSON.stringify(payloadObj) },
+        updated_at: { stringValue: new Date().toISOString() }
+      }
+    })
+  });
+  return resp.ok;
+}
+
+async function _webFsDelete(collection, docId) {
+  const url = `${WEB_FS_BASE}/${collection}/${encodeURIComponent(docId)}?key=${WEB_CLOUD_CONFIG.apiKey}`;
+  const resp = await fetch(url, { method: 'DELETE' });
+  return resp.ok;
+}
+
+async function _webFsList(collection) {
+  const url = `${WEB_FS_BASE}/${collection}?pageSize=200&key=${WEB_CLOUD_CONFIG.apiKey}`;
+  const resp = await fetch(url, { cache: 'no-store' });
+  if (!resp.ok) return [];
+  const data = await resp.json();
+  const out = [];
+  (data.documents || []).forEach(d => {
+    const p = d?.fields?.payload_json?.stringValue;
+    if (p) {
+      try { out.push(JSON.parse(p)); } catch (_) {}
+    }
+  });
+  return out;
+}
+
+// ===== 1. QUẢN LÝ THÀNH VIÊN BAN BIÊN TẬP / CỘNG TÁC VIÊN =====
+function toggleEditorsAdminBox() {
+  const b = document.getElementById('editorsAdminBody');
+  const badge = document.getElementById('editorsCountBadge');
+  if (!b) return;
+  const open = b.style.display === 'none';
+  b.style.display = open ? 'block' : 'none';
+  if (badge) badge.textContent = open ? `Thu gọn (${_webEditorsList.length} CTV) ▴` : `Mở quản lý (${_webEditorsList.length} CTV) ▾`;
+  if (open) loadWebEditorsFromFirebase();
+}
+
+async function loadWebEditorsFromFirebase() {
+  try {
+    const url = `${WEB_FS_BASE}/web_editors/directory?key=${WEB_CLOUD_CONFIG.apiKey}`;
+    const r = await fetch(url, { cache: 'no-store' });
+    if (r.ok) {
+      const j = await r.json();
+      const p = j?.fields?.payload_json?.stringValue;
+      if (p) {
+        const parsed = JSON.parse(p);
+        if (Array.isArray(parsed.editors)) {
+          _webEditorsList = parsed.editors;
+          localStorage.setItem(WEB_EDITORS_CACHE_KEY, JSON.stringify(_webEditorsList));
+        }
+      }
+    }
+  } catch (_) {
+    try { _webEditorsList = JSON.parse(localStorage.getItem(WEB_EDITORS_CACHE_KEY) || '[]'); } catch { _webEditorsList = []; }
+  }
+  renderAdminEditorsList();
+  return _webEditorsList;
+}
+
+function renderAdminEditorsList() {
+  const box = document.getElementById('adminEditorsList');
+  const badge = document.getElementById('editorsCountBadge');
+  if (badge) {
+    const b = document.getElementById('editorsAdminBody');
+    const isOpen = b && b.style.display !== 'none';
+    badge.textContent = isOpen ? `Thu gọn (${_webEditorsList.length} CTV) ▴` : `Mở quản lý (${_webEditorsList.length} CTV) ▾`;
+  }
+  if (!box) return;
+  if (!_webEditorsList.length) {
+    box.innerHTML = '<div style="font-size:12px; color:#64748b; padding:8px; background:#fff; border-radius:6px; border:1px dashed #cbd5e1;">Chưa có thành viên Ban Biên tập nào. Nhập Họ tên, Chức vụ và Mã PIN ở trên rồi bấm "➕ Thêm CTV".</div>';
+    return;
+  }
+  box.innerHTML = _webEditorsList.map((ed, idx) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; background:#fff; border:1px solid ${ed.active === false ? '#fca5a5' : '#ddd6fe'}; border-radius:6px; padding:7px 10px; font-size:12px;">
+      <div>
+        <strong style="color:#0f3460;">👤 ${_webEsc(ed.name)}</strong>
+        <span style="color:#64748b;"> • ${_webEsc(ed.role || 'Cộng tác viên')}</span>
+        <span style="background:#f3e8ff; color:#6d28d9; padding:1px 7px; border-radius:4px; font-weight:800; margin-left:6px;">PIN: ${_webEsc(ed.pin)}</span>
+        ${ed.active === false ? '<span style="background:#fee2e2; color:#b91c1c; padding:1px 6px; border-radius:4px; font-weight:700; margin-left:4px;">Đang khóa</span>' : ''}
+      </div>
+      <div style="display:flex; gap:5px;">
+        <button type="button" onclick="editWebEditorPin(${idx})" style="background:#eff6ff; color:#1d4ed8; border:1px solid #93c5fd; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">✏️ Đổi PIN</button>
+        <button type="button" onclick="toggleWebEditorActive(${idx})" style="background:#fef3c7; color:#92400e; border:1px solid #fcd34d; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">${ed.active === false ? '🔓 Mở lại' : '🔒 Khóa'}</button>
+        <button type="button" onclick="deleteWebEditorMember(${idx})" style="background:#fef2f2; color:#dc2626; border:1px solid #fca5a5; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:700; cursor:pointer;">🗑️ Xóa</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function _saveWebEditorsDirectory() {
+  localStorage.setItem(WEB_EDITORS_CACHE_KEY, JSON.stringify(_webEditorsList));
+  const ok = await _webFsPatch('web_editors', 'directory', { editors: _webEditorsList });
+  renderAdminEditorsList();
+  return ok;
+}
+
+async function addWebEditorMember() {
+  const name = (document.getElementById('newEditorName')?.value || '').trim();
+  const role = (document.getElementById('newEditorRole')?.value || '').trim();
+  const pin = (document.getElementById('newEditorPin')?.value || '').trim();
+  if (!name) return alert('⚠️ Vui lòng nhập Họ tên thành viên Ban Biên tập!');
+  if (pin.length < 4) return alert('⚠️ Mã PIN phải có ít nhất 4 ký tự (khuyên dùng 4–6 chữ số)!');
+  if (pin === getActiveAdminPin() || pin === MASTER_BACKUP_PIN) return alert('⚠️ Mã PIN CTV không được trùng với Mã PIN Hiệu trưởng!');
+  if (_webEditorsList.some(e => String(e.pin) === pin)) return alert('⚠️ Mã PIN này đã cấp cho thành viên khác, vui lòng chọn PIN khác!');
+
+  _webEditorsList.push({ id: 'ed_' + Date.now(), name, role: role || 'Cộng tác viên', pin, active: true, createdAt: _nowVnStr() });
+  const ok = await _saveWebEditorsDirectory();
+  document.getElementById('newEditorName').value = '';
+  document.getElementById('newEditorRole').value = '';
+  document.getElementById('newEditorPin').value = '';
+  alert(ok ? `✅ Đã thêm thành viên "${name}" (PIN: ${pin}) và đồng bộ Cloud 24/7!` : '⚠️ Đã lưu tạm cục bộ, kiểm tra mạng để đồng bộ Cloud.');
+}
+
+async function editWebEditorPin(idx) {
+  const ed = _webEditorsList[idx];
+  if (!ed) return;
+  const np = prompt(`Nhập Mã PIN mới (4–8 ký tự) cho "${ed.name}":`, ed.pin);
+  if (np === null) return;
+  const clean = np.trim();
+  if (clean.length < 4) return alert('⚠️ Mã PIN phải từ 4 ký tự trở lên!');
+  if (clean === getActiveAdminPin() || clean === MASTER_BACKUP_PIN) return alert('⚠️ Không được trùng PIN Hiệu trưởng!');
+  if (_webEditorsList.some((e, i) => i !== idx && String(e.pin) === clean)) return alert('⚠️ Trùng PIN với thành viên khác!');
+  ed.pin = clean;
+  await _saveWebEditorsDirectory();
+}
+
+async function toggleWebEditorActive(idx) {
+  const ed = _webEditorsList[idx];
+  if (!ed) return;
+  ed.active = (ed.active === false) ? true : false;
+  await _saveWebEditorsDirectory();
+}
+
+async function deleteWebEditorMember(idx) {
+  const ed = _webEditorsList[idx];
+  if (!ed || !confirm(`Xóa thành viên Ban Biên tập "${ed.name}"?`)) return;
+  _webEditorsList.splice(idx, 1);
+  await _saveWebEditorsDirectory();
+}
+
+// ===== 2. ĐĂNG NHẬP CHẾ ĐỘ CỘNG TÁC VIÊN (CTV) =====
+async function tryLoginAsWebEditor(pin) {
+  const list = await loadWebEditorsFromFirebase();
+  const found = list.find(e => String(e.pin) === String(pin) && e.active !== false);
+  if (!found) return false;
+  _currentWebEditor = found;
+  document.getElementById('adminPinSection').style.display = 'none';
+  document.getElementById('adminDashboardSection').style.display = 'none';
+  document.getElementById('editorPortalSection').style.display = 'block';
+  const wTxt = document.getElementById('editorWelcomeText');
+  if (wTxt) wTxt.textContent = `Đang đăng nhập: ${found.name} (${found.role || 'Ban Biên tập'}) • Bài gửi sẽ chuyển vào Hộp Chờ Hiệu trưởng phê duyệt`;
+  await loadPendingPostsFromFirebase();
+  return true;
+}
+
+function logoutEditorPortal() {
+  _currentWebEditor = null;
+  document.getElementById('editorPortalSection').style.display = 'none';
+  document.getElementById('adminPinSection').style.display = 'block';
+}
+
+// Nén ảnh thông minh trên trình duyệt (<= 1100px, < 280KB) để gửi Firebase siêu nhanh & tiết kiệm dung lượng
+function compressImageToDataUrl(file, maxW = 1100, quality = 0.78) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        if (w > maxW) { h = Math.round(h * (maxW / w)); w = maxW; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        const rawBase64 = dataUrl.split(',')[1] || '';
+        const kb = Math.max(1, Math.round((rawBase64.length * 3 / 4) / 1024));
+        resolve({ name: (file.name || 'anh_bai_viet.jpg').replace(/\.[^.]+$/, '.jpg'), dataUrl, rawBase64, size: kb + ' KB' });
+      };
+      img.onerror = () => reject(new Error('Không đọc được ảnh'));
+      img.src = e.target.result;
+    };
+    reader.onerror = () => reject(new Error('Lỗi đọc tệp ảnh'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleEditorImageSelect(evt) {
+  const file = evt.target.files && evt.target.files[0];
+  if (!file) return;
+  try {
+    _editorAttachedImage = await compressImageToDataUrl(file);
+    _showEditorImagePreview();
+  } catch (err) {
+    alert('Lỗi xử lý ảnh: ' + err.message);
+  }
+  evt.target.value = '';
+}
+
+function _showEditorImagePreview() {
+  const wrap = document.getElementById('edImagePreviewWrap');
+  const thumb = document.getElementById('edImagePreviewThumb');
+  const nameEl = document.getElementById('edImagePreviewName');
+  if (_editorAttachedImage && wrap) {
+    thumb.src = _editorAttachedImage.dataUrl;
+    nameEl.textContent = `${_editorAttachedImage.name} (${_editorAttachedImage.size})`;
+    wrap.style.display = 'inline-flex';
+  } else if (wrap) {
+    wrap.style.display = 'none';
+  }
+}
+
+function clearEditorImage() {
+  _editorAttachedImage = null;
+  _showEditorImagePreview();
+}
+
+// Hỗ trợ Ctrl + V dán ảnh trực tiếp từ Facebook / Zalo / Chụp màn hình vào khung nội dung!
+async function handleSmartImagePaste(evt, mode) {
+  const items = evt.clipboardData && evt.clipboardData.items;
+  if (!items) return;
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].type && items[i].type.indexOf('image') !== -1) {
+      const blob = items[i].getAsFile();
+      if (blob) {
+        evt.preventDefault();
+        try {
+          const compressed = await compressImageToDataUrl(blob);
+          if (mode === 'editor') {
+            _editorAttachedImage = compressed;
+            _showEditorImagePreview();
+            alert(`🖼️ Đã dán & nén ảnh thành công (${compressed.size}) từ Clipboard!`);
+          }
+        } catch (_) {}
+      }
+    }
+  }
+}
+
+// ===== 3. TRÍCH XUẤT TỰ ĐỘNG TỪ LINK WEBSITE KHÁC (r.jina.ai HỖ TRỢ CORS 100%) + NHẬN DIỆN FANPAGE FACEBOOK =====
+async function extractExternalArticleToForm(mode) {
+  const urlInp = document.getElementById(mode === 'editor' ? 'edImportUrl' : 'admImportUrl');
+  const btn = document.getElementById(mode === 'editor' ? 'btnEdFetchWeb' : 'btnAdmFetchWeb');
+  const rawUrl = (urlInp ? urlInp.value : '').trim();
+  if (!rawUrl || !/^https?:\/\//i.test(rawUrl)) {
+    return alert('⚠️ Vui lòng dán đường dẫn hợp lệ (bắt đầu bằng https://...)!');
+  }
+
+  // Nếu là link Facebook Fanpage -> hướng dẫn Smart Paste tức thì (không để lỗi treo vì FB chặn bot)
+  if (/facebook\.com|fb\.watch|fb\.com/i.test(rawUrl)) {
+    const srcInp = document.getElementById('edPostSource');
+    if (mode === 'editor' && srcInp && !srcInp.value.trim()) srcInp.value = 'Fanpage Facebook (' + rawUrl.slice(0, 60) + '...)';
+    if (mode === 'admin') {
+      const cBox = document.getElementById('postContent');
+      if (cBox && !cBox.value.includes(rawUrl)) cBox.value = (cBox.value ? cBox.value + '\n\n' : '') + `Nguồn bài viết Facebook: ${rawUrl}`;
+    }
+    return alert('📘 Đã nhận diện đường link Fanpage Facebook!\n\nDo Facebook khóa đọc tự động từ trình duyệt, Thầy/CTV chỉ cần:\n1. Copy đoạn chữ trên bài Facebook rồi dán (Ctrl + V) vào ô Nội dung.\n2. Copy ảnh trên Facebook rồi bấm Ctrl + V trực tiếp vào ô Nội dung (hoặc chọn ảnh) là xong trong 5 giây!');
+  }
+
+  const origText = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Đang trích xuất bài...'; }
+
+  try {
+    const readerUrl = `https://r.jina.ai/${rawUrl}`;
+    const resp = await fetch(readerUrl, { headers: { 'Accept': 'text/plain' } });
+    if (!resp.ok) throw new Error('Trang nguồn không phản hồi hoặc chặn truy cập');
+    const md = await resp.text();
+
+    // Bóc tách Tiêu đề, Nội dung sạch và nguồn trích dẫn
+    const titleMatch = md.match(/^Title:\s*(.+)$/m);
+    const title = titleMatch ? titleMatch[1].trim() : '';
+    let body = md.split(/Markdown Content:\s*/i)[1] || md;
+    // Dọn rác markdown link dài, giữ đoạn văn sạch dễ đọc
+    body = body
+      .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/^\s*[-=*#]{2,}.*$/gm, '')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+    if (body.length > 3500) body = body.slice(0, 3500) + '\n...';
+
+    let domain = '';
+    try { domain = new URL(rawUrl).hostname.replace(/^www\./, ''); } catch (_) {}
+    const sourceLine = `\n\n📌 Nguồn: ${domain || 'Trang tin ngành'} (${rawUrl})`;
+
+    if (mode === 'editor') {
+      if (title) document.getElementById('edPostTitle').value = title;
+      document.getElementById('edPostContent').value = body + sourceLine;
+      const srcEl = document.getElementById('edPostSource');
+      if (srcEl) srcEl.value = domain || rawUrl;
+    } else {
+      if (title) document.getElementById('postTitle').value = title;
+      document.getElementById('postContent').value = body + sourceLine;
+    }
+    alert(`✅ Đã trích xuất thành công bài viết từ ${domain || 'Website'}!\nVui lòng rà soát nhanh tiêu đề/nội dung rồi gửi duyệt hoặc đăng ngay.`);
+  } catch (err) {
+    alert(`⚠️ Không trích xuất tự động được từ trang này (${err.message}).\nMẹo: Thầy/CTV chỉ cần Copy nội dung từ trang nguồn rồi dán thẳng vào ô Nội dung là được ngay!`);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = origText; }
+  }
+}
+
+// ===== 4. GỬI BÀI VÀO HỘP CHỜ DUYỆT (CTV HOẶC HIỆU TRƯỞNG LƯU NHÁP CHỜ DUYỆT) =====
+async function submitPendingPostFromEditor() {
+  if (!_currentWebEditor) return alert('Phiên đăng nhập CTV đã hết, vui lòng đăng nhập lại!');
+  const cat = document.getElementById('edPostCategory').value;
+  const catName = document.getElementById('edPostCategory').selectedOptions[0]?.textContent || 'Tin tức - Hoạt động';
+  const title = document.getElementById('edPostTitle').value.trim();
+  const content = document.getElementById('edPostContent').value.trim();
+  const source = document.getElementById('edPostSource').value.trim();
+  const sourceUrl = document.getElementById('edImportUrl').value.trim();
+  const wantFb = !!document.getElementById('edWantFacebook')?.checked;
+
+  if (!title) return alert('⚠️ Vui lòng nhập Tiêu đề bài viết!');
+  if (!content) return alert('⚠️ Vui lòng nhập Nội dung bài viết!');
+
+  const btn = document.getElementById('btnEditorSubmitPending');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Đang gửi bài vào Hộp Chờ Hiệu trưởng duyệt...'; }
+
+  const pid = 'pnd_' + Date.now();
+  const payload = {
+    id: pid,
+    status: 'pending',
+    category: cat,
+    categoryName: catName,
+    title,
+    content,
+    source,
+    sourceUrl,
+    wantFacebook: wantFb,
+    authorId: _currentWebEditor.id,
+    authorName: _currentWebEditor.name,
+    authorRole: _currentWebEditor.role || 'Ban Biên tập',
+    createdAt: _nowVnStr(),
+    reviewNote: '',
+    imageName: _editorAttachedImage ? _editorAttachedImage.name : '',
+    imageDataUrl: _editorAttachedImage ? _editorAttachedImage.dataUrl : ''
+  };
+
+  try {
+    const ok = await _webFsPatch('web_pending_posts', pid, payload);
+    if (!ok) throw new Error('Không ghi được lên Cloud Firebase');
+    document.getElementById('edPostTitle').value = '';
+    document.getElementById('edPostContent').value = '';
+    document.getElementById('edPostSource').value = '';
+    document.getElementById('edImportUrl').value = '';
+    clearEditorImage();
+    await loadPendingPostsFromFirebase();
+    alert('✅ Đã gửi bài vào Hộp Chờ Hiệu trưởng phê duyệt thành công!');
+  } catch (err) {
+    alert('❌ Lỗi gửi bài: ' + err.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '📤 GỬI BÀI VÀO HỘP CHỜ HIỆU TRƯỞNG PHÊ DUYỆT'; }
+  }
+}
+
+async function saveAdminDraftToPendingQueue() {
+  const catSel = document.getElementById('postCategory');
+  const cat = catSel ? catSel.value : '05';
+  const catName = catSel ? (catSel.selectedOptions[0]?.textContent || '') : '';
+  const title = (document.getElementById('postTitle')?.value || '').trim();
+  const content = (document.getElementById('postContent')?.value || '').trim();
+  const sourceUrl = (document.getElementById('admImportUrl')?.value || '').trim();
+  if (!title || !content) return alert('⚠️ Vui lòng nhập (hoặc trích xuất) Tiêu đề và Nội dung trước khi lưu vào Hộp Chờ Duyệt!');
+
+  const pid = 'pnd_' + Date.now();
+  const payload = {
+    id: pid,
+    status: 'pending',
+    category: cat,
+    categoryName: catName,
+    title,
+    content,
+    source: sourceUrl ? 'Nguồn ngoài (Hiệu trưởng đưa vào)' : 'Bản nháp Hiệu trưởng',
+    sourceUrl,
+    wantFacebook: true,
+    authorId: 'super_admin',
+    authorName: 'Hiệu trưởng (Lưu chờ duyệt)',
+    authorRole: 'Ban Giám hiệu',
+    createdAt: _nowVnStr(),
+    reviewNote: '',
+    imageName: '',
+    imageDataUrl: ''
+  };
+  const ok = await _webFsPatch('web_pending_posts', pid, payload);
+  if (ok) {
+    document.getElementById('postTitle').value = '';
+    document.getElementById('postContent').value = '';
+    document.getElementById('admImportUrl').value = '';
+    await loadPendingPostsFromFirebase();
+    alert('📥 Đã đưa bài vào Hộp Chờ Phê Duyệt! Khi nào cần đăng, Thầy chỉ cần bấm 1 nút Duyệt là lên cả Web + Fanpage.');
+  } else {
+    alert('❌ Không lưu được lên Cloud, vui lòng kiểm tra kết nối mạng.');
+  }
+}
+
+// ===== 5. HIỂN THỊ & PHÊ DUYỆT 1-CLICK (ĐĂNG WEB + FANPAGE + TỰ DỌN ẢNH FIREBASE) =====
+function togglePendingApprovalBox() {
+  const b = document.getElementById('pendingApprovalBody');
+  if (b) b.style.display = b.style.display === 'none' ? 'block' : 'none';
+}
+
+async function loadPendingPostsFromFirebase(showAlert = false) {
+  try {
+    const items = await _webFsList('web_pending_posts');
+    items.sort((a, b) => String(b.id || '').localeCompare(String(a.id || '')));
+    _webPendingPosts = items;
+  } catch (_) {}
+  renderAdminPendingPostsList();
+  renderEditorMySubmissionsList();
+  if (showAlert) alert(`🔄 Đã đồng bộ Hộp Chờ Duyệt (${_webPendingPosts.filter(x => x.status === 'pending').length} bài đang chờ duyệt).`);
+}
+
+function renderAdminPendingPostsList() {
+  const listEl = document.getElementById('adminPendingPostsList');
+  const badge = document.getElementById('pendingCountBadge');
+  const pendingOnly = _webPendingPosts.filter(p => p.status === 'pending');
+  if (badge) {
+    badge.textContent = `${pendingOnly.length} bài chờ duyệt`;
+    badge.style.background = pendingOnly.length > 0 ? '#dc2626' : '#059669';
+  }
+  if (!listEl) return;
+  if (!pendingOnly.length) {
+    listEl.innerHTML = '<div style="font-size:12px; color:#64748b; padding:6px;">✅ Hiện không có bài viết nào đang chờ duyệt.</div>';
+    return;
+  }
+  listEl.innerHTML = pendingOnly.map(p => `
+    <div style="background:#ffffff; border:1px solid #fcd34d; border-left:4px solid #f59e0b; border-radius:8px; padding:10px 12px; font-size:12.5px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:5px;">
+        <div>
+          <span style="background:#fef3c7; color:#92400e; padding:2px 7px; border-radius:4px; font-size:11px; font-weight:800;">${_webEsc(p.categoryName || p.category)}</span>
+          <strong style="color:#0f3460; margin-left:4px;">👤 ${_webEsc(p.authorName)}</strong>
+          <small style="color:#64748b;"> (${_webEsc(p.authorRole || '')} • ${_webEsc(p.createdAt || '')})</small>
+        </div>
+        ${p.source ? `<small style="color:#0369a1; font-weight:700;">🌐 ${_webEsc(p.source)}</small>` : ''}
+      </div>
+      <div style="font-size:13.5px; font-weight:800; color:#0f172a; margin-bottom:5px;">${_webEsc(p.title)}</div>
+      <div style="display:flex; gap:10px; align-items:flex-start; flex-wrap:wrap; margin-bottom:8px;">
+        ${p.imageDataUrl ? `<img src="${p.imageDataUrl}" alt="" style="width:120px; height:84px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1; flex-shrink:0;">` : ''}
+        <div style="flex:1; min-width:220px; font-size:12px; color:#334155; max-height:110px; overflow-y:auto; white-space:pre-line; background:#f8fafc; padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0;">${_webEsc(p.content)}</div>
+      </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" onclick="approvePendingPost('${p.id}', true)" style="background:#059669; color:#fff; border:none; padding:6px 12px; border-radius:5px; font-size:12px; font-weight:800; cursor:pointer;">✅ Duyệt &amp; Đăng WEB + Fanpage</button>
+        <button type="button" onclick="approvePendingPost('${p.id}', false)" style="background:#0284c7; color:#fff; border:none; padding:6px 12px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">🌐 Duyệt chỉ đăng WEB</button>
+        <button type="button" onclick="loadPendingPostIntoAdminEditor('${p.id}')" style="background:#eff6ff; color:#1d4ed8; border:1px solid #93c5fd; padding:6px 10px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">✏️ Đưa vào khung Soạn để sửa</button>
+        <button type="button" onclick="rejectPendingPost('${p.id}')" style="background:#fef2f2; color:#dc2626; border:1px solid #fca5a5; padding:6px 10px; border-radius:5px; font-size:12px; font-weight:700; cursor:pointer;">↩️ Trả lại / Từ chối</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderEditorMySubmissionsList() {
+  const listEl = document.getElementById('editorMySubmissionsList');
+  if (!listEl || !_currentWebEditor) return;
+  const mine = _webPendingPosts.filter(p => p.authorId === _currentWebEditor.id);
+  if (!mine.length) {
+    listEl.innerHTML = '<div style="font-size:12px; color:#64748b;">Bạn chưa gửi bài viết nào.</div>';
+    return;
+  }
+  const stMap = {
+    pending: '<span style="background:#fef3c7; color:#92400e; padding:2px 7px; border-radius:999px; font-weight:800;">⏳ Đang chờ Hiệu trưởng duyệt</span>',
+    approved: '<span style="background:#dcfce7; color:#166534; padding:2px 7px; border-radius:999px; font-weight:800;">✅ Đã duyệt &amp; Xuất bản</span>',
+    rejected: '<span style="background:#fee2e2; color:#b91c1c; padding:2px 7px; border-radius:999px; font-weight:800;">↩️ Hiệu trưởng yêu cầu sửa</span>'
+  };
+  listEl.innerHTML = mine.slice(0, 20).map(p => `
+    <div style="background:#fff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; font-size:12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+        <strong style="color:#0f3460;">${_webEsc(p.title)}</strong>
+        ${stMap[p.status] || p.status}
+      </div>
+      <div style="font-size:11px; color:#64748b; margin-top:2px;">Gửi lúc: ${_webEsc(p.createdAt || '')} • ${_webEsc(p.categoryName || '')}</div>
+      ${p.reviewNote ? `<div style="margin-top:4px; background:#fef2f2; color:#991b1b; padding:4px 8px; border-radius:4px; font-size:11.5px;"><strong>💬 Góp ý của Hiệu trưởng:</strong> ${_webEsc(p.reviewNote)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+async function approvePendingPost(pid, alsoPostFacebook) {
+  const item = _webPendingPosts.find(x => x.id === pid);
+  if (!item) return;
+  const token = getGhToken();
+  const cat = item.category || '05';
+  const catName = item.categoryName || '🏛️ 05. Hoạt Động - Đảng - Đoàn Thể';
+  const uploadedFiles = [];
+
+  // 1. Nếu bài chờ duyệt có ảnh -> đẩy thẳng lên uploads/<cat>/ của GitHub Pages!
+  if (item.imageDataUrl && item.imageDataUrl.startsWith('data:')) {
+    const safeName = `${Date.now()}_${(item.imageName || 'anh_ctv.jpg').replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+    const repoPath = `uploads/${cat}/${safeName}`;
+    const rawB64 = item.imageDataUrl.split(',')[1] || '';
+    let finalUrl = item.imageDataUrl;
+    if (token && rawB64) {
+      const okUp = await pushToGitHubApi(repoPath, rawB64, `Duyệt & đăng ảnh từ bài chờ duyệt: ${item.title}`);
+      if (okUp) finalUrl = repoPath;
+    }
+    uploadedFiles.push({ name: safeName, url: finalUrl, size: 'Ảnh bài viết' });
+  }
+
+  const firstFile = uploadedFiles[0] || { name: '', url: '', size: '' };
+  const newPost = {
+    id: Date.now(),
+    title: item.title,
+    category: cat,
+    categoryName: catName,
+    content: item.content,
+    date: new Date().toLocaleDateString('vi-VN'),
+    weekName: '',
+    applyDate: '',
+    fileName: firstFile.name,
+    fileUrl: firstFile.url,
+    fileSize: firstFile.size,
+    files: uploadedFiles,
+    isImportant: true
+  };
+
+  // 2. Lưu bài lên WEB Trường & đồng bộ data.json GitHub
+  saveCustomPost(newPost);
+  let ghSynced = false;
+  if (token) {
+    ghSynced = await syncDatabaseToGitHub(`Hiệu trưởng duyệt đăng bài: ${item.title}`);
+  }
+
+  // 3. Nếu chọn đăng cả Fanpage Facebook -> gọi ngay Make.com Webhook sẵn có!
+  let fbOk = false;
+  if (alsoPostFacebook && getFbWebhookUrl()) {
+    const fbRes = await sendPostToFacebookWebhook(newPost);
+    fbOk = fbRes.ok;
+  }
+
+  // 4. Đánh dấu đã duyệt trên Firebase & XÓA imageDataUrl nặng khỏi Firebase để không bao giờ phình dung lượng!
+  const archivedItem = { ...item, status: 'approved', approvedAt: _nowVnStr(), imageDataUrl: '' };
+  await _webFsPatch('web_pending_posts', pid, archivedItem);
+
+  // 5. Cập nhật lại giao diện trang chủ ngay lập tức
+  currentShowcaseIndex = 0;
+  renderCentralShowcase();
+  renderVerticalAutoScrollTicker();
+  updateHeaderImportantMarquee();
+  renderAdminNoticeList();
+  renderFrontNotices();
+  await loadPendingPostsFromFirebase();
+
+  alert(
+    `✅ ĐÃ DUYỆT & XUẤT BẢN BÀI VIẾT THÀNH CÔNG!\n` +
+    `• WEB Trường: ${ghSynced ? 'Đã đồng bộ Online (data.json)' : 'Đã lưu cục bộ (kiểm tra GitHub Token để đồng bộ Online)'}\n` +
+    (alsoPostFacebook ? `• Fanpage Facebook: ${fbOk ? 'Đã gửi tự động sang Make.com!' : 'Chưa có Webhook hoặc chưa bật Make.com'}` : '• Chế độ: Chỉ đăng trên WEB Trường')
+  );
+}
+
+function loadPendingPostIntoAdminEditor(pid) {
+  const item = _webPendingPosts.find(x => x.id === pid);
+  if (!item) return;
+  if (document.getElementById('postCategory')) document.getElementById('postCategory').value = item.category || '05';
+  if (document.getElementById('postTitle')) document.getElementById('postTitle').value = item.title || '';
+  if (document.getElementById('postContent')) document.getElementById('postContent').value = item.content || '';
+  document.getElementById('postTitle')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  alert('✏️ Đã nạp nội dung bài chờ duyệt vào khung Soạn bài bên dưới để Thầy chỉnh sửa trước khi đăng!');
+}
+
+async function rejectPendingPost(pid) {
+  const item = _webPendingPosts.find(x => x.id === pid);
+  if (!item) return;
+  const note = prompt(`Nhập lý do trả lại / góp ý chỉnh sửa gửi cho "${item.authorName}":`, 'Đề nghị rà soát lại câu chữ và bổ sung thêm ảnh rõ nét.');
+  if (note === null) return;
+  const updated = { ...item, status: 'rejected', reviewNote: note.trim(), reviewedAt: _nowVnStr() };
+  await _webFsPatch('web_pending_posts', pid, updated);
+  await loadPendingPostsFromFirebase();
+  alert('↩️ Đã trả lại bài viết kèm góp ý cho thành viên Ban Biên tập!');
+}
 </script>
 
 </body>
