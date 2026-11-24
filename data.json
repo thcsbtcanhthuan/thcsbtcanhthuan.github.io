@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T02:29:16.197Z",
+  "updatedAt": "2026-11-24T23:00:29.024Z",
   "siteLocked": false,
   "siteLockMessage": "Cổng thông tin điện tử nhà trường đang tạm khóa để bảo trì & kiểm duyệt định kỳ. Quý Thầy Cô, Phụ huynh và Học sinh vui lòng quay lại sau!",
   "schoolStats": {
@@ -197,6 +197,42 @@
   "pinnedNoticeId": "1795181797523",
   "hiddenDefaultIds": [],
   "posts": [
+    {
+      "id": 1795561229021,
+      "title": "✨ HƯỞNG ỨNG NGÀY VĂN HÓA VIỆT NAM – TỰ HÀO SẮC MÀU TRANG PHỤC CHĂM & BA NA ✨",
+      "category": "05",
+      "categoryName": "🏛️ Hoạt Động - Đảng - Đoàn Thể",
+      "content": "✨ HƯỞNG ỨNG NGÀY VĂN HÓA VIỆT NAM – TỰ HÀO SẮC MÀU TRANG PHỤC CHĂM & BA NA ✨\nHòa chung không khí sôi nổi chào mừng Ngày Văn hóa Việt Nam 24-11, Liên đội trường ta hãy cùng nhau khám phá và tôn vinh những giá trị di sản quý báu ngay trên chính quê hương mình qua nét đẹp trang phục truyền thống của đồng bào Chăm và Ba Na:\n🌸 Trang phục truyền thống người Chăm – Nét duyên dáng, tinh tế:\n• Nữ giới: Duyên dáng trong chiếc áo dài truyền thống (áo patra) kín đáo, không xẻ tà, kết hợp cùng váy dài (sarông) dệt hoa văn cầu kỳ và khăn đội đầu mềm mại.\n• Nam giới: Trang trọng, lịch lãm với chiếc áo chvéa trắng cài cúc hoặc áo dài truyền thống, đi cùng váy sarông và khăn quấn đầu đặc trưng.\n🔥 Trang phục truyền thống người Ba Na – Hơi thở mạnh mẽ của đại ngàn:\n• Được dệt thủ công từ vải thổ cẩm với những gam màu chủ đạo giàu ý nghĩa: đen (đất đai), đỏ (ngọn lửa và sức sống), cùng các đường nét trắng, vàng, xanh tượng trưng cho ánh sáng và thiên nhiên.\n• Nữ giới: Khéo léo, rạng rỡ với áo chui đầu không xẻ cổ phối cùng váy quấn thổ cẩm thêu dệt họa tiết hình khối đối xứng độc đáo.\n• Nam giới: Khỏe khoắn, đậm chất núi rừng trong bộ áo chui đầu cổ xẻ cộc tay, đóng khố chữ T và chít khăn đầu truyền thống.\n🌟 Mỗi bộ trang phục truyền thống đều mang trong mình câu chuyện lịch sử và tâm hồn của dân tộc. Nhân dịp Ngày Văn hóa Việt Nam 24 - 11, các bạn Đội viên hãy cùng nhau tìm hiểu, trân trọng và tự hào lan tỏa nét đẹp văn hóa Chăm – Ba Na đến với bạn bè khắp nơi nhé! ❤️💛",
+      "date": "25/11/2026",
+      "weekName": "",
+      "applyDate": "",
+      "fileName": "anh_dan_1795561140323.jpg",
+      "fileUrl": "uploads/05_HoatDong_Dang_DoanThe/anh_dan_1795561140323.jpg",
+      "fileSize": "54 KB",
+      "files": [
+        {
+          "name": "anh_dan_1795561140323.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/anh_dan_1795561140323.jpg",
+          "size": "54 KB"
+        },
+        {
+          "name": "anh_dan_1795561171971.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/anh_dan_1795561171971.jpg",
+          "size": "57 KB"
+        },
+        {
+          "name": "anh_dan_1795561182706.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/anh_dan_1795561182706.jpg",
+          "size": "57 KB"
+        },
+        {
+          "name": "anh_dan_1795561196870.jpg",
+          "url": "uploads/05_HoatDong_Dang_DoanThe/anh_dan_1795561196870.jpg",
+          "size": "54 KB"
+        }
+      ],
+      "isImportant": true
+    },
     {
       "id": 1795181797523,
       "title": "Lễ trao giải Hội thao Chào mừng kỷ niệm 44 năm Ngày Nhà Giáo Việt Nam (20/11/1982- 20/11/2026)",
