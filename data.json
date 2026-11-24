@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T04:22:26.606Z",
+  "updatedAt": "2026-11-24T01:31:01.694Z",
   "siteLocked": false,
   "siteLockMessage": "Cổng thông tin điện tử nhà trường đang tạm khóa để bảo trì & kiểm duyệt định kỳ. Quý Thầy Cô, Phụ huynh và Học sinh vui lòng quay lại sau!",
   "schoolStats": {
@@ -55,6 +55,145 @@
     "kpi4Num": "NH 2026 - 2027",
     "kpi4Lbl": "100% Công khai theo Thông tư 09/2024/TT-BGDĐT"
   },
+  "orgStaffList": [
+    {
+      "name": "Nguyễn Bá Công",
+      "birthYear": "1982",
+      "dept": "Ban Giám hiệu",
+      "govRole": "P.Hiệu trưởng/P. Giám đốc",
+      "partyType": "Đảng viên",
+      "partyRole": "P. Bí thư",
+      "duty": "Lịch sử và Địa lí",
+      "dutyCustom": "",
+      "otherDuty": "Quản lý, Chịu trách nhiệm CM",
+      "tdcm": "ĐH",
+      "tdllct": "TC",
+      "phone": "",
+      "address": "Xã Vân Canh, Gia Lai"
+    },
+    {
+      "name": "Lương Văn Tuấn",
+      "birthYear": "1978",
+      "dept": "Ban Giám hiệu",
+      "govRole": "Hiệu trưởng/Giám đốc",
+      "partyType": "Đảng viên",
+      "partyRole": "Bí thư",
+      "duty": "Toán",
+      "dutyCustom": "",
+      "otherDuty": "Quản lý chung, Chủ tài khoản",
+      "tdcm": "Trên ĐH",
+      "tdllct": "TC",
+      "phone": "",
+      "address": "Xã Vân Canh, Gia Lai"
+    },
+    {
+      "name": "Tổ trưởng Tổ Khoa học Tự nhiên",
+      "birthYear": "1983",
+      "dept": "Tổ Khoa học Tự nhiên",
+      "govRole": "Tổ trưởng/Trưởng phòng",
+      "partyType": "Đảng viên",
+      "partyRole": "Ủy viên",
+      "duty": "Toán",
+      "dutyCustom": "",
+      "otherDuty": "Chủ nhiệm 9A1",
+      "tdcm": "ĐH",
+      "tdllct": "Sơ cấp",
+      "phone": "",
+      "address": "Xã Vân Canh, Gia Lai"
+    },
+    {
+      "name": "Tổ trưởng Tổ Khoa học Xã hội",
+      "birthYear": "1984",
+      "dept": "Tổ Khoa học Xã hội",
+      "govRole": "Tổ trưởng/Trưởng phòng",
+      "partyType": "Đảng viên",
+      "partyRole": "Đảng viên/Đoàn viên",
+      "duty": "Ngữ văn",
+      "dutyCustom": "",
+      "otherDuty": "Chủ nhiệm 8A1",
+      "tdcm": "ĐH",
+      "tdllct": "Sơ cấp",
+      "phone": "",
+      "address": "Xã Vân Canh, Gia Lai"
+    },
+    {
+      "name": "Bộ phận Văn thư - Kế toán - Bán trú",
+      "birthYear": "1988",
+      "dept": "Tổ Văn phòng - Bán trú",
+      "govRole": "Giáo viên/Thành viên",
+      "partyType": "Đoàn viên",
+      "partyRole": "Đảng viên/Đoàn viên",
+      "duty": "Văn thư - Lưu trữ",
+      "dutyCustom": "",
+      "otherDuty": "Quản lý hồ sơ bán trú",
+      "tdcm": "ĐH",
+      "tdllct": "Sơ cấp",
+      "phone": "",
+      "address": "Xã Vân Canh, Gia Lai"
+    }
+  ],
+  "facilityList": [
+    {
+      "name": "Dãy phòng học chính khóa (2 tầng)",
+      "group": "Học tập",
+      "scale": "09 phòng học",
+      "area": 486,
+      "year": "2021",
+      "structure": "Kiên cố",
+      "status": "Tốt / Đạt chuẩn",
+      "note": "Đủ bàn ghế 2 chỗ, bảng chống lóa, Tivi/máy chiếu"
+    },
+    {
+      "name": "Khu Phòng Bộ môn & Thư viện",
+      "group": "Bộ môn - Chức năng",
+      "scale": "04 phòng",
+      "area": 240,
+      "year": "2022",
+      "structure": "Kiên cố",
+      "status": "Tốt / Đạt chuẩn",
+      "note": "Tin học (25 máy), KHTN, Tiếng Anh, Thư viện chuẩn"
+    },
+    {
+      "name": "Khu Nhà ở Học sinh Bán trú",
+      "group": "Khu Bán trú",
+      "scale": "12 phòng ở",
+      "area": 420,
+      "year": "2021",
+      "structure": "Kiên cố",
+      "status": "Tốt / Đạt chuẩn",
+      "note": "Phục vụ 123 HS bán trú (giường tầng, tủ cá nhân, quạt)"
+    },
+    {
+      "name": "Nhà ăn & Bếp ăn một chiều Bán trú",
+      "group": "Khu Bán trú",
+      "scale": "01 khu (150 chỗ)",
+      "area": 180,
+      "year": "2022",
+      "structure": "Kiên cố",
+      "status": "Tốt / Đạt chuẩn",
+      "note": "Đạt chuẩn VSATTP, tủ cơm công nghiệp, nước lọc RO"
+    },
+    {
+      "name": "Khối Hiệu bộ & Phòng làm việc Tổ CM",
+      "group": "Hành chính - Quản trị",
+      "scale": "05 phòng",
+      "area": 195,
+      "year": "2020",
+      "structure": "Kiên cố",
+      "status": "Tốt / Đạt chuẩn",
+      "note": "Phòng BGH, Văn thư, Kế toán, Hội đồng, Y tế học đường"
+    },
+    {
+      "name": "Sân trường, Sân thể thao & Hệ thống mạng",
+      "group": "Hạ tầng chung",
+      "scale": "Toàn khuôn viên",
+      "area": 3500,
+      "year": "2023",
+      "structure": "Bê tông / Cáp quang",
+      "status": "Tốt / Đạt chuẩn",
+      "note": "Sân chào cờ, sân bóng chuyền, Wifi phủ sóng toàn trường"
+    }
+  ],
   "pinnedNoticeId": "1795181797523",
   "hiddenDefaultIds": [],
   "posts": [
